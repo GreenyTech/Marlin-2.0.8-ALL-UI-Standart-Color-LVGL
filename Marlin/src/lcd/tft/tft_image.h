@@ -28,6 +28,7 @@
 extern const uint8_t marlin_logo_112x38x1[];
 extern const uint8_t marlin_logo_228x255x2[];
 extern const uint8_t marlin_logo_228x255x4[];
+extern const uint16_t marlin_logo_150x113x16[];
 extern const uint16_t marlin_logo_195x59x16[];
 extern const uint16_t marlin_logo_320x240x16[];
 extern const uint16_t marlin_logo_480x320x16[];
@@ -127,6 +128,7 @@ extern const tImage NoLogo;
   extern const tImage MarlinLogo112x38x1;
   extern const tImage MarlinLogo228x255x2;
   extern const tImage MarlinLogo228x255x4;
+  extern const tImage MarlinLogo150x113x16;
   extern const tImage MarlinLogo195x59x16;
   extern const tImage MarlinLogo320x240x16;
   extern const tImage MarlinLogo480x320x16;

@@ -24,23 +24,20 @@
 //JUST uncomment the option for your machine
 //#define V6_330_TITAN_TMC 1
 //#define V6_330_TITAN_NO_TMC 1
-//#define V6_330_NO_TITAN_TMC 1
+#define V6_330_NO_TITAN_TMC 1
 //#define V6_330_NO_TITAN_NO_TMC 1
 //#define V6_400_TITAN_TMC 1
 //#define V6_400_NO_TITAN_TMC 1
 //#define V6_500_TITAN_TMC 1
-//#define V6_500_TITAN_TMC2209 1       // New Chitu V6 190319     (RN)
-//#define V6_500_TITAN_TMC2209V9 1     // New Chitu V9 200420     (RN)  Testrepo !!! Please only test with a full backup of the board !!!!!!!!! please leave a comment if it is running right !!!! Last adjustments should fit now :-)
+//#define V6_500_TITAN_TMC2209 1     // New Chitu V6 190319     (RN)
 
-//#define V5_330_TITAN_TMC 1
-//#define V5_330_TITAN_NO_TMC 1
-//#define V5_330_NO_TITAN_TMC 1
-//#define V5_330_NO_TITAN_NO_TMC 1
-//#define XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL 1
-//#define XY2_V6_255_ALL 1        //Please comment with TITAN and with TMC itself in or out in line #elif XY2_V6_255_ALL !!! (RN)
+// #define V5_330_TITAN_TMC 1
+// #define V5_330_TITAN_NO_TMC 1
+// #define V5_330_NO_TITAN_TMC 1
+// #define V5_330_NO_TITAN_NO_TMC 1
+// #define XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL 1
 
-////////////////////////////////////////////////////////////////////
-// Section shortened name   (This section is for information only and remains unaffected by any selection !!!!)
+// Section shortened name
 // Tronxy X5SA V6 330 Titan TMC = X5SA V6 330 TTMC 2.0.8
 // Tronxy X5SA V6 330 Titan = X5SA V6 330 T 2.0.8
 // Tronxy X5SA V6 330 TMC = X5SA V6 330 TMC 2.0.8
@@ -52,43 +49,23 @@
 // Tronxy X5SA V5 330 Titan = X5SA V5 330 T 2.0.8
 // Tronxy X5SA V5 330 TMC = X5SA V5 330 TMC 2.0.8
 // Tronxy X5SA V5 330 = X5SA V5 330 2.0.8
-////////////////////////////////////////////////////////////////////
 
 //Ui Theme Changer
+
 //#define TFT_CLASSIC_UI    //Marlin Classic
 #define TFT_COLOR_UI      //Marlin Color Ui (Touch Support)
-//#define TFT_LVGL_UI       //Marlin MKS Themed UI (Good Touch Support but quite buggy with Chitu boards) 
+//#define TFT_LVGL_UI       //Marlin MKS Themed UI (Good Touch Support) 
 
-//ATTENTION: Board conversion as in the video: https://bit.ly/3zCrela is mandatory!!! Linear Advance will not work without it!!!
-//Linear Advance activation:
-//#define LINEAR_ADVANCE
-
-//Section Extruder Info: 
-//Mixing Extruders and Dual_E must not be selected together. This will result in a compilation error. Either use a mixing nozzle or a normal dual extruder hotend, not both together !!!!
-
-//Dual Extruder Setup
-//#define Dual_E
-
-//Mixing Extruder Setup   (Mixing extruder means an extruder such as the BigTreeTech ZSYoung 2in1 Hotend)
-//#define MIXING_EXTRUDER
-
-//Power Loss Recovery
-//#define POWER_L
-
-//Printcounter is almost like an operating hours counter. It counts full hours and number of prints. 
-//#define PRINTCOUNTER
 
 #if V6_330_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 330
   #define Y_BED_SIZE 330
-  #define Z_MAX_POS 400
-  #define CUSTOM_MACHINE_NAME "X5SA V6 330 TTMC 2.0.8"
+  #define Z_MAX_POS 385
+  #define CUSTOM_MACHINE_NAME "GT Powerprinter"
 
 #elif V6_330_TITAN_NO_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   //#define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -97,16 +74,14 @@
   #define CUSTOM_MACHINE_NAME "X5SA V6 330 T 2.0.8"
 
 #elif V6_330_NO_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 330
   #define Y_BED_SIZE 330
-  #define Z_MAX_POS 400
-  #define CUSTOM_MACHINE_NAME "X5SA V6 330 TMC 2.0.8"
+  #define Z_MAX_POS 385
+  #define CUSTOM_MACHINE_NAME "GT Powerprinter"
 
 #elif V6_330_NO_TITAN_NO_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   //#define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -115,7 +90,6 @@
   #define CUSTOM_MACHINE_NAME "Tronxy X5SA V6 2.0.8"
   
 #elif V6_400_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 400
@@ -124,7 +98,6 @@
   #define CUSTOM_MACHINE_NAME "X5SA V6 400 TTMC 2.0.8"
 
 #elif V6_400_NO_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 400
@@ -133,7 +106,6 @@
   #define CUSTOM_MACHINE_NAME "X5SA V6 400 TMC 2.0.8"
 
 #elif V6_500_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 500
@@ -142,29 +114,14 @@
   #define CUSTOM_MACHINE_NAME "X5SA V6 500 TTMC 2.0.8"
 
 #elif V6_500_TITAN_TMC2209 
-  #define MOTHERBOARD BOARD_CHITU3D_V6
   #define WITH_TMC2209 1
   #define WITH_TITAN 1
-  #define WITH_DOUBLE_Z 1   //(RN)
-  #define WITH_Z_ALIGN 1    //Comment this out if you not use Z Auto Align (RN)
   #define X_BED_SIZE 500
   #define Y_BED_SIZE 500
   #define Z_MAX_POS 500
   #define CUSTOM_MACHINE_NAME "X5SA V6 500 TTMC NEW 2.0.8"
 
-#elif V6_500_TITAN_TMC2209V9 
-  #define MOTHERBOARD BOARD_CHITU3D_V6
-  #define WITH_TMC2209V9 1
-  #define WITH_TITAN 1
-  #define WITH_DOUBLE_Z 1   //(RN)
-  #define WITH_Z_ALIGN 1    //Comment this out if you not use Z Auto Align (RN)
-  #define X_BED_SIZE 500
-  #define Y_BED_SIZE 500
-  #define Z_MAX_POS 500
-  #define CUSTOM_MACHINE_NAME "X5SA V6 500 TTMC NEW V9 2.0.8"
-
 #elif V5_330_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V5
   #define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -173,7 +130,6 @@
   #define CUSTOM_MACHINE_NAME "X5SA V5 330 TTMC 2.0.8"
 
 #elif V5_330_TITAN_NO_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V5
   //#define WITH_TMC 1
   #define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -182,7 +138,6 @@
   #define CUSTOM_MACHINE_NAME "X5SA V5 330 T 2.0.8"
 
 #elif V5_330_NO_TITAN_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V5
   #define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -191,7 +146,6 @@
   #define CUSTOM_MACHINE_NAME "X5SA V5 330 TMC 2.0.8"
 
 #elif V5_330_NO_TITAN_NO_TMC
-  #define MOTHERBOARD BOARD_CHITU3D_V5
   //#define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 330
@@ -200,26 +154,12 @@
   #define CUSTOM_MACHINE_NAME "X5SA V5 330 2.0.8"
 
 #elif XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL
-  #define MOTHERBOARD BOARD_CHITU3D_V5
   //#define WITH_TMC 1
   //#define WITH_TITAN 1
   #define X_BED_SIZE 310
   #define Y_BED_SIZE 310
   #define Z_MAX_POS 400
   #define CUSTOM_MACHINE_NAME "Tronxy XY3 310 2.0.8"
-
-#elif XY2_V6_255_ALL
-  #define MOTHERBOARD BOARD_CHITU3D_V6
-  #define WITH_TMC 1
-  //#define WITH_TITAN 1
-  #define X_BED_SIZE 255
-  #define Y_BED_SIZE 255
-#ifdef WITH_TITAN   //(RN)
-  #define Z_MAX_POS 245 // Due to the height of the titan extruder it's recommended to reduce the max Z
-#else
-  #define Z_MAX_POS 260
-#endif
-  #define CUSTOM_MACHINE_NAME "Tronxy XY-2PRO 2.0.8"
 
 #endif
 /**
@@ -270,7 +210,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(Modded, Darkwulf1986)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Mod v2.0\nby KS & MH" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -321,14 +261,18 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 250000
+#define BAUDRATE 115200
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
 
 // Choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
+  #if T2_STM32F446
+  #define MOTHERBOARD BOARD_TRONXY_F446
+  #else
   #define MOTHERBOARD BOARD_CHITU3D_V6
+  #endif
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
@@ -342,26 +286,12 @@
 
 // This defines the number of extruders
 // :[0, 1, 2, 3, 4, 5, 6, 7, 8]
-
-#ifdef Dual_E   //(RN)
-  #define EXTRUDERS 2
-#else
-  #define EXTRUDERS 1
-#endif
-
-//#define EXTRUDERS 2 
+#define EXTRUDERS 1
 
 // Generally expected filament diameter (1.75, 2.85, 3.0, ...). Used for Volumetric, Filament Width Sensor, etc.
 #define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
 
 // For Cyclops or any "multi-extruder" that shares a single nozzle.
-
-#ifdef Dual_E   //(RN)
-  #define SINGLENOZZLE
-#else
-  //#define SINGLENOZZLE
-#endif
-
 //#define SINGLENOZZLE
 
 // Save and restore temperature and fan speed on tool-change.
@@ -680,7 +610,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 320
+#define HEATER_0_MAXTEMP 260
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -688,7 +618,7 @@
 #define HEATER_5_MAXTEMP 275
 #define HEATER_6_MAXTEMP 275
 #define HEATER_7_MAXTEMP 275
-#define BED_MAXTEMP      150
+#define BED_MAXTEMP      120
 #define CHAMBER_MAXTEMP  60
 
 /**
@@ -697,8 +627,8 @@
  * (especially before PID tuning). Setting the target temperature too close to MAXTEMP guarantees
  * a MAXTEMP shutdown! Use these values to forbid temperatures being set too close to MAXTEMP.
  */
-#define HOTEND_OVERSHOOT 15   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
-#define BED_OVERSHOOT    10   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
+#define HOTEND_OVERSHOOT 20   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
+#define BED_OVERSHOOT    0   // (°C) Forbid temperatures over MAXTEMP - OVERSHOOT
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -712,8 +642,8 @@
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
-  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  //#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+  #define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+  #define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
   //#define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
 
@@ -724,9 +654,9 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
-    #define DEFAULT_Kd 114.00
+    #define DEFAULT_Kp  22.1
+    #define DEFAULT_Ki   2.46
+    #define DEFAULT_Kd  49.6
   #endif
 #endif // PIDTEMP
 
@@ -765,9 +695,9 @@
 
   // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 99.01
-  #define DEFAULT_bedKi 13.88
-  #define DEFAULT_bedKd 470.91
+  #define DEFAULT_bedKp 168.8
+  #define DEFAULT_bedKi 30.52
+  #define DEFAULT_bedKd 622.8
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -873,9 +803,7 @@
 
 // Enable one of the options below for CoreXY, CoreXZ, or CoreYZ kinematics,
 // either in the usual order or reversed
-#if defined(XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL) || defined(XY2_V6_255_ALL)   //(RN)
-//#define COREXY
-#else
+#ifndef XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL
 #define COREXY
 #endif
 //#define COREXZ
@@ -954,21 +882,16 @@
  *          TMC5130, TMC5130_STANDALONE, TMC5160, TMC5160_STANDALONE
  * :['A4988', 'A5984', 'DRV8825', 'LV8729', 'L6470', 'L6474', 'POWERSTEP01', 'TB6560', 'TB6600', 'TMC2100', 'TMC2130', 'TMC2130_STANDALONE', 'TMC2160', 'TMC2160_STANDALONE', 'TMC2208', 'TMC2208_STANDALONE', 'TMC2209', 'TMC2209_STANDALONE', 'TMC26X', 'TMC26X_STANDALONE', 'TMC2660', 'TMC2660_STANDALONE', 'TMC5130', 'TMC5130_STANDALONE', 'TMC5160', 'TMC5160_STANDALONE']
  */
-#if WITH_TMC2209 //(RN)
+#if WITH_TMC2209 // (RN)
   #define X_DRIVER_TYPE TMC2209_STANDALONE
   #define Y_DRIVER_TYPE TMC2209_STANDALONE
   #define Z_DRIVER_TYPE TMC2209_STANDALONE
   //#define X2_DRIVER_TYPE A4988
   //#define Y2_DRIVER_TYPE A4988
-  #define Z2_DRIVER_TYPE TMC2209_STANDALONE       //(RN)
+  #define Z2_DRIVER_TYPE TMC2209_STANDALONE       // (RN)
   //#define Z3_DRIVER_TYPE A4988
   //#define Z4_DRIVER_TYPE A4988
   #define E0_DRIVER_TYPE A4988
-#if defined(Dual_E) || defined(MIXING_EXTRUDER)   //(RN)
-  #define E1_DRIVER_TYPE A4988
-#else
-  //#define E1_DRIVER_TYPE A4988
-#endif
   //#define E1_DRIVER_TYPE A4988
   //#define E2_DRIVER_TYPE A4988
   //#define E3_DRIVER_TYPE A4988
@@ -976,30 +899,6 @@
   //#define E5_DRIVER_TYPE A4988
   //#define E6_DRIVER_TYPE A4988
   //#define E7_DRIVER_TYPE A4988
-
-#elif WITH_TMC2209V9 //(RN)
-  #define X_DRIVER_TYPE TMC2209_STANDALONE
-  #define Y_DRIVER_TYPE TMC2209_STANDALONE
-  #define Z_DRIVER_TYPE TMC2209_STANDALONE
-  //#define X2_DRIVER_TYPE A4988
-  //#define Y2_DRIVER_TYPE A4988
-  #define Z2_DRIVER_TYPE TMC2209_STANDALONE       //(RN)
-  //#define Z3_DRIVER_TYPE A4988
-  //#define Z4_DRIVER_TYPE A4988
-  #define E0_DRIVER_TYPE TMC2208_STANDALONE
-#if defined(Dual_E) || defined(MIXING_EXTRUDER)   //(RN)
-  #define E1_DRIVER_TYPE TMC2208_STANDALONE
-#else
-  //#define E1_DRIVER_TYPE TMC2208_STANDALONE
-#endif
-  //#define E1_DRIVER_TYPE TMC2208_STANDALONE
-  //#define E2_DRIVER_TYPE A4988
-  //#define E3_DRIVER_TYPE A4988
-  //#define E4_DRIVER_TYPE A4988
-  //#define E5_DRIVER_TYPE A4988
-  //#define E6_DRIVER_TYPE A4988
-  //#define E7_DRIVER_TYPE A4988
-
 #elif WITH_TMC  //(RN)
   #define X_DRIVER_TYPE TMC2208_STANDALONE
   #define Y_DRIVER_TYPE TMC2208_STANDALONE
@@ -1010,18 +909,13 @@
   //#define Z3_DRIVER_TYPE A4988
   //#define Z4_DRIVER_TYPE A4988
   #define E0_DRIVER_TYPE TMC2208_STANDALONE
-#if defined(Dual_E) || defined(MIXING_EXTRUDER)   //(RN)
-  #define E1_DRIVER_TYPE TMC2208_STANDALONE
-#else
-  //#define E1_DRIVER_TYPE TMC2208_STANDALONE
-#endif
+  //#define E1_DRIVER_TYPE A4988
   //#define E2_DRIVER_TYPE A4988
   //#define E3_DRIVER_TYPE A4988
   //#define E4_DRIVER_TYPE A4988
   //#define E5_DRIVER_TYPE A4988
   //#define E6_DRIVER_TYPE A4988
   //#define E7_DRIVER_TYPE A4988
-
 #elif !WITH_TMC
   #define X_DRIVER_TYPE  A4988
   #define Y_DRIVER_TYPE  A4988
@@ -1032,11 +926,7 @@
   //#define Z3_DRIVER_TYPE A4988
   //#define Z4_DRIVER_TYPE A4988
   #define E0_DRIVER_TYPE A4988
-#if defined(Dual_E) || defined(MIXING_EXTRUDER)   //(RN)
-  #define E1_DRIVER_TYPE A4988
-#else
   //#define E1_DRIVER_TYPE A4988
-#endif
   //#define E2_DRIVER_TYPE A4988
   //#define E3_DRIVER_TYPE A4988
   //#define E4_DRIVER_TYPE A4988
@@ -1086,27 +976,17 @@
  */
 //#define DISTINCT_E_FACTORS
 
-#ifdef Dual_E   //(RN)
-  #define DISTINCT_E_FACTORS
-#else
-  //#define DISTINCT_E_FACTORS
-#endif
-
-
-
 /**
  * Default Axis Steps Per Unit (steps/mm)
  * Override with M92
- *                                      X, Y, Z, E0 [, E1[, E2...]] (RN)
+ *                                      X, Y, Z, E0 [, E1[, E2...]] (noch zu ändern)
  */
 #if WITH_TMC && WITH_TITAN
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 778 }
+  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 830 } // E849 gemessen
 #elif WITH_TMC2209 && WITH_TITAN
   #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 420 }
-#elif WITH_TMC2209V9 && WITH_TITAN
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 778 }
 #elif WITH_TMC && !WITH_TITAN
-  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 186 }
+  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 830 }
 #elif WITH_TITAN && !WITH_TMC
   #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 420 }
 #else
@@ -1118,7 +998,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 50 }
+#define DEFAULT_MAX_FEEDRATE          { 240, 240, 5, 50 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1195,11 +1075,7 @@
  *
  * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
  */
-#ifdef LINEAR_ADVANCE   //(RN)
-  #define S_CURVE_ACCELERATION
-#else
-  //#define S_CURVE_ACCELERATION
-#endif
+#define S_CURVE_ACCELERATION
 
 //===========================================================================
 //============================= Z Probe Options =============================
@@ -1375,20 +1251,20 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { -35, 0, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { -43, -8, -3 }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 50
+#define PROBING_MARGIN 15
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_FEEDRATE (133*60)
+#define XY_PROBE_FEEDRATE (266*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (4*60)
+#define Z_PROBE_FEEDRATE_FAST (12*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
-#define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
+#define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 6)
 
 /**
  * Probe Activation Switch
@@ -1512,19 +1388,15 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#if defined(XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL) || defined(XY2_V6_255_ALL)  //(RN)
+#ifdef XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL
   #define INVERT_X_DIR false
 #else
   #define INVERT_X_DIR true
 #endif
 
-#ifdef XY2_V6_255_ALL   //(RN)
-  #define INVERT_Y_DIR false
-#else
-  #define INVERT_Y_DIR true
-#endif
+#define INVERT_Y_DIR true
 
-#if defined(XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL) || defined(XY2_V6_255_ALL)  //(RN)
+#ifdef XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL
   #define INVERT_Z_DIR true
 #else
   #define INVERT_Z_DIR false
@@ -1538,11 +1410,7 @@
 #else
   #define INVERT_E0_DIR false
 #endif
-#if WITH_TITAN
-  #define INVERT_E1_DIR true
-#else
-  #define INVERT_E1_DIR false
-#endif
+#define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
 #define INVERT_E4_DIR false
@@ -1562,7 +1430,7 @@
  */
 //#define Z_IDLE_HEIGHT Z_HOME_POS
 
-#define Z_HOMING_HEIGHT 10        // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT 4        // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
 //#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
@@ -1581,11 +1449,11 @@
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
-#define Y_MIN_POS 0
+#define Y_MIN_POS -2
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE
-//#define Z_MAX_POS 400
+#define X_MAX_POS X_BED_SIZE + 20
+#define Y_MAX_POS Y_BED_SIZE +3
+//#define Z_MAX_POS 385
 
 /**
  * Software Endstops
@@ -1632,13 +1500,7 @@
 #define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define FIL_RUNOUT_ENABLED_DEFAULT true // Enable the sensor on startup. Override with M412 followed by M500.
-  //#define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
-
-#ifdef Dual_E   //(RN)
-  #define NUM_RUNOUT_SENSORS   2
-#else
-  #define NUM_RUNOUT_SENSORS   1
-#endif
+  #define NUM_RUNOUT_SENSORS   1          // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
 
   #define FIL_RUNOUT_STATE     HIGH       // Pin state indicating that filament is NOT present.
   //#define FIL_RUNOUT_PULLUP             // Use internal pullup for filament runout pins.
@@ -1684,15 +1546,15 @@
   // NOTE: After 'M412 H1' the host handles filament runout and this script does not apply.
   
   #ifndef TFT_LVGL_UI
-  #define FILAMENT_RUNOUT_SCRIPT "M600"
+    #define FILAMENT_RUNOUT_SCRIPT "M600"
   #else
-  #define FILAMENT_RUNOUT_SCRIPT "M25"
+    #define FILAMENT_RUNOUT_SCRIPT "M25"
   #endif
   
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
   // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-  //#define FILAMENT_RUNOUT_DISTANCE_MM 25
+  #define FILAMENT_RUNOUT_DISTANCE_MM 45
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
     // Enable this option to use an encoder disc that toggles the runout pin
@@ -1755,16 +1617,16 @@
  * these options to restore the prior leveling state or to always enable
  * leveling immediately after G28.
  */
-#define RESTORE_LEVELING_AFTER_G28
-//#define ENABLE_LEVELING_AFTER_G28
+//#define RESTORE_LEVELING_AFTER_G28
+#define ENABLE_LEVELING_AFTER_G28
 
 /**
  * Auto-leveling needs preheating
  */
-//#define PREHEAT_BEFORE_LEVELING
+#define PREHEAT_BEFORE_LEVELING
 #if ENABLED(PREHEAT_BEFORE_LEVELING)
-  #define LEVELING_NOZZLE_TEMP 120   // (°C) Only applies to E0 at this time
-  #define LEVELING_BED_TEMP     50
+  #define LEVELING_NOZZLE_TEMP 0   // (°C) Only applies to E0 at this time
+  #define LEVELING_BED_TEMP     60
 #endif
 
 /**
@@ -1780,7 +1642,7 @@
   // The height can be set with M420 Z<height>
   #define ENABLE_LEVELING_FADE_HEIGHT
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
-    #define DEFAULT_LEVELING_FADE_HEIGHT 10.0 // (mm) Default fade height.
+    #define DEFAULT_LEVELING_FADE_HEIGHT 3.0 // (mm) Default fade height.
   #endif
 
   // For Cartesian machines, instead of dividing moves on mesh boundaries,
@@ -1792,11 +1654,11 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  //#define G26_MESH_VALIDATION
+  #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_NOZZLE_SIZE    0.6  // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for G26.
-    #define MESH_TEST_HOTEND_TEMP  205    // (°C) Default nozzle temperature for G26.
+    #define MESH_TEST_HOTEND_TEMP  220    // (°C) Default nozzle temperature for G26.
     #define MESH_TEST_BED_TEMP      60    // (°C) Default bed temperature for G26.
     #define G26_XY_FEEDRATE         20    // (mm/s) Feedrate for G26 XY moves.
     #define G26_XY_FEEDRATE_TRAVEL 100    // (mm/s) Feedrate for G26 XY travel moves.
@@ -1808,7 +1670,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 4
+  #define GRID_MAX_POINTS_X 5
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1840,8 +1702,8 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 10      // Don't use more than 15 points per axis, implementation limited.
+  //#define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 7       // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
@@ -1987,9 +1849,9 @@
 
 #if ENABLED(SKEW_CORRECTION)
   // Input all length measurements here:
-  #define XY_DIAG_AC 282.8427124746
-  #define XY_DIAG_BD 282.8427124746
-  #define XY_SIDE_AD 200
+  #define XY_DIAG_AC 466,690475583
+  #define XY_DIAG_BD 466,690475583
+  #define XY_SIDE_AD 330
 
   // Or, set the default skew factors directly here
   // to override the above measurements:
@@ -2059,15 +1921,15 @@
 // Preheat Constants - Up to 5 are supported without changes
 //
 #define PREHEAT_1_LABEL       "PLA"
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED     50
-#define PREHEAT_1_TEMP_CHAMBER 35
+#define PREHEAT_1_TEMP_HOTEND 210
+#define PREHEAT_1_TEMP_BED     60
+//#define PREHEAT_1_TEMP_CHAMBER 35
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "ABS"
 #define PREHEAT_2_TEMP_HOTEND 240
 #define PREHEAT_2_TEMP_BED    90
-#define PREHEAT_2_TEMP_CHAMBER 35
+//#define PREHEAT_2_TEMP_CHAMBER 35
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
@@ -2085,7 +1947,7 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   // Specify a park position as { X, Y, Z_raise }
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
+  #define NOZZLE_PARK_POINT { (X_MIN_POS + 4), (Y_MIN_POS + 4), 20 }
   //#define NOZZLE_PARK_X_ONLY          // X move only is required to park
   //#define NOZZLE_PARK_Y_ONLY          // Y move only is required to park
   #define NOZZLE_PARK_Z_RAISE_MIN   2   // (mm) Always raise Z by at least this distance
@@ -2161,7 +2023,7 @@
   //#define NOZZLE_CLEAN_NO_Y
 
   // Require a minimum hotend temperature for cleaning
-  #define NOZZLE_CLEAN_MIN_TEMP 170
+  #define NOZZLE_CLEAN_MIN_TEMP 200
   //#define NOZZLE_CLEAN_HEATUP       // Heat up the nozzle instead of skipping wipe
 
   // Explicit wipe G-code script applies to a G12 with no arguments.
@@ -2620,7 +2482,7 @@
 // MKS LCD12864A/B with graphic controller and SD support. Follows MKS_MINI_12864 pinout.
 // https://www.aliexpress.com/item/33018110072.html
 //
-//#define MKS_LCD12864 //(RN)
+//#define MKS_LCD12864
 
 //
 // FYSETC variant of the MINI12864 graphic controller with SD support
@@ -2841,7 +2703,7 @@
 //
 // 480x320, 3.5", FSMC Stock Display from TronxXY
 //
-//#define TFT_TRONXY_X5SA
+#define TFT_TRONXY_X5SA
 
 //
 // 480x320, 3.5", FSMC Stock Display from AnyCubic
@@ -2866,10 +2728,10 @@
 //
 // Generic TFT with detailed options
 //
-#define TFT_GENERIC
+//#define TFT_GENERIC
 #if ENABLED(TFT_GENERIC)
   // :[ 'AUTO', 'ST7735', 'ST7789', 'ST7796', 'R61505', 'ILI9328', 'ILI9341', 'ILI9488' ]
-  #define TFT_DRIVER ILI9488 //(RN)
+  #define TFT_DRIVER AUTO
 
   // Interface. Enable one of the following options:
   #define TFT_INTERFACE_FSMC

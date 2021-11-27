@@ -145,6 +145,9 @@ class PrintJobRecovery {
     static void prepare();
 
     static inline void setup() {
+      #ifdef POWER_LM393_PIN
+      OUT_WRITE(POWER_LM393_PIN,HIGH);//YSZ-WORK
+      #endif
       #if PIN_EXISTS(POWER_LOSS)
         #if ENABLED(POWER_LOSS_PULLUP)
           SET_INPUT_PULLUP(POWER_LOSS_PIN);

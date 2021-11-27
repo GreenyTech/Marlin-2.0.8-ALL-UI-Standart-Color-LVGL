@@ -3,7 +3,6 @@
 
 ## JUST uncomment the option for your machine
 ```cpp
-//JUST uncomment the option for your machine
 //#define V6_330_TITAN_TMC 1
 //#define V6_330_TITAN_NO_TMC 1
 //#define V6_330_NO_TITAN_TMC 1
@@ -11,18 +10,15 @@
 //#define V6_400_TITAN_TMC 1
 //#define V6_400_NO_TITAN_TMC 1
 //#define V6_500_TITAN_TMC 1
-//#define V6_500_TITAN_TMC2209 1       // New Chitu V6 190319     (RN)
-//#define V6_500_TITAN_TMC2209V9 1     // New Chitu V9 200420     (RN)  Testrepo !!! Please only test with a full backup of the board !!!!!!!!!
+//#define V6_500_TITAN_TMC2209 1     // New Chitu V6 190319
 
 // #define V5_330_TITAN_TMC 1
 // #define V5_330_TITAN_NO_TMC 1
 // #define V5_330_NO_TITAN_TMC 1
 // #define V5_330_NO_TITAN_NO_TMC 1
 // #define XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL 1
-// #define XY2_V6_255_ALL 1        //Please comment with TITAN and with TMC itself in or out in line #elif XY2_V6_255_ALL !!! (RN)
 
-////////////////////////////////////////////////////////////////////
-// Section shortened name   (This section is for information only and remains unaffected by any selection !!!!)
+// Section shortened name
 // Tronxy X5SA V6 330 Titan TMC = X5SA V6 330 TTMC 2.0.8
 // Tronxy X5SA V6 330 Titan = X5SA V6 330 T 2.0.8
 // Tronxy X5SA V6 330 TMC = X5SA V6 330 TMC 2.0.8
@@ -34,32 +30,12 @@
 // Tronxy X5SA V5 330 Titan = X5SA V5 330 T 2.0.8
 // Tronxy X5SA V5 330 TMC = X5SA V5 330 TMC 2.0.8
 // Tronxy X5SA V5 330 = X5SA V5 330 2.0.8
-////////////////////////////////////////////////////////////////////
 
 //Ui Theme Changer
+
 //#define TFT_CLASSIC_UI    //Marlin Classic
-#define TFT_COLOR_UI      //Marlin Color Ui (Touch Support)
-//#define TFT_LVGL_UI       //Marlin MKS Themed UI (Good Touch Support but quite buggy with Chitu boards) 
-
-//ATTENTION: Board conversion as in the video: https://bit.ly/3zCrela is mandatory!!! Linear Advance will not work without it!!!
-//Linear Advance activation:
-//#define LINEAR_ADVANCE
-
-//Section Extruder Info: 
-//Mixing Extruders and Dual_E must not be selected together. This will result in a compilation error. Either use a mixing nozzle or a normal dual extruder hotend, not both together !!!!
-
-//Dual Extruder Setup
-//#define Dual_E
-
-//Mixing Extruder Setup   (Mixing extruder means an extruder such as the BigTreeTech ZSYoung 2in1 Hotend)
-//#define MIXING_EXTRUDER
-
-//Power Loss Recovery
-//#define POWER_L
-
-//Printcounter is almost like an operating hours counter. It counts full hours and number of prints. 
-//#define PRINTCOUNTER
-
+//#define TFT_COLOR_UI      //Marlin Color Ui (Touch Support)
+#define TFT_LVGL_UI       //Marlin MKS Themed UI (Good Touch Support) 
 ```
 
 # Marlin 3D Printer Firmware
@@ -74,7 +50,7 @@
 Additional documentation can be found at the [Marlin Home Page](https://marlinfw.org/).
 Please test this firmware and let us know if it misbehaves in any way. Volunteers are standing by!
 
-## Marlin 2.0.8 Branch
+## Marlin 2.0 Bugfix Branch
 
 __Not for production use. Use with caution!__
 

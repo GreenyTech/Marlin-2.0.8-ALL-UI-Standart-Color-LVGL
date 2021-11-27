@@ -44,29 +44,55 @@ void TFT_FSMC::Init() {
     OUT_WRITE(TFT_BACKLIGHT_PIN, HIGH);
   #endif
 
+  #if defined(STM32F446xx)  //YSZ-WORK
+  FMC_NORSRAM_TimingTypeDef Timing, ExtTiming;
+  #else
   FSMC_NORSRAM_TimingTypeDef Timing, ExtTiming;
+  #endif
 
   uint32_t NSBank = (uint32_t)pinmap_peripheral(digitalPinToPinName(TFT_CS_PIN), PinMap_FSMC_CS);
 
   // Perform the SRAM1 memory initialization sequence
-  SRAMx.Instance = FSMC_NORSRAM_DEVICE;
-  SRAMx.Extended = FSMC_NORSRAM_EXTENDED_DEVICE;
-  // SRAMx.Init
-  SRAMx.Init.NSBank = NSBank;
-  SRAMx.Init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_DISABLE;
-  SRAMx.Init.MemoryType = FSMC_MEMORY_TYPE_SRAM;
-  SRAMx.Init.MemoryDataWidth = TERN(TFT_INTERFACE_FSMC_8BIT, FSMC_NORSRAM_MEM_BUS_WIDTH_8, FSMC_NORSRAM_MEM_BUS_WIDTH_16);
-  SRAMx.Init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_DISABLE;
-  SRAMx.Init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_LOW;
-  SRAMx.Init.WrapMode = FSMC_WRAP_MODE_DISABLE;
-  SRAMx.Init.WaitSignalActive = FSMC_WAIT_TIMING_BEFORE_WS;
-  SRAMx.Init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
-  SRAMx.Init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
-  SRAMx.Init.ExtendedMode = FSMC_EXTENDED_MODE_ENABLE;
-  SRAMx.Init.AsynchronousWait = FSMC_ASYNCHRONOUS_WAIT_DISABLE;
-  SRAMx.Init.WriteBurst = FSMC_WRITE_BURST_DISABLE;
-  #ifdef STM32F4xx
-    SRAMx.Init.PageSize = FSMC_PAGE_SIZE_NONE;
+  #if defined(STM32F446xx)  //YSZ-WORK
+    SRAMx.Instance = FMC_NORSRAM_DEVICE;
+    SRAMx.Extended = FMC_NORSRAM_EXTENDED_DEVICE;
+    // SRAMx.Init
+    SRAMx.Init.NSBank = NSBank;
+    SRAMx.Init.DataAddressMux = FMC_DATA_ADDRESS_MUX_DISABLE;
+    SRAMx.Init.MemoryType = FMC_MEMORY_TYPE_SRAM;
+    SRAMx.Init.MemoryDataWidth = TERN(TFT_INTERFACE_FMC_8BIT, FMC_NORSRAM_MEM_BUS_WIDTH_8, FMC_NORSRAM_MEM_BUS_WIDTH_16);
+    SRAMx.Init.BurstAccessMode = FMC_BURST_ACCESS_MODE_DISABLE;
+    SRAMx.Init.WaitSignalPolarity = FMC_WAIT_SIGNAL_POLARITY_LOW;
+    SRAMx.Init.WrapMode = FMC_WRAP_MODE_DISABLE;
+    SRAMx.Init.WaitSignalActive = FMC_WAIT_TIMING_BEFORE_WS;
+    SRAMx.Init.WriteOperation = FMC_WRITE_OPERATION_ENABLE;
+    SRAMx.Init.WaitSignal = FMC_WAIT_SIGNAL_DISABLE;
+    SRAMx.Init.ExtendedMode = FMC_EXTENDED_MODE_ENABLE;
+    SRAMx.Init.AsynchronousWait = FMC_ASYNCHRONOUS_WAIT_DISABLE;
+    SRAMx.Init.WriteBurst = FMC_WRITE_BURST_DISABLE;
+    #ifdef STM32F4xx
+      SRAMx.Init.PageSize = FMC_PAGE_SIZE_NONE;
+    #endif
+  #else
+    SRAMx.Instance = FSMC_NORSRAM_DEVICE;
+    SRAMx.Extended = FSMC_NORSRAM_EXTENDED_DEVICE;
+    // SRAMx.Init
+    SRAMx.Init.NSBank = NSBank;
+    SRAMx.Init.DataAddressMux = FSMC_DATA_ADDRESS_MUX_DISABLE;
+    SRAMx.Init.MemoryType = FSMC_MEMORY_TYPE_SRAM;
+    SRAMx.Init.MemoryDataWidth = TERN(TFT_INTERFACE_FSMC_8BIT, FSMC_NORSRAM_MEM_BUS_WIDTH_8, FSMC_NORSRAM_MEM_BUS_WIDTH_16);
+    SRAMx.Init.BurstAccessMode = FSMC_BURST_ACCESS_MODE_DISABLE;
+    SRAMx.Init.WaitSignalPolarity = FSMC_WAIT_SIGNAL_POLARITY_LOW;
+    SRAMx.Init.WrapMode = FSMC_WRAP_MODE_DISABLE;
+    SRAMx.Init.WaitSignalActive = FSMC_WAIT_TIMING_BEFORE_WS;
+    SRAMx.Init.WriteOperation = FSMC_WRITE_OPERATION_ENABLE;
+    SRAMx.Init.WaitSignal = FSMC_WAIT_SIGNAL_DISABLE;
+    SRAMx.Init.ExtendedMode = FSMC_EXTENDED_MODE_ENABLE;
+    SRAMx.Init.AsynchronousWait = FSMC_ASYNCHRONOUS_WAIT_DISABLE;
+    SRAMx.Init.WriteBurst = FSMC_WRITE_BURST_DISABLE;
+    #ifdef STM32F4xx
+      SRAMx.Init.PageSize = FSMC_PAGE_SIZE_NONE;
+    #endif
   #endif
   // Read Timing - relatively slow to ensure ID information is correctly read from TFT controller
   // Can be decreases from 15-15-24 to 4-4-8 with risk of stability loss
@@ -76,7 +102,11 @@ void TFT_FSMC::Init() {
   Timing.BusTurnAroundDuration = 0;
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
+  #if defined(STM32F446xx)  //YSZ-WORK
+  Timing.AccessMode = FMC_ACCESS_MODE_A;
+  #else
   Timing.AccessMode = FSMC_ACCESS_MODE_A;
+  #endif
   // Write Timing
   // Can be decreases from 8-15-8 to 0-0-1 with risk of stability loss
   ExtTiming.AddressSetupTime = 8;
@@ -85,9 +115,15 @@ void TFT_FSMC::Init() {
   ExtTiming.BusTurnAroundDuration = 0;
   ExtTiming.CLKDivision = 16;
   ExtTiming.DataLatency = 17;
+  #if defined(STM32F446xx)  //YSZ-WORK
+  ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
+
+  __HAL_RCC_FMC_CLK_ENABLE();
+  #else
   ExtTiming.AccessMode = FSMC_ACCESS_MODE_A;
 
   __HAL_RCC_FSMC_CLK_ENABLE();
+  #endif
 
   for (uint16_t i = 0; PinMap_FSMC[i].pin != NC; i++)
     pinmap_pinout(PinMap_FSMC[i].pin, PinMap_FSMC);
@@ -96,11 +132,19 @@ void TFT_FSMC::Init() {
 
   controllerAddress = FSMC_BANK1_1;
   #ifdef PF0
+    #if defined(STM32F446xx)  //YSZ-WORK
+    switch (NSBank) {
+      case FMC_NORSRAM_BANK2: controllerAddress = FSMC_BANK1_2 ; break;
+      case FMC_NORSRAM_BANK3: controllerAddress = FSMC_BANK1_3 ; break;
+      case FMC_NORSRAM_BANK4: controllerAddress = FSMC_BANK1_4 ; break;
+    }
+    #else
     switch (NSBank) {
       case FSMC_NORSRAM_BANK2: controllerAddress = FSMC_BANK1_2 ; break;
       case FSMC_NORSRAM_BANK3: controllerAddress = FSMC_BANK1_3 ; break;
       case FSMC_NORSRAM_BANK4: controllerAddress = FSMC_BANK1_4 ; break;
     }
+    #endif
   #endif
 
   controllerAddress |= (uint32_t)pinmap_peripheral(digitalPinToPinName(TFT_RS_PIN), PinMap_FSMC_RS);
