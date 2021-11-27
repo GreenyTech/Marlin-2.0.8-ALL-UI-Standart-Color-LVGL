@@ -56,11 +56,7 @@
 //
 #define X_STOP_PIN                          PG10
 #define Y_STOP_PIN                          PA12
-#ifdef V6_500_TITAN_TMC2209V9    //(RN)
-  #define Z_STOP_PIN                          PA14
-#else
-  #define Z_STOP_PIN                          PG9
-#endif
+#define Z_STOP_PIN                          PG9
 
 //
 // Steppers
@@ -114,7 +110,8 @@
 //
 #define BEEPER_PIN                          PB0
 //#define LED_PIN                           PD3
-//#define POWER_LOSS_PIN                    PG2   // PG4 PW_DET
+#define POWER_LOSS_PIN                      PG2   // PG4 PW_DET
+#define POWER_LM393_PIN                     PG4  //YSZ-WORK
 
 #ifndef FIL_RUNOUT_PIN
   #define FIL_RUNOUT_PIN                    PA15  // MT_DET

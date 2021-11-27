@@ -5,7 +5,7 @@
 import os,random,struct,uuid,marlin
 
 # Relocate firmware from 0x08000000 to 0x08008800
-marlin.relocate_firmware("0x08008800")
+marlin.relocate_firmware("0x08010000")
 
 def calculate_crc(contents, seed):
     accumulating_xor_value = seed;
@@ -114,3 +114,24 @@ def encrypt(source, target, env):
     update.close()
 
 marlin.add_post_action(encrypt);
+
+from SCons.Script import DefaultEnvironment
+env = DefaultEnvironment()
+def output_target():
+    # tar_hex = "output/fmw_greeny_f103.hex"
+    tar_bin = "output/fmw_greeny_f103.bin"
+    # env.AddPostAction(
+    #     "$BUILD_DIR/${PROGNAME}.elf",
+    #     env.VerboseAction(" ".join([
+    #         "$OBJCOPY", "-O", "ihex", "-R", ".eeprom",
+    #         "$BUILD_DIR/${PROGNAME}.elf", tar_hex
+    #     ]), "Building %s" % tar_hex)
+    # )
+    env.AddPostAction(
+        "$BUILD_DIR/${PROGNAME}.elf",
+        env.VerboseAction(" ".join([
+            "$OBJCOPY", "-O", "binary", "-R", ".eeprom",
+            "$BUILD_DIR/${PROGNAME}.elf", tar_bin
+        ]), "Building %s" % tar_bin)
+    )
+output_target()

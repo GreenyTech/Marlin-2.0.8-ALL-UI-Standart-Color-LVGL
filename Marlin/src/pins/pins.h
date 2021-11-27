@@ -626,6 +626,10 @@
   #include "stm32f4/pins_ANET_ET4P.h"           // STM32F4                                env:Anet_ET4_OpenBLT
 #elif MB(FYSETC_CHEETAH_V20)
   #include "stm32f4/pins_FYSETC_CHEETAH_V20.h"  // STM32F4                                env:FYSETC_CHEETAH_V20
+#elif MB(tronxy_stm32f103)
+  #include "stm32f1/pins_tronxy_stm32f103.h"    // STM32F1                                env:tronxy_stm32f103
+#elif MB(TRONXY_F446)
+  #include "stm32f4/pins_TRONXY_F446.h"         //STM32F4                                 env:tronxy_stm32f446
 
 //
 // ARM Cortex M7

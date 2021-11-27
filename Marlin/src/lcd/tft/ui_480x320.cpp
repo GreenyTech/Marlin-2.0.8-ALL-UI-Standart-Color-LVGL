@@ -66,8 +66,8 @@ void MarlinUI::tft_idle() {
 
     tft.canvas(0, 0, TFT_WIDTH, TFT_HEIGHT);
     #if ENABLED(BOOT_MARLIN_LOGO_SMALL)
-      #define BOOT_LOGO_W 195   // MarlinLogo195x59x16
-      #define BOOT_LOGO_H  59
+      #define BOOT_LOGO_W 150   // Greeny+Logo150x113x16
+      #define BOOT_LOGO_H  113
       #define SITE_URL_Y (TFT_HEIGHT - 70)
       tft.set_background(COLOR_BACKGROUND);
     #else

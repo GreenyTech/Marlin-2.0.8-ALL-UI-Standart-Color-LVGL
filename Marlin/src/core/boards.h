@@ -344,6 +344,7 @@
 #define BOARD_BEAST                   4047  // STM32F103RET6 Libmaple-based controller
 #define BOARD_MINGDA_MPX_ARM_MINI     4048  // STM32F103ZET6 Mingda MD-16
 #define BOARD_GTM32_PRO_VD            4049  // STM32F103VET6 controller
+#define BOARD_tronxy_stm32f103        4050
 
 //
 // ARM Cortex-M4F
@@ -383,6 +384,7 @@
 #define BOARD_ANET_ET4                4224  // ANET ET4 V1.x (STM32F407VGT6)
 #define BOARD_ANET_ET4P               4225 // ANET ET4P V1.x (STM32F407VGT6)
 #define BOARD_FYSETC_CHEETAH_V20      4226  // FYSETC Cheetah V2.0
+#define BOARD_TRONXY_F446             4227
 
 //
 // ARM Cortex M7
