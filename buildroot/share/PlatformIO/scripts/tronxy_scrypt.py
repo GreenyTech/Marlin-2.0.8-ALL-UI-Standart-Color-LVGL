@@ -1,5 +1,6 @@
 
 import marlin
+import os
 from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 board = env.BoardConfig()
@@ -10,6 +11,7 @@ if 'offset' in board.get("build").keys():
 #arm-none-eabi-objcopy -O binary *.elf *.bin
 def output_target():
     # tar_hex = "output/fmw_greeny_f446.hex"
+    os.makedirs('output', exist_ok=True)
     tar_bin = "output/fmw_greeny_f446.bin"
     # env.AddPostAction(
     #     "$BUILD_DIR/${PROGNAME}.elf",
