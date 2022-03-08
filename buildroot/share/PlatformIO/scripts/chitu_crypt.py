@@ -119,6 +119,7 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 def output_target():
     # tar_hex = "output/fmw_greeny_f103.hex"
+    os.makedirs('output', exist_ok=True)
     tar_bin = "output/fmw_greeny_f103.bin"
     # env.AddPostAction(
     #     "$BUILD_DIR/${PROGNAME}.elf",
