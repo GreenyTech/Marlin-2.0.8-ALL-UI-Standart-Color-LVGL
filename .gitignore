@@ -121,6 +121,7 @@ tags
 .clang_complete
 .gcc-flags.json
 /lib/
+output
 
 # Secure Credentials
 Configuration_Secure.h
@@ -157,6 +158,9 @@ cmake-build-*
 .pydevproject
 .settings
 .classpath
+
+# Netbeans
+nbproject
 
 # Python
 __pycache__

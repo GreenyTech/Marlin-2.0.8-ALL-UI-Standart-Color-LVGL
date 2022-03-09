@@ -37,8 +37,8 @@
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
   // SoC Flash (framework-arduinoststm32-maple/STM32F1/libraries/EEPROM/EEPROM.h)
-  #define EEPROM_START_ADDRESS (0x8000000UL + (512 * 1024) - 2 * EEPROM_PAGE_SIZE)
   #define EEPROM_PAGE_SIZE     (0x800U)           // 2KB, but will use 2x more (4KB)
+  #define EEPROM_START_ADDRESS (0x8000000UL + (512 * 1024) - EEPROM_PAGE_SIZE)
   #define MARLIN_EEPROM_SIZE    EEPROM_PAGE_SIZE
 #else
   #define I2C_EEPROM //AT24C32
