@@ -1485,6 +1485,7 @@ void MarlinUI::update() {
   #endif
 
   void MarlinUI::abort_print() {
+    //TODO Gabriel -> axchsen deaktivieren
     #if ENABLED(SDSUPPORT)
       wait_for_heatup = wait_for_user = false;
       card.flag.abort_sd_printing = true;
