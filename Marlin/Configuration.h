@@ -1261,7 +1261,7 @@
 #define XY_PROBE_FEEDRATE (266*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (12*60)
+#define Z_PROBE_FEEDRATE_FAST (24*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 6)
@@ -1732,7 +1732,7 @@
  */
 
 #ifndef TFT_LVGL_UI
-#define LCD_BED_LEVELING
+  #define LCD_BED_LEVELING
 #endif
 
 #if ENABLED(LCD_BED_LEVELING)
