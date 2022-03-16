@@ -267,6 +267,7 @@ void menu_bed_leveling() {
     EDIT_ITEM(bool, MSG_BED_LEVELING, &show_state, _lcd_toggle_bed_leveling);
   }
 
+
   // Z Fade Height
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
     // Shadow for editing the fade height
@@ -274,27 +275,31 @@ void menu_bed_leveling() {
     EDIT_ITEM_FAST(float3, MSG_Z_FADE_HEIGHT, &editable.decimal, 0, 100, []{ set_z_fade_height(editable.decimal); });
   #endif
 
+
+
   //
   // Mesh Bed Leveling Z-Offset
   //
   #if ENABLED(MESH_BED_LEVELING)
     EDIT_ITEM(float43, MSG_BED_Z, &mbl.z_offset, -1, 1);
   #endif
-
+/**
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     SUBMENU(MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
   #elif HAS_BED_PROBE
     EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
   #endif
+  **/
 
   #if ENABLED(LEVEL_BED_CORNERS)
     SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
   #endif
-
+/**
   #if ENABLED(EEPROM_SETTINGS)
     ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
     ACTION_ITEM(MSG_STORE_EEPROM, ui.store_settings);
   #endif
+  **/
   END_MENU();
 }
 
