@@ -215,11 +215,13 @@ void menu_temperature() {
     #if HAS_FAN0
       _FAN_EDIT_ITEMS(0,FIRST_FAN_SPEED);
     #endif
+    /** //Removed because we only have 1 fan.
     #if HAS_FAN1
       FAN_EDIT_ITEMS(1);
     #elif SNFAN(1)
       singlenozzle_item(1);
     #endif
+
     #if HAS_FAN2
       FAN_EDIT_ITEMS(2);
     #elif SNFAN(2)
@@ -250,9 +252,11 @@ void menu_temperature() {
     #elif SNFAN(7)
       singlenozzle_item(7);
     #endif
+    **/
 
   #endif // HAS_FAN
 
+/** //removed -> we preheat over the GCODE.
   #if PREHEAT_COUNT
     //
     // Preheat for all Materials
@@ -266,6 +270,7 @@ void menu_temperature() {
       #endif
     }
   #endif
+  **/
 
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED
     //
