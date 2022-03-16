@@ -375,6 +375,7 @@ void MenuItem_confirm::select_screen(
   if (got_click || ui.should_draw()) {
     draw_select_screen(yes, no, ui_selection, pref, string, suff);
     if (got_click) {
+      ui.chirp(); //chirp on every selection click.
       selectFunc_t callFunc = ui_selection ? yesFunc : noFunc;
       if (callFunc) callFunc(); else ui.goto_previous_screen();
     }

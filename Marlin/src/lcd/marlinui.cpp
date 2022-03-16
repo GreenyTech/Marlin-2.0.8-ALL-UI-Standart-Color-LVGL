@@ -250,6 +250,7 @@ millis_t MarlinUI::next_button_update_ms; // = 0
   bool MarlinUI::lcd_clicked;
 
   bool MarlinUI::use_click() {
+    //chirp(); //gets updatet on every UI change
     const bool click = lcd_clicked;
     lcd_clicked = false;
     return click;
