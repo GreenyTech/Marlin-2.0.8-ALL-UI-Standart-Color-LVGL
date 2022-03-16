@@ -147,6 +147,7 @@ void Touch::idle() {
 }
 
 void Touch::touch(touch_control_t *control) {
+  //also a good idear to add ui.chierps()
   switch (control->type) {
     #if ENABLED(TOUCH_SCREEN_CALIBRATION)
       case CALIBRATE:
@@ -218,13 +219,13 @@ void Touch::touch(touch_control_t *control) {
       break;
     case FEEDRATE:
       ui.clear_lcd();
-      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 999);
+      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 250); //Gabriel speed Slider limit
       break;
     case FLOWRATE:
       ui.clear_lcd();
       MenuItemBase::itemIndex = control->data;
       #if EXTRUDERS == 1
-        MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
+        MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 250, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
       #else
         MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW_N), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
       #endif
