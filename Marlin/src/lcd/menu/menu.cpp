@@ -190,6 +190,7 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
       else if (screen == status_screen && currentScreen == menu_main && PENDING(millis(), doubleclick_expire_ms)) {
         if (BABYSTEP_ALLOWED())
           screen = TERN(BABYSTEP_ZPROBE_OFFSET, lcd_babystep_zoffset, lcd_babystep_z);
+          //TODO move actual x achse.
         else {
           #if ENABLED(MOVE_Z_WHEN_IDLE)
             ui.manual_move.menu_scale = MOVE_Z_IDLE_MULTIPLICATOR;
@@ -301,6 +302,10 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
   #include "../../feature/babystep.h"
 
   void lcd_babystep_zoffset() {
+    //TODO home first
+    //GCODES_ITEM(MSG_AUTO_HOME, G28_STR);
+    //queue.inject_P(G28_STR);
+
     if (ui.use_click()) return ui.goto_previous_screen_no_defer();
     ui.defer_status_screen();
     const bool do_probe = DISABLED(BABYSTEP_HOTEND_Z_OFFSET) || active_extruder == 0;

@@ -259,13 +259,18 @@ void menu_backlash();
     //
     // Autotemp, Min, Max, Fact
     //
+    /** //Values shouldn't be changed -> remove them
+     * 
     #if BOTH(AUTOTEMP, HAS_TEMP_HOTEND)
       EDIT_ITEM(bool, MSG_AUTOTEMP, &planner.autotemp_enabled);
       EDIT_ITEM(int3, MSG_MIN, &planner.autotemp_min, 0, thermalManager.hotend_max_target(0));
       EDIT_ITEM(int3, MSG_MAX, &planner.autotemp_max, 0, thermalManager.hotend_max_target(0));
       EDIT_ITEM(float42_52, MSG_FACTOR, &planner.autotemp_factor, 0, 10);
     #endif
+    
+    **/ 
 
+   /**
     //
     // PID-P, PID-I, PID-D, PID-C, PID Autotune
     // PID-P E1, PID-I E1, PID-D E1, PID-C E1, PID Autotune E1
@@ -274,8 +279,10 @@ void menu_backlash();
     // PID-P E4, PID-I E4, PID-D E4, PID-C E4, PID Autotune E4
     // PID-P E5, PID-I E5, PID-D E5, PID-C E5, PID Autotune E5
     //
-
+    
+    **/
     #if ENABLED(PID_EDIT_MENU)
+    
       #define _PID_EDIT_ITEMS_TMPL(N,T) \
         raw_Ki = unscalePID_i(T.pid.Ki); \
         raw_Kd = unscalePID_d(T.pid.Kd); \
@@ -289,6 +296,7 @@ void menu_backlash();
         EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_P_E, &PID_PARAM(Kp, N), 1, 9990); \
         EDIT_ITEM_FAST_N(float52sign, N, MSG_PID_I_E, &raw_Ki, 0.01f, 9990, []{ copy_and_scalePID_i(N); }); \
         EDIT_ITEM_FAST_N(float41sign, N, MSG_PID_D_E, &raw_Kd, 1, 9990, []{ copy_and_scalePID_d(N); })
+
 
       #if ENABLED(PID_EXTRUSION_SCALING)
         #define _PID_HOTEND_MENU_ITEMS(N) \
@@ -305,6 +313,7 @@ void menu_backlash();
       #else
         #define _HOTEND_PID_EDIT_MENU_ITEMS(N) _PID_HOTEND_MENU_ITEMS(N)
       #endif
+      
 
     #else
 
@@ -312,6 +321,7 @@ void menu_backlash();
 
     #endif
 
+/**
     #if ENABLED(PID_AUTOTUNE_MENU)
       #define HOTEND_PID_EDIT_MENU_ITEMS(N) \
         _HOTEND_PID_EDIT_MENU_ITEMS(N); \
@@ -319,16 +329,25 @@ void menu_backlash();
     #else
       #define HOTEND_PID_EDIT_MENU_ITEMS(N) _HOTEND_PID_EDIT_MENU_ITEMS(N);
     #endif
-
-    HOTEND_PID_EDIT_MENU_ITEMS(0);
+**/
+    
+    //HOTEND_PID_EDIT_MENU_ITEMS(0);
+    //EDIT_ITEM_FAST_N(int3, N, MSG_PID_AUTOTUNE_E, &autotune_temp[N], 150, thermalManager.hotend_max_target(N), []{ _lcd_autotune(heater_id_t(MenuItemBase::itemIndex)); });
+    EDIT_ITEM_FAST_N(int3, 0, MSG_PID_AUTOTUNE_E, &autotune_temp[0], 150, thermalManager.hotend_max_target(0), []{ _lcd_autotune(heater_id_t(MenuItemBase::itemIndex)); });
+    //EDIT_ITEM_FAST_N(int3, H_BED, MSG_PID_AUTOTUNE_E, &autotune_temp_bed, PREHEAT_1_TEMP_BED, BED_MAX_TARGET, []{ _lcd_autotune(H_BED); });
+    
     #if ENABLED(PID_PARAMS_PER_HOTEND)
       REPEAT_S(1, HOTENDS, HOTEND_PID_EDIT_MENU_ITEMS)
     #endif
+    /****/
 
     #if ENABLED(PIDTEMPBED)
+      /**       
       #if ENABLED(PID_EDIT_MENU)
         _PID_EDIT_ITEMS_TMPL(H_BED, thermalManager.temp_bed);
       #endif
+      **/
+
       #if ENABLED(PID_AUTOTUNE_MENU)
         EDIT_ITEM_FAST_N(int3, H_BED, MSG_PID_AUTOTUNE_E, &autotune_temp_bed, PREHEAT_1_TEMP_BED, BED_MAX_TARGET, []{ _lcd_autotune(H_BED); });
       #endif
@@ -548,7 +567,7 @@ void menu_advanced_settings() {
   BACK_ITEM(MSG_CONFIGURATION);
 
   #if DISABLED(SLIM_LCD_MENUS)
-
+    
     #if HAS_M206_COMMAND
       //
       // Set Home Offsets

@@ -30,6 +30,8 @@
 
 #include "menu_item.h"
 
+//#include "menu_advanced.cpp" // warning
+
 #if HAS_FILAMENT_SENSOR
   #include "../../feature/runout.h"
 #endif
@@ -51,6 +53,7 @@
 
 #define HAS_DEBUG_MENU ENABLED(LCD_PROGRESS_BAR_TEST)
 
+void menu_advanced_temperature();//from menu_advanced settings a submenu..
 void menu_advanced_settings();
 #if EITHER(DELTA_CALIBRATION_MENU, DELTA_AUTO_CALIBRATION)
   void menu_delta_calibrate();
@@ -504,8 +507,19 @@ void menu_configuration() {
     }
   #endif
 
-  SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
+  //SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard); 
+    #if ENABLED(PROBE_OFFSET_WIZARD)
+        SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);//added from the menu advanced settings
+      #endif
+  //SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
+  SUBMENU(MSG_TEMPERATURE, menu_advanced_temperature);//added from the menu advanced settings
+  
+  //menu_advanced_temperature();
 
+
+
+
+/** //remove unnesecary menues
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     SUBMENU(MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
   #elif HAS_BED_PROBE
@@ -572,6 +586,7 @@ void menu_configuration() {
       SUBMENU_N_S(m, ui.get_preheat_label(m), MSG_PREHEAT_M_SETTINGS, _menu_configuration_preheat_settings);
   #endif
 
+**/
   #if ENABLED(SOUND_MENU_ITEM)
     EDIT_ITEM(bool, MSG_SOUND, &ui.buzzer_enabled, []{ ui.chirp(); });
   #endif

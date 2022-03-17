@@ -359,8 +359,9 @@ void menu_motion() {
 
   #elif ENABLED(LCD_BED_LEVELING)
 
-    if (!g29_in_progress)
-      SUBMENU(MSG_BED_LEVELING, menu_bed_leveling);
+    if (!g29_in_progress) //checkout if menu: Bed Leveling  is still there 
+      SUBMENU(MSG_BED_LEVELING, menu_bed_leveling); // TODO return to main Menu / status screen
+      //loks like menuBedLevelin
 
   #elif HAS_LEVELING && DISABLED(SLIM_LCD_MENUS)
 
@@ -384,14 +385,15 @@ void menu_motion() {
     SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
   #endif
 
+/** //useful tool to check if the sensor is working. Gabriels Deviation is 0.002964
   #if ENABLED(Z_MIN_PROBE_REPEATABILITY_TEST)
     GCODES_ITEM(MSG_M48_TEST, PSTR("G28O\nM48 P10"));
   #endif
-
+**/
   //
   // Disable Steppers
   //
-  GCODES_ITEM(MSG_DISABLE_STEPPERS, PSTR("M84"));
+  //GCODES_ITEM(MSG_DISABLE_STEPPERS, PSTR("M84")); //shouldnt be required 
 
   END_MENU();
 }

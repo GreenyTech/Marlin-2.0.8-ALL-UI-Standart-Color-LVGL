@@ -363,7 +363,7 @@ void menu_main() {
       if (thermalManager.targetHotEnoughToExtrude(active_extruder))
         GCODES_ITEM(MSG_FILAMENTCHANGE, PSTR("M600 B0"));
       else
-        SUBMENU(MSG_FILAMENTCHANGE, []{ _menu_temp_filament_op(PAUSE_MODE_CHANGE_FILAMENT, 0); });
+        //SUBMENU(MSG_FILAMENTCHANGE, []{ _menu_temp_filament_op(PAUSE_MODE_CHANGE_FILAMENT, 0); }); // We only print PLA -> change to MSG_Filamentchange PLA
     #else
       SUBMENU(MSG_FILAMENTCHANGE, menu_change_filament);
     #endif
@@ -405,6 +405,7 @@ void menu_main() {
           #if PIN_EXISTS(SD_DETECT)
             GCODES_ITEM(MSG_CHANGE_MEDIA, PSTR("M21"));
           #else
+          /** Disable attach micro sd card Release Media attach media**/
             GCODES_ITEM(MSG_RELEASE_MEDIA, PSTR("M22"));
           #endif
           SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);
@@ -417,7 +418,10 @@ void menu_main() {
           GCODES_ITEM(MSG_ATTACH_MEDIA, PSTR("M21"));
         #endif
       }
+
+
     }
+
 
   #endif // HAS_ENCODER_WHEEL && SDSUPPORT
 
