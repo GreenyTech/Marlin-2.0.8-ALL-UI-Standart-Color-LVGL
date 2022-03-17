@@ -321,12 +321,17 @@ void menu_temperature() {
   #endif
 
 
+/*
 
+            //MSG_FILAMENTCHANGE
       #if PREHEAT_COUNT
           LOOP_L_N(m, PREHEAT_COUNT-1) //remove the ABS Preheat
             ACTION_ITEM_N_S(m, ui.get_preheat_label(m), MSG_PREHEAT_M, _change_filament_with_preset);
-        #endif
 
+        #endif
+        */
+//MSG_FILAMENTCHANGE
+  ACTION_ITEM_N_S(0, GET_TEXT(MSG_FILAMENTCHANGE), MSG_PREHEAT_M, _change_filament_with_preset);
 
   END_MENU();
 }
