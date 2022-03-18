@@ -273,7 +273,7 @@ void menu_main() {
         ACTION_ITEM(MSG_END_LOOPS, repeat.cancel);
     #endif
 
-    SUBMENU(MSG_TUNE, menu_tune);
+    //SUBMENU(MSG_TUNE, menu_tune);
 
     #if ENABLED(CANCEL_OBJECTS) && DISABLED(SLIM_LCD_MENUS)
       SUBMENU(MSG_CANCEL_OBJECT, []{ editable.int8 = -1; ui.goto_screen(menu_cancelobject); });
