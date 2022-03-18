@@ -216,6 +216,7 @@ void menu_info_board() {
 
   START_SCREEN();
   STATIC_ITEM_P(PSTR(BOARD_INFO_NAME), SS_DEFAULT|SS_INVERT);      // MyPrinterController
+  
   #ifdef BOARD_WEBSITE_URL
     STATIC_ITEM_P(PSTR(BOARD_WEBSITE_URL), SS_LEFT);               // www.my3dprinter.com
   #endif

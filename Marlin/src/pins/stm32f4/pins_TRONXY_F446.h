@@ -24,7 +24,7 @@
 /**
  * 2017 Victor Perez Marlin for stm32f1 test
  */
-#define BOARD_INFO_NAME      "TRONXY_F446"
+#define BOARD_INFO_NAME      "GT Powerboard 446" //TRONXY_F446
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
 //

@@ -1162,7 +1162,7 @@
   #endif
 
   // Include a page of printer information in the LCD Main Menu
-  #define LCD_INFO_MENU 0 //disable About Printer //might be needet
+  #define LCD_INFO_MENU 1 //disable About Printer //might be needet
   #if ENABLED(LCD_INFO_MENU)
     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
   #endif
