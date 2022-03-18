@@ -17,6 +17,8 @@
  *
  */
 
+#include "../marlinui.h"
+
 #include "../../inc/MarlinConfig.h"
 
 #if ENABLED(TOUCH_SCREEN_CALIBRATION)
@@ -85,11 +87,15 @@ void TouchCalibration::validate_calibration() {
     TERN_(TOUCH_CALIBRATION_AUTO_SAVE, settings.save());
   }
 }
-
+static millis_t next_button_update_ms = 0;
 bool TouchCalibration::handleTouch(uint16_t x, uint16_t y) {
-  static millis_t next_button_update_ms = 0;
+  ui.chirp();
   const millis_t now = millis();
+  if(next_button_update_ms==0){ //init value;
+    next_button_update_ms = now + BUTTON_DELAY_MENU;
+  }
   if (PENDING(now, next_button_update_ms)) return false;
+  
   next_button_update_ms = now + BUTTON_DELAY_MENU;
 
   if (calibration_state < CALIBRATION_SUCCESS) {
@@ -102,7 +108,9 @@ bool TouchCalibration::handleTouch(uint16_t x, uint16_t y) {
     case CALIBRATION_TOP_LEFT: calibration_state = CALIBRATION_BOTTOM_LEFT; break;
     case CALIBRATION_BOTTOM_LEFT: calibration_state = CALIBRATION_TOP_RIGHT; break;
     case CALIBRATION_TOP_RIGHT: calibration_state = CALIBRATION_BOTTOM_RIGHT; break;
-    case CALIBRATION_BOTTOM_RIGHT: validate_calibration(); break;
+    case CALIBRATION_BOTTOM_RIGHT: validate_calibration();
+                                  next_button_update_ms =0;
+                                  break;
     default: break;
   }
 
