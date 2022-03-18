@@ -1289,7 +1289,7 @@
   //#define BROWSE_MEDIA_ON_INSERT          // Open the file browser when media is inserted
 
   //TODO Gabriel nur Z nach oben.
-  #define EVENT_GCODE_SD_ABORT "G1 Z10"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
+  #define EVENT_GCODE_SD_ABORT "G1 Z60"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
                                             //G28XY home X and Y achis
                                             //G1 Z10 //moves the z axes 10 cm up
 
@@ -2283,7 +2283,7 @@
   #define FILAMENT_CHANGE_ALERT_BEEPS         10  // Number of alert beeps to play when a response is needed.
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
-  //#define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
+  #define PARK_HEAD_ON_PAUSE                    // Park the nozzle during pause and filament change.
   //#define HOME_BEFORE_FILAMENT_CHANGE           // If needed, home before parking for filament change
 
   //#define FILAMENT_LOAD_UNLOAD_GCODES           // Add M701/M702 Load/Unload G-codes, plus Load/Unload in the LCD Prepare menu.
