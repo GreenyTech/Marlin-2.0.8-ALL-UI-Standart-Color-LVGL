@@ -331,7 +331,7 @@ void menu_temperature() {
         #endif
         */
 //MSG_FILAMENTCHANGE
-  ACTION_ITEM_N_S(0, GET_TEXT(MSG_FILAMENTCHANGE), MSG_PREHEAT_M, _change_filament_with_preset);
+  ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
 
   END_MENU();
 }
