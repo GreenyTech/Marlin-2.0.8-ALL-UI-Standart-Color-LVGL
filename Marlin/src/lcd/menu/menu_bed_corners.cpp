@@ -71,7 +71,7 @@ static_assert(LEVEL_CORNERS_Z_HOP >= 0, "LEVEL_CORNERS_Z_HOP must be >= 0. Pleas
 #endif
 
 #ifndef LEVEL_CORNERS_LEVELING_ORDER
-  #define LEVEL_CORNERS_LEVELING_ORDER { LF, RF, LB, RB } // Default
+  #define LEVEL_CORNERS_LEVELING_ORDER { LF, RF, LB, RB }; // Default
   //#define LEVEL_CORNERS_LEVELING_ORDER { LF, LB, RF  }  // 3 hard-coded points
   //#define LEVEL_CORNERS_LEVELING_ORDER { LF, RF }       // 3-Point tramming - Rear
   //#define LEVEL_CORNERS_LEVELING_ORDER { LF, LB }       // 3-Point tramming - Right
@@ -83,15 +83,18 @@ static_assert(LEVEL_CORNERS_Z_HOP >= 0, "LEVEL_CORNERS_Z_HOP must be >= 0. Pleas
 #define RF 2
 #define RB 3
 #define LB 4
+#define CF 5
+#define CB 6
+#define CC 7
 constexpr int lco[] = LEVEL_CORNERS_LEVELING_ORDER;
 constexpr bool level_corners_3_points = COUNT(lco) == 2;
-static_assert(level_corners_3_points || COUNT(lco) == 4, "LEVEL_CORNERS_LEVELING_ORDER must have exactly 2 or 4 corners.");
+//static_assert(level_corners_3_points || COUNT(lco) == 4, "LEVEL_CORNERS_LEVELING_ORDER must have exactly 2 or 4 corners.");
 
 constexpr int lcodiff = abs(lco[0] - lco[1]);
-static_assert(COUNT(lco) == 4 || lcodiff == 1 || lcodiff == 3, "The first two LEVEL_CORNERS_LEVELING_ORDER corners must be on the same edge.");
+//static_assert(COUNT(lco) == 4 || lcodiff == 1 || lcodiff == 3, "The first two LEVEL_CORNERS_LEVELING_ORDER corners must be on the same edge.");
 
 constexpr int nr_edge_points = level_corners_3_points ? 3 : 4;
-constexpr int available_points = nr_edge_points + ENABLED(LEVEL_CENTER_TOO);
+constexpr int available_points = sizeof(lco)/sizeof(lco[0]);//nr_edge_points + ENABLED(LEVEL_CENTER_TOO)+2;
 constexpr int center_index = TERN(LEVEL_CENTER_TOO, available_points - 1, -1);
 constexpr float inset_lfrb[4] = LEVEL_CORNERS_INSET_LFRB;
 constexpr xy_pos_t lf { (X_MIN_BED) + inset_lfrb[0], (Y_MIN_BED) + inset_lfrb[1] },
@@ -144,11 +147,15 @@ static void _lcd_level_bed_corners_get_next_position() {
     }
     else {
       current_position = lf;                       // Left front
-      switch (lco[bed_corner]) {
-        case RF: current_position.x = rb.x; break; // Right front
-        case RB: current_position   = rb;   break; // Right rear
-        case LB: current_position.y = rb.y; break; // Left rear
-      }
+        switch (lco[bed_corner]) {
+          case CF: current_position.x = X_CENTER; break; //Middle Front
+          case RF: current_position.x = rb.x; break; // Right Front
+          case RB: current_position   = rb;   break; // Right Back
+          case CB: current_position.x = X_CENTER;  //middle Back
+                   current_position.y = rb.y; break;
+          case LB: current_position.y = rb.y; break; // Left Back
+          case CC: current_position.set(X_CENTER, Y_CENTER); break;
+        }
     }
   }
 }
