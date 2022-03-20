@@ -131,8 +131,9 @@ namespace Language_en {
   PROGMEM Language_Str MSG_RETRACT                         = _UxGT("Retract");
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Move Axis");
   PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Bed Leveling");
-  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Level Bed");
+  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Calibrate Bed");
   PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Level Corners");
+  PROGMEM Language_Str MSG_LEVEL_CORNERS_CENTER            = _UxGT("Level Middle Screws");
   PROGMEM Language_Str MSG_LEVEL_CORNERS_RAISE             = _UxGT("Raise Bed Until Probe Triggered");
   PROGMEM Language_Str MSG_LEVEL_CORNERS_IN_RANGE          = _UxGT("All Corners Within Tolerance. Level Bed");
   PROGMEM Language_Str MSG_LEVEL_CORNERS_GOOD_POINTS       = _UxGT("Good Points: ");

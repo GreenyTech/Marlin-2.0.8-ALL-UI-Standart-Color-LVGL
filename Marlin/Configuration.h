@@ -1774,7 +1774,9 @@
    *  LF --------- RF   LF --------- RF    LF --------- RF   LF --------- RF
    */
   //#define LEVEL_CORNERS_LEVELING_ORDER { LF, RF, RB, LB }
-  #define LEVEL_CORNERS_LEVELING_ORDER { LF,  RF, RB, LB, CB, CC,CF }
+  #define LEVEL_CORNERS_LEVELING_ORDER {LF,  RF, RB, LB};
+  
+  #define LEVEL_CENTERS_LEVELING_ORDER {CB, CF}; //CC, 
 #endif
 
 /**

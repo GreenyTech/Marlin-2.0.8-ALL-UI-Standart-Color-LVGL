@@ -294,6 +294,10 @@ void menu_bed_leveling() {
   #if ENABLED(LEVEL_BED_CORNERS)
     SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
   #endif
+
+  #if ENABLED(LEVEL_BED_CORNERS)
+    SUBMENU(MSG_LEVEL_CORNERS_CENTER, _lcd_level_bed_center);
+  #endif
 /**
   #if ENABLED(EEPROM_SETTINGS)
     ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
