@@ -27,7 +27,7 @@
  * 2017 Victor Perez Marlin for stm32f1 test
  */
 
-#define BOARD_INFO_NAME      "Chitu3D"
+#define BOARD_INFO_NAME      "GT Powerboard F103 V6"
 #define DEFAULT_MACHINE_NAME "STM32F103ZET6"
 
 #define BOARD_NO_NATIVE_USB
