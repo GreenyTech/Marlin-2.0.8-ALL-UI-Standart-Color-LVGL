@@ -511,14 +511,17 @@ void menu_configuration() {
     #if ENABLED(PROBE_OFFSET_WIZARD)
         SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);//added from the menu advanced settings
       #endif
+
+  
+    #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+    SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
+    #endif
+
   //SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
   SUBMENU(MSG_TEMPERATURE, menu_advanced_temperature);//added from the menu advanced settings
   
   //menu_advanced_temperature();
 
-#if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-  SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
-  #endif
 
     #if HAS_FILAMENT_SENSOR
     EDIT_ITEM(bool, MSG_RUNOUT_SENSOR, &runout.enabled, runout.reset);
