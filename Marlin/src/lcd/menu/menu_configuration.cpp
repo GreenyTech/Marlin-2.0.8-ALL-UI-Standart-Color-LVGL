@@ -516,7 +516,17 @@ void menu_configuration() {
   
   //menu_advanced_temperature();
 
+#if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+  SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
+  #endif
 
+    #if HAS_FILAMENT_SENSOR
+    EDIT_ITEM(bool, MSG_RUNOUT_SENSOR, &runout.enabled, runout.reset);
+  #endif
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
+    EDIT_ITEM(bool, MSG_OUTAGE_RECOVERY, &recovery.enabled, recovery.changed);
+  #endif
 
 
 /** //remove unnesecary menues
