@@ -261,11 +261,13 @@ void menu_bed_leveling() {
     if (is_valid) SUBMENU(MSG_EDIT_MESH, menu_edit_mesh);
   #endif
 
+/**
   // Homed and leveling is valid? Then leveling can be toggled.
   if (is_homed && is_valid) {
     bool show_state = planner.leveling_active;
     EDIT_ITEM(bool, MSG_BED_LEVELING, &show_state, _lcd_toggle_bed_leveling);
   }
+  **/
 
 
   // Z Fade Height

@@ -369,10 +369,12 @@ void menu_motion() {
       GCODES_ITEM(MSG_LEVEL_BED, PSTR("G29N"));
     #endif
 
+/*
     if (all_axes_homed() && leveling_is_valid()) {
       bool show_state = planner.leveling_active;
       EDIT_ITEM(bool, MSG_BED_LEVELING, &show_state, _lcd_toggle_bed_leveling);
     }
+    */
 
     #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
       editable.decimal = planner.z_fade_height;
