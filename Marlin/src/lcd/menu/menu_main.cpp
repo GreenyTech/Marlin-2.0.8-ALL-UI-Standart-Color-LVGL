@@ -384,7 +384,6 @@ void menu_main() {
   }
   
   
-  ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
 
   #if HAS_CUTTER
     SUBMENU(MSG_CUTTER(MENU), STICKY_SCREEN(menu_spindle_laser));
@@ -434,8 +433,11 @@ void menu_main() {
   #endif
   */
 
+ 
+  ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
+
   #if ENABLED(LCD_INFO_MENU)
-    SUBMENU(MSG_INFO_MENU, menu_info);
+    SUBMENU(MSG_INFO_MENU, menu_info); 
   #endif
 
   #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_MENU)
