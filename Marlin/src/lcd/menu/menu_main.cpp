@@ -138,6 +138,33 @@ static void _change_filament_with_preset() {
 
 
 
+//printer infos:
+void menu_info_printer() {
+    if (ui.use_click()) return ui.go_back();
+    START_SCREEN();
+    //STATIC_ITEM(MSG_MARLIN, SS_DEFAULT|SS_INVERT);              // Marlin
+    
+    STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter
+    STATIC_ITEM_P(PSTR(BOARD_INFO_NAME), SS_DEFAULT|SS_INVERT);      // MyPrinterController
+    STATIC_ITEM_P(PSTR(SHORT_BUILD_VERSION));                   // x.x.x-Branch
+    STATIC_ITEM_P(PSTR(STRING_DISTRIBUTION_DATE));              // YYYY-MM-DD HH:MM
+    STATIC_ITEM_P(PSTR(WEBSITE_URL));                           // www.my3dprinter.com
+    /**
+    PSTRING_ITEM(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2
+    #if HAS_LEVELING
+      STATIC_ITEM(
+        TERN_(AUTO_BED_LEVELING_3POINT, MSG_3POINT_LEVELING)      // 3-Point Leveling
+        TERN_(AUTO_BED_LEVELING_LINEAR, MSG_LINEAR_LEVELING)      // Linear Leveling
+        TERN_(AUTO_BED_LEVELING_BILINEAR, MSG_BILINEAR_LEVELING)  // Bi-linear Leveling
+        TERN_(AUTO_BED_LEVELING_UBL, MSG_UBL_LEVELING)            // Unified Bed Leveling
+        TERN_(MESH_BED_LEVELING, MSG_MESH_LEVELING)               // Mesh Leveling
+      );
+    #endif
+
+    **/
+    END_SCREEN();
+  }
+
 
 
 
@@ -436,10 +463,14 @@ void menu_main() {
  
   ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
 
+  SUBMENU(MSG_INFO_PRINTER_MENU, menu_info_printer);           // Printer Info >
+    
+/**
   #if ENABLED(LCD_INFO_MENU)
     SUBMENU(MSG_INFO_MENU, menu_info); 
   #endif
 
+**/
   #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_MENU)
     SUBMENU(MSG_LEDS, menu_led);
   #endif
