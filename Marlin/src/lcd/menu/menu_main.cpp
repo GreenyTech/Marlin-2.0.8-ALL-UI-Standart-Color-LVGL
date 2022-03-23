@@ -473,7 +473,7 @@ void menu_main() {
           /** Disable attach micro sd card Release Media attach media**/
             GCODES_ITEM(MSG_RELEASE_MEDIA, PSTR("M22"));
           #endif
-          SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);
+          //SUBMENU(MSG_MEDIA_MENU, MEDIA_MENU_GATEWAY);
         }
       }
       else {
