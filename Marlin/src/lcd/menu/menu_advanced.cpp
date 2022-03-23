@@ -331,9 +331,12 @@ void menu_backlash();
     #endif
 **/
     
+
     //HOTEND_PID_EDIT_MENU_ITEMS(0);
     //EDIT_ITEM_FAST_N(int3, N, MSG_PID_AUTOTUNE_E, &autotune_temp[N], 150, thermalManager.hotend_max_target(N), []{ _lcd_autotune(heater_id_t(MenuItemBase::itemIndex)); });
-    EDIT_ITEM_FAST_N(int3, 0, MSG_PID_AUTOTUNE_E, &autotune_temp[0], 150, thermalManager.hotend_max_target(0), []{ _lcd_autotune(heater_id_t(MenuItemBase::itemIndex)); });
+    
+    //thermalManager.hotend_max_target(0) //TODO auf 230 stellen
+    EDIT_ITEM_FAST_N(int3, 0, MSG_PID_AUTOTUNE_NOZZLE, &autotune_temp[0], 150, 230, []{ _lcd_autotune(heater_id_t(MenuItemBase::itemIndex)); });
     //EDIT_ITEM_FAST_N(int3, H_BED, MSG_PID_AUTOTUNE_E, &autotune_temp_bed, PREHEAT_1_TEMP_BED, BED_MAX_TARGET, []{ _lcd_autotune(H_BED); });
     
     #if ENABLED(PID_PARAMS_PER_HOTEND)
