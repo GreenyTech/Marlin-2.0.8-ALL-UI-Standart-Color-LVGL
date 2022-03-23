@@ -184,12 +184,14 @@ void Temperature::lcd_preheat(const uint8_t e, const int8_t indh, const int8_t i
 #endif // HAS_TEMP_HOTEND || HAS_HEATED_BED
 
 void menu_temperature() {
+  /**
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED
     bool has_heat = false;
     #if HAS_TEMP_HOTEND
       HOTEND_LOOP() if (thermalManager.degTargetHotend(HOTEND_INDEX)) { has_heat = true; break; }
     #endif
   #endif
+  **/
 
   #if HAS_COOLER
     if (thermalManager.temp_cooler.target == 0) thermalManager.temp_cooler.target = COOLER_DEFAULT_TEMP;
@@ -311,7 +313,7 @@ void menu_temperature() {
     }
   #endif
   **/
-
+/*
   #if HAS_TEMP_HOTEND || HAS_HEATED_BED
     //
     // Cooldown
@@ -319,7 +321,7 @@ void menu_temperature() {
     if (TERN0(HAS_HEATED_BED, thermalManager.degTargetBed())) has_heat = true;
     if (has_heat) ACTION_ITEM(MSG_COOLDOWN, lcd_cooldown);
   #endif
-
+**/
 
 /*
 
