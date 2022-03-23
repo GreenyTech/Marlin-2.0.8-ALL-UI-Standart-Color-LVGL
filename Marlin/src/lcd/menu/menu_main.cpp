@@ -101,6 +101,63 @@ void menu_configuration();
   void menu_language();
 #endif
 
+
+
+
+
+
+
+///preheat pla / Chagne filament
+static PauseMode _change_filament_mode; // = PAUSE_MODE_PAUSE_PRINT
+static int8_t _change_filament_extruder; // = 0
+
+inline PGM_P _change_filament_command() {
+  switch (_change_filament_mode) {
+    case PAUSE_MODE_LOAD_FILAMENT:    return PSTR("M701 T%d");
+    case PAUSE_MODE_UNLOAD_FILAMENT:  return _change_filament_extruder >= 0
+                                           ? PSTR("M702 T%d") : PSTR("M702 ;%d");
+    case PAUSE_MODE_CHANGE_FILAMENT:
+    case PAUSE_MODE_PAUSE_PRINT:
+    default: break;
+  }
+  return PSTR("M600 B0 T%d");
+}
+
+// Initiate Filament Load/Unload/Change at the specified temperature
+static void _change_filament_with_temp(const uint16_t celsius) {
+  char cmd[11];
+  sprintf_P(cmd, _change_filament_command(), _change_filament_extruder);
+  thermalManager.setTargetHotend(celsius, _change_filament_extruder);
+  queue.inject(cmd);
+}
+
+static void _change_filament_with_preset() {
+  _change_filament_with_temp(ui.material_preset[MenuItemBase::itemIndex].hotend_temp);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #if ENABLED(CUSTOM_MENU_MAIN)
 
   void _lcd_custom_menu_main_gcode(PGM_P const cmd) {
@@ -363,7 +420,10 @@ void menu_main() {
       if (thermalManager.targetHotEnoughToExtrude(active_extruder))
         GCODES_ITEM(MSG_FILAMENTCHANGE, PSTR("M600 B0"));
       else
+      //todo
         //SUBMENU(MSG_FILAMENTCHANGE, []{ _menu_temp_filament_op(PAUSE_MODE_CHANGE_FILAMENT, 0); }); // We only print PLA -> change to MSG_Filamentchange PLA
+        
+        ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
     #else
       SUBMENU(MSG_FILAMENTCHANGE, menu_change_filament);
     #endif
