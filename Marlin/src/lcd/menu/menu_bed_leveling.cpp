@@ -237,8 +237,8 @@
  *    Save Settings       (Req: EEPROM_SETTINGS)
  */
 void menu_bed_leveling() {
-  const bool is_homed = all_axes_trusted(),
-             is_valid = leveling_is_valid();
+  const bool is_homed = all_axes_trusted();
+  //const bool is_valid = leveling_is_valid();
 
   START_MENU();
   BACK_ITEM(MSG_MOTION);
