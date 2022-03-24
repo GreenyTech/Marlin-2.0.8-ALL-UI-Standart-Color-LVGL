@@ -40,11 +40,11 @@ namespace Language_de {
   PROGMEM Language_Str MSG_NO                              = _UxGT("NEIN");
   PROGMEM Language_Str MSG_BACK                            = _UxGT("Zurück");
   PROGMEM Language_Str MSG_MEDIA_ABORTING                  = _UxGT("Abbruch...");
-  PROGMEM Language_Str MSG_MEDIA_INSERTED                  = _UxGT("Medium erkannt");
-  PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("Medium entfernt");
-  PROGMEM Language_Str MSG_MEDIA_WAITING                   = _UxGT("Warten auf Medium");
+  PROGMEM Language_Str MSG_MEDIA_INSERTED                  = _UxGT("SD Karte erkannt");
+  PROGMEM Language_Str MSG_MEDIA_REMOVED                   = _UxGT("SD Karte entfernt");
+  PROGMEM Language_Str MSG_MEDIA_WAITING                   = _UxGT("Warten auf SD Karte");
   PROGMEM Language_Str MSG_SD_INIT_FAIL                    = _UxGT("SD Init fehlgesch.");
-  PROGMEM Language_Str MSG_MEDIA_READ_ERROR                = _UxGT("Medium Lesefehler");
+  PROGMEM Language_Str MSG_MEDIA_READ_ERROR                = _UxGT("SD Karte Lesefehler");
   PROGMEM Language_Str MSG_MEDIA_USB_REMOVED               = _UxGT("USB Gerät entfernt");
   PROGMEM Language_Str MSG_MEDIA_USB_FAILED                = _UxGT("USB Start fehlge.");
   PROGMEM Language_Str MSG_KILL_SUBCALL_OVERFLOW           = _UxGT("Subcall überschritten");
@@ -57,7 +57,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_DISABLE_STEPPERS                = _UxGT("Motoren deaktivieren"); // M84 :: Max length 19 characters
   PROGMEM Language_Str MSG_DEBUG_MENU                      = _UxGT("Debug-Menü");
   PROGMEM Language_Str MSG_PROGRESS_BAR_TEST               = _UxGT("Statusbalken-Test");
-  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Auto Home");
+  PROGMEM Language_Str MSG_AUTO_HOME                       = _UxGT("Home Position");
   PROGMEM Language_Str MSG_AUTO_HOME_X                     = _UxGT("Home X");
   PROGMEM Language_Str MSG_AUTO_HOME_Y                     = _UxGT("Home Y");
   PROGMEM Language_Str MSG_AUTO_HOME_Z                     = _UxGT("Home Z");
@@ -66,7 +66,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("XYZ homen");
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klick zum Starten");
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Nächste Koordinate");
-  PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Nivellieren fertig!");
+  PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Kalibrieren fertig!");
   PROGMEM Language_Str MSG_Z_FADE_HEIGHT                   = _UxGT("Ausblendhöhe");
   PROGMEM Language_Str MSG_SET_HOME_OFFSETS                = _UxGT("Setze Homeversatz");
   PROGMEM Language_Str MSG_HOME_OFFSETS_APPLIED            = _UxGT("Homeversatz aktiv");
@@ -100,10 +100,10 @@ namespace Language_de {
   PROGMEM Language_Str MSG_SWITCH_PS_OFF                   = _UxGT("Netzteil aus");
   PROGMEM Language_Str MSG_EXTRUDE                         = _UxGT("Extrudieren");
   PROGMEM Language_Str MSG_RETRACT                         = _UxGT("Einzug");
-  PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Achsen bewegen");
-  PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Bett-Nivellierung");
-  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Bett nivellieren");
-  PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Ecken nivellieren");
+  PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Achsen Bewegen");
+  PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Bett Kalibrieren");
+  PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Bett automatisch Vermessen");
+  PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Referenz: Ecken");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Nächste Ecke");
   PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Netz Editor");
   PROGMEM Language_Str MSG_EDIT_MESH                       = _UxGT("Netz bearbeiten");
@@ -322,7 +322,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_ERR_EEPROM_INDEX                = _UxGT("EEPROM Index Fehler");
   PROGMEM Language_Str MSG_ERR_EEPROM_VERSION              = _UxGT("EEPROM Version Fehler");
   PROGMEM Language_Str MSG_SETTINGS_STORED                 = _UxGT("Einstell. gespei.");
-  PROGMEM Language_Str MSG_MEDIA_UPDATE                    = _UxGT("FW Update vom Medium");
+  PROGMEM Language_Str MSG_MEDIA_UPDATE                    = _UxGT("FW Update von SD Karte");
   PROGMEM Language_Str MSG_RESET_PRINTER                   = _UxGT("Drucker neustarten");
   PROGMEM Language_Str MSG_REFRESH                         = LCD_STR_REFRESH  _UxGT("Aktualisieren");
   PROGMEM Language_Str MSG_INFO_SCREEN                     = _UxGT("Info");
@@ -350,9 +350,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_PRINTING_OBJECT                 = _UxGT("Objekt drucken");
   PROGMEM Language_Str MSG_CANCEL_OBJECT                   = _UxGT("Objekt abbrechen");
   PROGMEM Language_Str MSG_CANCEL_OBJECT_N                 = _UxGT("Objekt abbrechen =");
-  PROGMEM Language_Str MSG_OUTAGE_RECOVERY                 = _UxGT("Wiederh. n. Stroma.");
-  PROGMEM Language_Str MSG_MEDIA_MENU                      = _UxGT("Druck vom Medium");
-  PROGMEM Language_Str MSG_NO_MEDIA                        = _UxGT("Kein Medium");
+  PROGMEM Language_Str MSG_OUTAGE_RECOVERY                 = _UxGT("Stromausfall Routine");
+  PROGMEM Language_Str MSG_MEDIA_MENU                      = _UxGT("Druck von SD Karte");
+  PROGMEM Language_Str MSG_NO_MEDIA                        = _UxGT("SD Karte Fehlt");
   PROGMEM Language_Str MSG_DWELL                           = _UxGT("Warten...");
   PROGMEM Language_Str MSG_USERWAIT                        = _UxGT("Klick zum Fortsetzen");
   PROGMEM Language_Str MSG_PRINT_PAUSED                    = _UxGT("Druck pausiert...");
@@ -388,16 +388,16 @@ namespace Language_de {
   PROGMEM Language_Str MSG_TOOL_MIGRATION_AUTO             = _UxGT("Auto-Migration");
   PROGMEM Language_Str MSG_TOOL_MIGRATION_END              = _UxGT("Letzter Extruder");
   PROGMEM Language_Str MSG_TOOL_MIGRATION_SWAP             = _UxGT("Migrieren zu *");
-  PROGMEM Language_Str MSG_FILAMENTCHANGE                  = _UxGT("Filament wechseln");
-  PROGMEM Language_Str MSG_FILAMENTCHANGE_E                = _UxGT("Filament wechseln *");
+  PROGMEM Language_Str MSG_FILAMENTCHANGE                  = _UxGT("Filament Wechseln");
+  PROGMEM Language_Str MSG_FILAMENTCHANGE_E                = _UxGT("Filament Wechseln *");
   PROGMEM Language_Str MSG_FILAMENTLOAD                    = _UxGT("Filament laden");
   PROGMEM Language_Str MSG_FILAMENTLOAD_E                  = _UxGT("Filament laden *");
   PROGMEM Language_Str MSG_FILAMENTUNLOAD                  = _UxGT("Filament entladen");
   PROGMEM Language_Str MSG_FILAMENTUNLOAD_E                = _UxGT("Filament entladen *");
   PROGMEM Language_Str MSG_FILAMENTUNLOAD_ALL              = _UxGT("Alles entladen");
-  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("Medium initial.");  // Manually initialize the SD-card via user interface
-  PROGMEM Language_Str MSG_CHANGE_MEDIA                    = _UxGT("Medium getauscht"); // SD-card changed by user. For machines with no autocarddetect. Both send "M21"
-  PROGMEM Language_Str MSG_RELEASE_MEDIA                   = _UxGT("Medium freigeben"); // if Marlin gets confused - M22
+  PROGMEM Language_Str MSG_ATTACH_MEDIA                    = _UxGT("SD Karte bereit.");  // Manually initialize the SD-card via user interface
+  PROGMEM Language_Str MSG_CHANGE_MEDIA                    = _UxGT("SD Karte getauscht"); // SD-card changed by user. For machines with no autocarddetect. Both send "M21"
+  PROGMEM Language_Str MSG_RELEASE_MEDIA                   = _UxGT("SD Karte freigeben"); // if Marlin gets confused - M22
   PROGMEM Language_Str MSG_ZPROBE_OUT                      = _UxGT("Z-Sonde außerhalb");
   PROGMEM Language_Str MSG_SKEW_FACTOR                     = _UxGT("Korrekturfaktor");
   PROGMEM Language_Str MSG_BLTOUCH                         = _UxGT("BLTouch");
@@ -424,7 +424,11 @@ namespace Language_de {
   PROGMEM Language_Str MSG_ZPROBE_OFFSETS                  = _UxGT("Sondenversatz");
   PROGMEM Language_Str MSG_ZPROBE_XOFFSET                  = _UxGT("Sondenversatz X");
   PROGMEM Language_Str MSG_ZPROBE_YOFFSET                  = _UxGT("Sondenversatz Y");
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Sondenversatz Z");
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Sondenversatz Z"); 
+  
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_BLIND            = _UxGT("Bettabstand (erster Layer)"); // TODO hinzugefuegt.
+  PROGMEM Language_Str MSG_PROBE_WIZARD                    = _UxGT("Bettabstand Routine");
+
   PROGMEM Language_Str MSG_BABYSTEP_X                      = _UxGT("Babystep X");
   PROGMEM Language_Str MSG_BABYSTEP_Y                      = _UxGT("Babystep Y");
   PROGMEM Language_Str MSG_BABYSTEP_Z                      = _UxGT("Babystep Z");
@@ -513,7 +517,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_PURGE    = _UxGT("Mehr entladen");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_OPTION_RESUME   = _UxGT("Druck weiter");
   PROGMEM Language_Str MSG_FILAMENT_CHANGE_NOZZLE          = _UxGT("  Düse: ");
-  PROGMEM Language_Str MSG_RUNOUT_SENSOR                   = _UxGT("Runout-Sensor");
+  PROGMEM Language_Str MSG_RUNOUT_SENSOR                   = _UxGT("Filament-Sensor");
   PROGMEM Language_Str MSG_RUNOUT_DISTANCE_MM              = _UxGT("Runout-Weg mm");
   PROGMEM Language_Str MSG_KILL_HOMING_FAILED              = _UxGT("Homing gescheitert");
   PROGMEM Language_Str MSG_LCD_PROBING_FAILED              = _UxGT("Probing gescheitert");
@@ -629,4 +633,12 @@ namespace Language_de {
   #endif
   PROGMEM Language_Str MSG_REHEAT                          = _UxGT("Erneut aufheizen");
   PROGMEM Language_Str MSG_REHEATING                       = _UxGT("Erneut aufhei. ...");
+  
+  PROGMEM Language_Str MSG_LEVEL_CORNERS_CENTER            = _UxGT("Referenz: Mittlere Schrauben");
+
+  
+
+
+
+
 }
