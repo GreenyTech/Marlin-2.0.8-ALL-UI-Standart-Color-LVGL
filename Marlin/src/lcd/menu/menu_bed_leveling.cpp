@@ -248,14 +248,7 @@ void menu_bed_leveling() {
     if (!is_homed) GCODES_ITEM(MSG_AUTO_HOME, G28_STR);
   #endif
 
-  // Level Bed
-  #if EITHER(PROBE_MANUALLY, MESH_BED_LEVELING)
-    // Manual leveling uses a guided procedure
-    SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_continue);
-  #else
-    // Automatic leveling can just run the G-code
-    GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29") : PSTR("G29N"));
-  #endif
+
 
   #if ENABLED(MESH_EDIT_MENU)
     if (is_valid) SUBMENU(MSG_EDIT_MESH, menu_edit_mesh);
@@ -306,6 +299,18 @@ void menu_bed_leveling() {
     ACTION_ITEM(MSG_STORE_EEPROM, ui.store_settings);
   #endif
   **/
+
+
+   // Auto Level Bed (mesh)
+  #if EITHER(PROBE_MANUALLY, MESH_BED_LEVELING)
+    // Manual leveling uses a guided procedure
+    SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_continue);
+  #else
+    // Automatic leveling can just run the G-code
+    GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29") : PSTR("G29N"));
+  #endif
+
+  
   END_MENU();
 }
 
