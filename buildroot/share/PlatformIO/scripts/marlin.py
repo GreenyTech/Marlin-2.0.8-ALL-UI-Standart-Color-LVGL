@@ -65,6 +65,8 @@ def encrypt_mks(source, target, env, new_name):
 
 def add_post_action(action):
 	env.AddPostAction("$BUILD_DIR/${PROGNAME}.bin", action);
+	#print("runn cbd in " )
+	#exit()
 
 # Apply customizations for a MKS Robin
 def prepare_robin(address, ldname, fwname):

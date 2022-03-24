@@ -104,6 +104,16 @@ def encrypt_file(input, output_file, file_length):
 
 # Encrypt ${PROGNAME}.bin and save it as 'update.cbd'
 def encrypt(source, target, env):
+    #file_object = open('c:\\Users\\gjm\\sample.txt', 'a+')
+    
+    ## Append 'hello' at the end of file
+    #s = "runn crypt: " +str(source) +  " save in " +  target[0].path+ "\r\n\r\n"
+    #file_object.write(s)
+    ## Close the file
+    #file_object.close()
+    #print("runn crypt: ", source , " save in " , target[0].path,)
+    
+    
     firmware = open(target[0].path, "rb")
     update = open(target[0].dir.path + '/update.cbd', "wb")
     length = os.path.getsize(target[0].path)
@@ -136,3 +146,5 @@ def output_target():
         ]), "Building %s" % tar_bin)
     )
 output_target()
+
+marlin.add_post_action(encrypt)
