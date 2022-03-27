@@ -1288,8 +1288,8 @@
 
   //#define BROWSE_MEDIA_ON_INSERT          // Open the file browser when media is inserted
 
-  //TODO Gabriel nur Z nach oben.
-  #define EVENT_GCODE_SD_ABORT "G1 Z60"      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
+    //TODO Gabriel nur Z nach oben.
+  #define EVENT_GCODE_SD_ABORT "G91\n G1 Z60\nG90" //parking G27 P2      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
                                             //G28XY home X and Y achis
                                             //G1 Z10 //moves the z axes 10 cm up
 
