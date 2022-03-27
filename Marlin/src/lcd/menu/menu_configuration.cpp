@@ -509,12 +509,12 @@ void menu_configuration() {
 
   //SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard); 
     #if ENABLED(PROBE_OFFSET_WIZARD)
-        SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);//added from the menu advanced settings
+        if (!printingIsActive()) SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);//added from the menu advanced settings
       #endif
 
   
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-    SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
+        if (printingIsActive()) SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
     #endif
 
   //SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
