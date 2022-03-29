@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "2.0.8.4.2 GT" //TODO Firmware Number updaten.
+  #define SHORT_BUILD_VERSION "2.0.8.4.5 GT" //TODO Firmware Number updaten.
 #endif
 
 /**
@@ -42,7 +42,7 @@
  * version was tagged.
  */
 #ifndef STRING_DISTRIBUTION_DATE
-  #define STRING_DISTRIBUTION_DATE "2022-03-23"
+  #define STRING_DISTRIBUTION_DATE "2022-03-30"
 #endif
 
 /**
