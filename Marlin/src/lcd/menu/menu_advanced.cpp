@@ -255,7 +255,8 @@ void menu_backlash();
 
   void menu_advanced_temperature() {
     START_MENU();
-    BACK_ITEM(MSG_ADVANCED_SETTINGS);
+    //BACK_ITEM(MSG_ADVANCED_SETTINGS);
+    BACK_ITEM(MSG_CONFIGURATION);
     //
     // Autotemp, Min, Max, Fact
     //
@@ -513,6 +514,10 @@ void menu_backlash();
   #endif
 
   // M851 - Z Probe Offsets
+  
+  //const bool busy = printingIsActive();
+
+  
   #if HAS_BED_PROBE
     void menu_probe_offsets() {
       START_MENU();
@@ -524,8 +529,9 @@ void menu_backlash();
       EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
 
       #if ENABLED(PROBE_OFFSET_WIZARD)
-        SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
+        if (!printingIsActive()) SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
       #endif
+
 
       END_MENU();
     }
