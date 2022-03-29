@@ -3524,7 +3524,7 @@ void Temperature::isr() {
         #if HAS_MULTI_HOTEND
           PSTR("E%c " S_FMT), '1' + e
         #else
-          PSTR("E " S_FMT)
+          PSTR("Düse " S_FMT) //todo use GET_TEXT(MSG_NOZZLE) for language adaption
         #endif
         , heating ? GET_TEXT(MSG_HEATING) : GET_TEXT(MSG_COOLING)
       );
