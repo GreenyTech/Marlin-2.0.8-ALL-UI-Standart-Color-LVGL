@@ -263,6 +263,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_LCD_OFF                         = _UxGT("aus");
   PROGMEM Language_Str MSG_PID_AUTOTUNE                    = _UxGT("PID Autotune");
   PROGMEM Language_Str MSG_PID_AUTOTUNE_E                  = _UxGT("PID Autotune *");
+  PROGMEM Language_Str MSG_PID_AUTOTUNE_NOZZLE             = _UxGT("PID Autotune Düse");
   PROGMEM Language_Str MSG_PID_AUTOTUNE_DONE               = _UxGT("PID Tuning fertig");
   PROGMEM Language_Str MSG_PID_BAD_EXTRUDER_NUM            = _UxGT("Autotune fehlge. Falscher Extruder");
   PROGMEM Language_Str MSG_PID_TEMP_TOO_HIGH               = _UxGT("Autotune fehlge. Temperatur zu hoch.");
@@ -421,13 +422,13 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MANUAL_DEPLOY                   = _UxGT("Z-Sonde ausfahren");
   PROGMEM Language_Str MSG_MANUAL_STOW                     = _UxGT("Z-Sonde einfahren");
   PROGMEM Language_Str MSG_HOME_FIRST                      = _UxGT("Vorher %s%s%s homen");
-  PROGMEM Language_Str MSG_ZPROBE_OFFSETS                  = _UxGT("Sondenversatz");
+  PROGMEM Language_Str MSG_ZPROBE_OFFSETS                  = _UxGT("Abstand Düse zu Bett");
   PROGMEM Language_Str MSG_ZPROBE_XOFFSET                  = _UxGT("Sondenversatz X");
   PROGMEM Language_Str MSG_ZPROBE_YOFFSET                  = _UxGT("Sondenversatz Y");
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Sondenversatz Z"); 
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Abstand düse zum Bett"); 
   
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_BLIND            = _UxGT("Bettabstand (erster Layer)"); // TODO hinzugefuegt.
-  PROGMEM Language_Str MSG_PROBE_WIZARD                    = _UxGT("Bettabstand Routine");
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_BLIND            = _UxGT("Abstand Düse zu Bett (erster Layer)"); // TODO hinzugefuegt.
+  PROGMEM Language_Str MSG_PROBE_WIZARD                    = _UxGT("Abstand Düse zu Bett Routine");
 
   PROGMEM Language_Str MSG_BABYSTEP_X                      = _UxGT("Babystep X");
   PROGMEM Language_Str MSG_BABYSTEP_Y                      = _UxGT("Babystep Y");
@@ -636,7 +637,8 @@ namespace Language_de {
   
   PROGMEM Language_Str MSG_LEVEL_CORNERS_CENTER            = _UxGT("Referenz: Mittlere Schrauben");
 
-  
+  PROGMEM Language_Str MSG_MOVE_NOZZLE_TO_BED              = _UxGT("Bewege Düse zum Bett");
+    
 
 
 
