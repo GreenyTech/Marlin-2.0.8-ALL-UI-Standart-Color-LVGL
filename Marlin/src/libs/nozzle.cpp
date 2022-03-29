@@ -226,7 +226,8 @@ Nozzle nozzle;
 #if ENABLED(NOZZLE_PARK_FEATURE)
 
   void Nozzle::park(const uint8_t z_action, const xyz_pos_t &park/*=NOZZLE_PARK_POINT*/) {
-    constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE, fr_z = NOZZLE_PARK_Z_FEEDRATE;
+    //constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE;
+    constexpr feedRate_t fr_z = NOZZLE_PARK_Z_FEEDRATE;
 
     switch (z_action) {
       case 1: // Go to Z-park height
@@ -234,8 +235,9 @@ Nozzle nozzle;
         break;
 
       case 2: // Raise by Z-park height
-        do_blocking_move_to_z(_MIN(current_position.z + park.z, Z_MAX_POS), fr_z);
+        do_blocking_move_to_z(_MIN(current_position.z + park.z+50, Z_MAX_POS), fr_z); //todo add extra heigth
         break;
+      //TODO add another case that distingushes between homing?
 
       default: {
         // Apply a minimum raise, overriding G27 Z
@@ -247,13 +249,13 @@ Nozzle nozzle;
         do_blocking_move_to_z(_MAX(park.z, min_raised_z), fr_z);
       } break;
     }
-
+/**
     do_blocking_move_to_xy(
       TERN(NOZZLE_PARK_Y_ONLY, current_position, park).x,
       TERN(NOZZLE_PARK_X_ONLY, current_position, park).y,
       fr_xy
     );
-
+**/
     report_current_position();
   }
 

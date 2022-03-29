@@ -32,8 +32,9 @@
 
 FilamentMonitor runout;
 
-bool FilamentMonitorBase::enabled = true,
-     FilamentMonitorBase::filament_ran_out;  // = false
+bool FilamentMonitorBase::enabled = true;
+bool FilamentMonitorBase::filament_ran_out;// = false
+//bool FilamentMonitorBase::printedSuccessfully=false;  
 
 #if ENABLED(HOST_ACTION_COMMANDS)
   bool FilamentMonitorBase::host_handling; // = false
@@ -47,7 +48,7 @@ bool FilamentMonitorBase::enabled = true,
 
 #if HAS_FILAMENT_RUNOUT_DISTANCE
   float RunoutResponseDelayed::runout_distance_mm = FILAMENT_RUNOUT_DISTANCE_MM;
-  volatile float RunoutResponseDelayed::runout_mm_countdown[NUM_RUNOUT_SENSORS];
+  volatile float RunoutResponseDelayed::runout_mm_countdown[NUM_RUNOUT_SENSORS] = {}; //make sure that all elements are 0
   #if ENABLED(FILAMENT_MOTION_SENSOR)
     uint8_t FilamentSensorEncoder::motion_detected;
   #endif

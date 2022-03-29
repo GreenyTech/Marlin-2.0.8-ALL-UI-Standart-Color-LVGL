@@ -66,6 +66,7 @@ extern FilamentMonitor runout;
 class FilamentMonitorBase {
   public:
     static bool enabled, filament_ran_out;
+    //static bool printedSuccessfully;
 
     #if ENABLED(HOST_ACTION_COMMANDS)
       static bool host_handling;
@@ -116,11 +117,16 @@ class TFilamentMonitor : public FilamentMonitorBase {
     // Give the response a chance to update its counter.
     static inline void run() {
       if (enabled && !filament_ran_out && (printingIsActive() || did_pause_print)) {
-        TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, cli()); // Prevent RunoutResponseDelayed::block_completed from accumulating here
+        //if(printedSuccessfully){
+          TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, cli()); // Prevent RunoutResponseDelayed::block_completed from accumulating here
+        //}
         response.run();
         sensor.run();
         const uint8_t runout_flags = response.has_run_out();
-        TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, sei());
+
+        //if(printedSuccessfully){
+          TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, sei());
+        //}
         #if MULTI_FILAMENT_SENSOR
           #if ENABLED(WATCH_ALL_RUNOUT_SENSORS)
             const bool ran_out = !!runout_flags;  // any sensor triggers
@@ -156,6 +162,10 @@ class TFilamentMonitor : public FilamentMonitorBase {
           event_filament_runout(extruder);
           planner.synchronize();
         }
+        /**else{
+          printedSuccessfully = true;
+
+        }**/
       }
     }
 };
@@ -169,6 +179,7 @@ class FilamentSensorBase {
      * Called by FilamentSensorEncoder::block_completed when motion is detected.
      */
     static inline void filament_present(const uint8_t extruder) {
+      //TODO set Variable here, that indicates that filament at least was once present
       runout.filament_present(extruder); // ...which calls response.filament_present(extruder)
     }
 
@@ -341,7 +352,8 @@ class FilamentSensorBase {
     public:
       static float runout_distance_mm;
 
-      static inline void reset() {
+
+      static inline void reset() { //TODO might be problematic
         LOOP_L_N(i, NUM_RUNOUT_SENSORS) filament_present(i);
       }
 
