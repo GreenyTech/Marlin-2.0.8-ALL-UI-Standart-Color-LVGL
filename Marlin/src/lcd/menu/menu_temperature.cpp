@@ -228,9 +228,9 @@ void menu_temperature() {
     DEFINE_SINGLENOZZLE_ITEM();
 
     #if HAS_FAN0
-      _FAN_EDIT_ITEMS(0,FIRST_FAN_SPEED);
+      _FAN_EDIT_ITEMS(0,FIRST_FAN_SPEED);  //object fan lüfter
     #endif
-    /** //Removed because we only have 1 fan.
+    /** //Removed because we only have 1 fan. Hotend fan dosn't count
     #if HAS_FAN1
       FAN_EDIT_ITEMS(1);
     #elif SNFAN(1)
