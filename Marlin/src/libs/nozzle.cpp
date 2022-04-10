@@ -226,7 +226,7 @@ Nozzle nozzle;
 #if ENABLED(NOZZLE_PARK_FEATURE)
 
   void Nozzle::park(const uint8_t z_action, const xyz_pos_t &park/*=NOZZLE_PARK_POINT*/) {
-    //constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE;
+    constexpr feedRate_t fr_xy = NOZZLE_PARK_XY_FEEDRATE;
     constexpr feedRate_t fr_z = NOZZLE_PARK_Z_FEEDRATE;
 
     switch (z_action) {
@@ -249,13 +249,13 @@ Nozzle nozzle;
         do_blocking_move_to_z(_MAX(park.z, min_raised_z), fr_z);
       } break;
     }
-/**
+
     do_blocking_move_to_xy(
       TERN(NOZZLE_PARK_Y_ONLY, current_position, park).x,
       TERN(NOZZLE_PARK_X_ONLY, current_position, park).y,
       fr_xy
     );
-**/
+
     report_current_position();
   }
 
