@@ -2422,6 +2422,9 @@
  * TMCStepper library is required to use TMC stepper drivers.
  * https://github.com/teemuatlut/TMCStepper
  */
+
+#define HAS_TRINAMIC_CONFIG 1
+
 #if HAS_TRINAMIC_CONFIG
 
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
@@ -2640,9 +2643,11 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
+/**
   #define STEALTHCHOP_XY
   #define STEALTHCHOP_Z
   #define STEALTHCHOP_E
+**/
 
   /**
    * Optimize spreadCycle chopper parameters by using predefined parameter sets
