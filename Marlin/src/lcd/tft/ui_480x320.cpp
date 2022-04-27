@@ -314,7 +314,7 @@ void MarlinUI::draw_status_screen() {
   y += TERN(HAS_UI_480x272, 36, 44);
   // print duration
   char buffer[14];
-  duration_t elapsed = print_job_timer.duration();
+  duration_t elapsed = ui.get_remaining_time();//.get_progress_percent();//print_job_timer.duration();
   elapsed.toDigital(buffer);
 
   tft.canvas((TFT_WIDTH - 128) / 2, y, 128, 29);

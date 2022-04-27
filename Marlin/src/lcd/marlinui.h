@@ -280,12 +280,12 @@ public:
         static inline uint32_t _calculated_remaining_time() {
           const duration_t elapsed = print_job_timer.duration();
           const progress_t progress = _get_progress();
-          return progress ? elapsed.value * (100 * (PROGRESS_SCALE) - progress) / progress : 0;
-        }
+          return progress ? elapsed.value * (100 * (PROGRESS_SCALE) - progress) / progress : 0;//elapsed.value*100 000;
+        } //progress. TODO In the beginning the elapsed time gets shown....
         #if ENABLED(USE_M73_REMAINING_TIME)
           static uint32_t remaining_time;
           FORCE_INLINE static void set_remaining_time(const uint32_t r) { remaining_time = r; }
-          FORCE_INLINE static uint32_t get_remaining_time() { return remaining_time ?: _calculated_remaining_time(); }
+          FORCE_INLINE static uint32_t get_remaining_time() { return remaining_time ?0: _calculated_remaining_time(); }
           FORCE_INLINE static void reset_remaining_time() { set_remaining_time(0); }
         #else
           FORCE_INLINE static uint32_t get_remaining_time() { return _calculated_remaining_time(); }
