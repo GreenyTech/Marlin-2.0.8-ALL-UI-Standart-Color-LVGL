@@ -146,8 +146,24 @@ void Touch::idle() {
   }
 }
 
+
+
+
+
+
+millis_t timeDleayOnTouch = 0;
+millis_t MINIMUM_TIME_DELAY = 200;
+
 void Touch::touch(touch_control_t *control) {
+  //TODO add delay here
   //also a good idear to add ui.chierps()
+  const millis_t now = millis();
+  if(timeDleayOnTouch>now){
+    return;
+  } 
+  timeDleayOnTouch = now+MINIMUM_TIME_DELAY;
+
+
   switch (control->type) {
     #if ENABLED(TOUCH_SCREEN_CALIBRATION)
       case CALIBRATE:
