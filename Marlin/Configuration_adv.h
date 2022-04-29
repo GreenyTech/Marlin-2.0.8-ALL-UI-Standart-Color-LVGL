@@ -2423,10 +2423,10 @@
  * https://github.com/teemuatlut/TMCStepper
  */
 
-#define HAS_TRINAMIC_CONFIG 1
+#define HAS_TRINAMIC_CONFIG 1 //TODO what dose this change
+//TODO can i just change the TMC printing modes?
 
 #if HAS_TRINAMIC_CONFIG
-
   #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
 
   /**
@@ -2693,7 +2693,7 @@
    * M912 - Clear stepper driver overtemperature pre-warn condition flag.
    * M122 - Report driver parameters (Requires TMC_DEBUG)
    */
-  //#define MONITOR_DRIVER_STATUS
+  //#define MONITOR_DRIVER_STATUS //TODO Gabriel nur für debugging
 
   #if ENABLED(MONITOR_DRIVER_STATUS)
     #define CURRENT_STEP_DOWN     50  // [mA]
@@ -2708,7 +2708,7 @@
    * STEALTHCHOP_(XY|Z|E) must be enabled to use HYBRID_THRESHOLD.
    * M913 X/Y/Z/E to live tune the setting
    */
-  //#define HYBRID_THRESHOLD
+  //#define HYBRID_THRESHOLD //TODO Gabriel ziemlich cool. Wir können aber auch die ganze zeit stelp hode fahren
 
   #define X_HYBRID_THRESHOLD     100  // [mm/s]
   #define X2_HYBRID_THRESHOLD    100
@@ -2790,7 +2790,7 @@
    * Enable M122 debugging command for TMC stepper drivers.
    * M122 S0/1 will enable continuous reporting.
    */
-  //#define TMC_DEBUG
+  #define TMC_DEBUG //TODO Gabriel
 
   /**
    * You can set your own advanced settings by filling in predefined functions.
