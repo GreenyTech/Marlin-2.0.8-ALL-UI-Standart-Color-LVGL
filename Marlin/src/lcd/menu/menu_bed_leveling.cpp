@@ -304,10 +304,10 @@ void menu_bed_leveling() {
    // Auto Level Bed (mesh)
   #if EITHER(PROBE_MANUALLY, MESH_BED_LEVELING)
     // Manual leveling uses a guided procedure
-    SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_continue);
+    //SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_continue);
   #else
     // Automatic leveling can just run the G-code
-    GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29") : PSTR("G29N"));
+    GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29 M140 S0") : PSTR("G29N M140 S0"));
   #endif
 
   
