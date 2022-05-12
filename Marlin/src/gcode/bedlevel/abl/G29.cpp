@@ -716,11 +716,8 @@ G29_TYPE GcodeSuite::G29() {
       set_bed_leveling_enabled(abl.reenable);
       abl.measured_z = NAN;
     }
-
     //TODO turn down bad temperatur.
-    //PSTR("M140 S0"); //has no effekt
-    //Maybe it would work as a subprocess.
-    //process_subcommands_now_P(TERN(G28_L0_ENSURES_LEVELING_OFF, PSTR("G28L0"), G28_STR));
+    queue.inject_P(PSTR("M140 S0"));
 
   }
   #endif // !PROBE_MANUALLY
