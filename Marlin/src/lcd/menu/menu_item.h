@@ -457,6 +457,9 @@ class MenuItem_bool : public MenuEditItemBase {
   void _lcd_level_bed_center(); 
 #endif
 
+  void _lcd_level_bed_plane(); 
+
+
 #if HAS_FAN
 
   #include "../../module/temperature.h"

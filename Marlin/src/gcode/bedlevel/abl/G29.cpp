@@ -217,6 +217,8 @@ public:
  *     There's no extra effect if you have a fixed Z probe.
  */
 G29_TYPE GcodeSuite::G29() {
+  //constexpr uint8_t line = (LCD_HEIGHT - 1) / 2;
+  //ui. draw(line, GET_TEXT(MSG_LEVEL_BED_HOMING));
   TERN_(PROBE_MANUALLY, static) G29_State abl;
 
   TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_PROBE));
@@ -597,6 +599,10 @@ G29_TYPE GcodeSuite::G29() {
 
   #else // !PROBE_MANUALLY
   {
+    //TODO check for homing
+
+
+
     const ProbePtRaise raise_after = parser.boolval('E') ? PROBE_PT_STOW : PROBE_PT_RAISE;
 
     abl.measured_z = 0;
@@ -628,6 +634,7 @@ G29_TYPE GcodeSuite::G29() {
 
         // An index to print current state
         uint8_t pt_index = (PR_OUTER_VAR) * (PR_INNER_SIZE) + 1;
+        
 
         // Inner loop is Y with PROBE_Y_FIRST enabled
         // Inner loop is X with PROBE_Y_FIRST disabled
@@ -718,6 +725,7 @@ G29_TYPE GcodeSuite::G29() {
     }
     //TODO turn down bad temperatur.
     queue.inject_P(PSTR("M140 S0"));
+    ui.reset_status();
 
   }
   #endif // !PROBE_MANUALLY

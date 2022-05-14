@@ -307,7 +307,12 @@ void menu_bed_leveling() {
     //SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_continue);
   #else
     // Automatic leveling can just run the G-code
-    GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29") : PSTR("G29N"));
+    
+    
+    SUBMENU(MSG_LEVEL_BED, _lcd_level_bed_plane);
+    //GCODES_ITEM(MSG_LEVEL_BED, is_homed ? PSTR("G29") : PSTR("G29N")); //TODO 
+    //constexpr uint8_t line = (LCD_HEIGHT - 1) / 2;
+    //MenuItem_static::draw(line, GET_TEXT(MSG_LEVEL_BED_HOMING));
   #endif
 
   

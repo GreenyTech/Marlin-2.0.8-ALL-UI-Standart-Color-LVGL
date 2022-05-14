@@ -191,4 +191,25 @@ void _lcd_level_bed_center() {
   ui.goto_screen(_lcd_level_bed_center_homing);
 }
 
+
+void _lcd_level_bed_plane() {
+
+  //ui.defer_status_screen();
+  
+  ui.return_to_status();
+  ui.set_status_P("Bett wird vermessen. Bitte Warten.",-1);
+  
+  //ui.status_printf_P(0, PSTR(S_FMT " %i/%i"), GET_TEXT(MSG_PROBING_MESH), int(pt_index), int(abl.abl_points));
+
+  if (!all_axes_trusted()) {
+    set_all_unhomed();
+    queue.inject_P(G28_STR);
+  }
+
+  // Disable leveling so the planner won't mess with us
+  
+  queue.inject_P(PSTR("G29N"));
+  
+}
+
 #endif // HAS_LCD_MENU && LEVEL_BED_CORNERS
