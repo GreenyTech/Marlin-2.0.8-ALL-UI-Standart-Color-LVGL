@@ -41,6 +41,10 @@ extern xyze_pos_t destination;
   feedRate_t fast_move_feedrate = MMM_TO_MMS(G0_FEEDRATE);
 #endif
 
+
+  #include "../../feature/powerloss.h"
+  //extern POWER_LOSS_RECOVERY recovery;
+
 /**
  * G0, G1: Coordinated movement of X Y Z E axes
  */
@@ -54,6 +58,13 @@ void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
         | (parser.seen('Z') ? _BV(Z_AXIS) : 0) )
     #endif
   ) {
+
+    if(parser.seen('Z')){
+      SERIAL_ECHO_MSG("See z");
+      recovery.save();
+    }
+
+
     TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_RUNNING));
 
     #ifdef G0_FEEDRATE

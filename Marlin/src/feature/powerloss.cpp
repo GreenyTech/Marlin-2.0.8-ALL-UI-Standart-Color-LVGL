@@ -90,6 +90,10 @@ void PrintJobRecovery::enable(const bool onoff) {
   changed();
 }
 
+
+int numberOfPOLoads=0;
+int actualPOSavedNumbers=0;
+
 /**
  * The enabled state was changed:
  *  - Enabled: Purge the job recovery file
@@ -128,7 +132,9 @@ void PrintJobRecovery::purge() {
  * Load the recovery data, if it exists
  */
 void PrintJobRecovery::load() {
+ 
   if (exists()) {
+     numberOfPOLoads++;
     open(true);
     (void)file.read(&info, sizeof(info));
     close();
@@ -148,7 +154,6 @@ void PrintJobRecovery::prepare() {
  * Save the current machine state to the power-loss recovery file
  */
 void PrintJobRecovery::save(const bool force/*=false*/, const float zraise/*=0*/) {
-
   #if SAVE_INFO_INTERVAL_MS > 0
     static millis_t next_save_ms; // = 0
     millis_t ms = millis();
@@ -308,18 +313,23 @@ void PrintJobRecovery::save(const bool force/*=false*/, const float zraise/*=0*/
 
 #endif
 
+
 /**
  * Save the recovery info the recovery file
  */
 void PrintJobRecovery::write() {
+        
+      
 
   debug(PSTR("Write"));
 
   open(false);
   file.seekSet(0);
   const int16_t ret = file.write(&info, sizeof(info));
+  actualPOSavedNumbers++;
   if (ret == -1) DEBUG_ECHOLNPGM("Power-loss file write failed.");
   if (!file.close()) DEBUG_ECHOLNPGM("Power-loss file close failed.");
+  
 }
 
 /**
@@ -339,7 +349,7 @@ void PrintJobRecovery::resume() {
 
   #if HAS_LEVELING
     // Make sure leveling is off before any G92 and G28
-    gcode.process_subcommands_now_P(PSTR("M420 S0 Z0"));
+    gcode.process_subcommands_now_P(PSTR("M420 S0 Z0 E0"));
   #endif
 
   #if HAS_HEATED_BED
@@ -378,7 +388,8 @@ void PrintJobRecovery::resume() {
   #else // "G92.9 E0 ..."
 
     // If a Z raise occurred at outage restore Z, otherwise raise Z now
-    sprintf_P(cmd, PSTR("G92.9 E0 " TERN(BACKUP_POWER_SUPPLY, "Z%s", "Z0\nG1Z%s")), dtostrf(info.zraise, 1, 3, str_1));
+    sprintf_P(cmd, PSTR("G92.9 E%s Z%s"), dtostrf(info.zraise, 1, 3, str_1)); //BACKUP_POWER_SUPPLY
+    //sprintf_P(cmd, PSTR("G92.9 E0 " TERN(BACKUP_POWER_SUPPLY, "Z%s", "Z0\nG1Z%s")), dtostrf(info.zraise, 1, 3, str_1));
     gcode.process_subcommands_now(cmd);
 
     // Home safely with no Z raise
@@ -506,6 +517,7 @@ void PrintJobRecovery::resume() {
   // Restore E position with G92.9
   sprintf_P(cmd, PSTR("G92.9 E%s"), dtostrf(info.current_position.e, 1, 3, str_1));
   gcode.process_subcommands_now(cmd);
+  
 
   TERN_(GCODE_REPEAT_MARKERS, repeat = info.stored_repeat);
   TERN_(HAS_HOME_OFFSET, home_offset = info.home_offset);
