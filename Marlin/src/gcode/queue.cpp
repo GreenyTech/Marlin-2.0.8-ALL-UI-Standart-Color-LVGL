@@ -81,6 +81,7 @@ PGM_P GCodeQueue::injected_commands_P; // = nullptr
  * Injected SRAM Commands
  */
 char GCodeQueue::injected_commands[64]; // = { 0 }
+int sdCardReadErrors = 0;
 
 
 void GCodeQueue::RingBuffer::commit_command(bool skip_ok
@@ -560,7 +561,10 @@ void GCodeQueue::get_serial_commands() {
     while (!ring_buffer.full() && !card.eof()) {
       const int16_t n = card.get();
       const bool card_eof = card.eof();
-      if (n < 0 && !card_eof) { SERIAL_ERROR_MSG(STR_SD_ERR_READ); continue; }
+      if (n < 0 && !card_eof) { 
+        SERIAL_ERROR_MSG(STR_SD_ERR_READ); 
+        sdCardReadErrors++;
+      continue; }
 
       CommandLine &command = ring_buffer.commands[ring_buffer.index_w];
       const char sd_char = (char)n;

@@ -255,7 +255,7 @@ void CardReader::selectByName(SdFile dir, const char * const match) {
   for (uint8_t cnt = 0; dir.readDir(&p, longFilename) > 0; cnt++) {
     if (is_dir_or_gcode(p)) {
       createFilename(filename, p);
-      if (strcasecmp(match, filename) == 0) return;
+      if (strcasecmp(match, filename) == 0) return; //TODO wird fehlerhaft angezegit
     }
   }
 }
@@ -1249,33 +1249,58 @@ void CardReader::fileHasFinished() {
 #if ENABLED(POWER_LOSS_RECOVERY)
 
   bool CardReader::jobRecoverFileExists() {
-    const bool exists = recovery.file.open(&root, recovery.filename, O_READ);
-    if (exists) recovery.file.close();
+      //todo Gabriel no distinguisching between file1 and file 2 most propably
+    return singleFileExists(recovery.file1, recovery.filename1) || singleFileExists(recovery.file2, recovery.filename2);
+    /**
+    const bool exists = recovery.file1.open(&root, recovery.filename1, O_READ);
+    if (exists) 
+    {
+      recovery.file1.close();
+      return exists;
+    }
+    const bool exists = recovery.file2.open(&root, recovery.filename2, O_READ);
+    if (exists) 
+    {
+      recovery.file2.close();
+      return exists;
+    }
+    **/
+
+  }
+  bool CardReader::singleFileExists(SdFile file, const char* fileName){
+    const bool exists = file.open(&root, fileName, O_READ);
+    if (exists) file.close();
     return exists;
   }
 
+
   void CardReader::openJobRecoveryFile(const bool read) {
     if (!isMounted()) return;
-    if (recovery.file.isOpen()) return;
-    if (!recovery.file.open(&root, recovery.filename, read ? O_READ : O_CREAT | O_WRITE | O_TRUNC | O_SYNC))
-      openFailed(recovery.filename);
+    if (recovery.getFile().isOpen()) return;
+    if (!recovery.getFile().open(&root, recovery.getFileName(), read ? O_READ : O_CREAT | O_WRITE | O_TRUNC | O_SYNC))
+      openFailed(recovery.getFileName());
     else if (!read)
-      echo_write_to_file(recovery.filename);
+      echo_write_to_file(recovery.getFileName());
   }
 
   // Removing the job recovery file currently requires closing
   // the file being printed, so during SD printing the file should
   // be zeroed and written instead of deleted.
   void CardReader::removeJobRecoveryFile() {
-    if (jobRecoverFileExists()) {
-      recovery.init();
-      removeFile(recovery.filename);
-      #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
-        SERIAL_ECHOPGM("Power-loss file delete");
-        SERIAL_ECHOPGM_P(jobRecoverFileExists() ? PSTR(" failed.\n") : PSTR("d.\n"));
-      #endif
-    }
+    removeSingleFile(recovery.file1,recovery.filename1);
+    removeSingleFile(recovery.file2,recovery.filename2);
   }
+  void CardReader::removeSingleFile(SdFile file, const char* fileName){
+    if (singleFileExists(file,fileName)) {
+    recovery.init();
+    removeFile(fileName);
+    #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
+      SERIAL_ECHOPGM("Power-loss file delete");
+      SERIAL_ECHOPGM_P(singleFileExists(file,fileName) ? PSTR(" failed.\n") : PSTR("d.\n"));
+    #endif
+  }
+}
+
 
 #endif // POWER_LOSS_RECOVERY
 

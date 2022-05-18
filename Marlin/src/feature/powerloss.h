@@ -44,7 +44,8 @@
 
 #define DEBUG_POWER_LOSS_RECOVERY
 #define SAVE_EACH_CMD_MODE
-#define SAVE_INFO_INTERVAL_MS 30000
+#define SAVE_INFO_INTERVAL_MS 0//30000
+
 
 typedef struct {
   uint8_t valid_head;
@@ -126,11 +127,36 @@ typedef struct {
 
 } job_recovery_info_t;
 
+
 class PrintJobRecovery {
   public:
-    static const char filename[5];
+    static bool useFirstFileCurrently;
+    static const char filename1[6];
+    static const char filename2[6];
+    //static bool useFirstFileCurrently;
 
-    static SdFile file;
+    static SdFile file1;    
+    static SdFile file2;
+
+    static SdFile& getFile(){ //returns the refferens. //would otherwiese coppy
+      if(useFirstFileCurrently){
+        return file1;
+      }
+      else{
+        return file2;
+      }
+    }
+    
+    static  const char* getFileName(){
+      if(useFirstFileCurrently){
+        return filename1;
+      }
+      else{
+        return filename2;
+      }
+    }
+
+
     static job_recovery_info_t info;
 
     static uint8_t queue_index_r;     //!< Queue index of the active command
@@ -169,7 +195,7 @@ class PrintJobRecovery {
 
     static inline bool exists() { return card.jobRecoverFileExists(); }
     static inline void open(const bool read) { card.openJobRecoveryFile(read); }
-    static inline void close() { file.close(); }
+    static inline void close() { getFile().close(); }
 
     static void check();
     static void resume();

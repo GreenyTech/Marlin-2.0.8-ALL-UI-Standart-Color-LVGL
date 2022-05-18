@@ -111,6 +111,7 @@ public:
   static void release();
   static inline bool isMounted() { return flag.mounted; }
   static void ls();
+  
 
   // Handle media insert/remove
   static void manage_media();
@@ -182,8 +183,10 @@ public:
 
   #if ENABLED(POWER_LOSS_RECOVERY)
     static bool jobRecoverFileExists();
+    static bool singleFileExists(SdFile file, const char* fileName); //internal method. define as well
     static void openJobRecoveryFile(const bool read);
     static void removeJobRecoveryFile();
+    static void removeSingleFile(SdFile file, const char* fileName); //internal method
   #endif
 
   static inline bool isFileOpen() { return isMounted() && file.isOpen(); }

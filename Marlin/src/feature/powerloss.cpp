@@ -33,9 +33,12 @@
 
 bool PrintJobRecovery::enabled; // Initialized by settings.load()
 
-SdFile PrintJobRecovery::file;
+SdFile PrintJobRecovery::file1;
+SdFile PrintJobRecovery::file2;
 job_recovery_info_t PrintJobRecovery::info;
-const char PrintJobRecovery::filename[5] = "/PLR";
+const char PrintJobRecovery::filename1[6] = "/PLR1";
+const char PrintJobRecovery::filename2[6] = "/PLR2";
+bool PrintJobRecovery::useFirstFileCurrently=false;
 uint8_t PrintJobRecovery::queue_index_r;
 uint32_t PrintJobRecovery::cmd_sdpos, // = 0
          PrintJobRecovery::sdpos[BUFSIZE];
@@ -80,7 +83,9 @@ PrintJobRecovery recovery;
 /**
  * Clear the recovery info
  */
-void PrintJobRecovery::init() { memset(&info, 0, sizeof(info)); }
+void PrintJobRecovery::init() { 
+  
+memset(&info, 0, sizeof(info)); }
 
 /**
  * Enable or disable then call changed()
@@ -133,13 +138,76 @@ void PrintJobRecovery::purge() {
  */
 void PrintJobRecovery::load() {
  
-  if (exists()) {
-     numberOfPOLoads++;
+    numberOfPOLoads++;
+
+  useFirstFileCurrently =!useFirstFileCurrently; //make access more likeley; second one is the fist one that could be keaped 
+  uint32 lengthFirst=0;//1 means invalid
+
+  if(card.singleFileExists(getFile(), getFileName())){
+    //lengthFirst
     open(true);
-    (void)file.read(&info, sizeof(info));
+    (void)getFile().read(&info, sizeof(info));
+    lengthFirst = info.sdpos;
+    if(!info.valid()){
+      lengthFirst=0;
+    }
     close();
   }
+
+  useFirstFileCurrently =!useFirstFileCurrently; //check the second file
+  uint32 lengthSecond=0; //can be implemented with one variable less.
+  if(card.singleFileExists(getFile(), getFileName())){
+    open(true);
+    (void)getFile().read(&info, sizeof(info));
+    lengthSecond = info.sdpos;
+    if(!info.valid()){
+      lengthSecond=0;
+    }
+    close();
+  }
+  if(lengthFirst>lengthSecond){
+    useFirstFileCurrently =!useFirstFileCurrently; 
+    open(true);
+    (void)getFile().read(&info, sizeof(info));
+    close();
+
+  }
+
+
+  /**
+  useFirstFileCurrently =!useFirstFileCurrently; //check the second file
+  if(card.singleFileExists(getFile(), getFileName())){
+    //lengthFirst
+    open(true);
+    (void)getFile().read(&info, sizeof(info));
+    if(lengthFirst < info.sdpos){
+      if(info.valid()){
+        lengthFirst = 0; //whil be the oder one;
+        numberOfPOLoads=2;
+      }
+    }
+    close();
+  }**/
+/**
+  if(lengthFirst>0){
+    useFirstFileCurrently =!useFirstFileCurrently; 
+    open(true);
+    (void)getFile().read(&info, sizeof(info));
+    close();
+    
+    numberOfPOLoads=1;
+  }
+**/
+
+/**
+  if (exists()) {
+    open(true);
+    (void)getFile().read(&info, sizeof(info));
+    close();
+  }
+  **/
   debug(PSTR("Load"));
+
 }
 
 /**
@@ -313,7 +381,7 @@ void PrintJobRecovery::save(const bool force/*=false*/, const float zraise/*=0*/
 
 #endif
 
-
+extern int sdCardReadErrors;
 /**
  * Save the recovery info the recovery file
  */
@@ -322,14 +390,29 @@ void PrintJobRecovery::write() {
       
 
   debug(PSTR("Write"));
+  useFirstFileCurrently = !useFirstFileCurrently;
+  SERIAL_ECHOLN("WriteToOtherFile");
 
   open(false);
-  file.seekSet(0);
-  const int16_t ret = file.write(&info, sizeof(info));
-  actualPOSavedNumbers++;
-  if (ret == -1) DEBUG_ECHOLNPGM("Power-loss file write failed.");
-  if (!file.close()) DEBUG_ECHOLNPGM("Power-loss file close failed.");
+  getFile().seekSet(0);
+  const int16_t ret = getFile().write(&info, sizeof(info));
   
+  
+  
+  if (ret == -1){
+    numberOfPOLoads++;
+    DEBUG_ECHOLNPGM("Power-loss file write failed.");
+  } 
+  if (!getFile().close()){
+    
+    numberOfPOLoads++;
+    DEBUG_ECHOLNPGM("Power-loss file close failed.");
+
+  } 
+  sdCardReadErrors = info.sdpos;
+  //SERIAL_FLUSH();
+  actualPOSavedNumbers++;
+    
 }
 
 /**
@@ -388,7 +471,10 @@ void PrintJobRecovery::resume() {
   #else // "G92.9 E0 ..."
 
     // If a Z raise occurred at outage restore Z, otherwise raise Z now
-    sprintf_P(cmd, PSTR("G92.9 E%s Z%s"), dtostrf(info.zraise, 1, 3, str_1)); //BACKUP_POWER_SUPPLY
+    sprintf_P(cmd, PSTR("G92.9 Z%s"), dtostrf(info.zraise, 1, 3, str_1)); //BACKUP_POWER_SUPPLY
+    //TODO problam with extruder
+    //todo make a relative z hope
+    //sprintf_P(cmd, PSTR("G92.9 E%s"), dtostrf(info.current_position.e, 1, 3, str_1)); //this should fix the error that the printer is printin in the air
     //sprintf_P(cmd, PSTR("G92.9 E0 " TERN(BACKUP_POWER_SUPPLY, "Z%s", "Z0\nG1Z%s")), dtostrf(info.zraise, 1, 3, str_1));
     gcode.process_subcommands_now(cmd);
 
