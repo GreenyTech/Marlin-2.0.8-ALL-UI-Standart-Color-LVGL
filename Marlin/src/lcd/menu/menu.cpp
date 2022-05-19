@@ -188,6 +188,7 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
           doubleclick_expire_ms = millis() + DOUBLECLICK_MAX_INTERVAL;
       }
       else if (screen == status_screen && currentScreen == menu_main && PENDING(millis(), doubleclick_expire_ms)) {
+        /** // z offset when go back
         if (BABYSTEP_ALLOWED())
           screen = TERN(BABYSTEP_ZPROBE_OFFSET, lcd_babystep_zoffset, lcd_babystep_z);
           //TODO move actual x achse.
@@ -197,6 +198,7 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
             screen = lcd_move_z;
           #endif
         }
+        **/
       }
     #endif
 
@@ -333,7 +335,7 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
     }
     if (ui.should_draw()) {
       if (do_probe) {
-        MenuEditItemBase::draw_edit_screen(GET_TEXT(MSG_ZPROBE_ZOFFSET), BABYSTEP_TO_STR(probe.offset.z));
+        MenuEditItemBase::draw_edit_screen(GET_TEXT(MSG_ZPROBE_ZOFFSET), BABYSTEP_TO_STR(probe.offset.z)); //todo
         TERN_(BABYSTEP_ZPROBE_GFX_OVERLAY, _lcd_zoffset_overlay_gfx(probe.offset.z));
       }
       else {
