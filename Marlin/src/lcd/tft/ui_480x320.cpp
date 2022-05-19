@@ -20,6 +20,7 @@
  *
  */
 
+
 #include "../../inc/MarlinConfigPre.h"
 
 #if HAS_UI_480x320 || HAS_UI_480x272
@@ -35,6 +36,11 @@
 #include "../../module/printcounter.h"
 #include "../../module/planner.h"
 #include "../../module/motion.h"
+
+
+extern int numberOfPOLoads;
+extern int actualPOSavedNumbers;
+extern int sdCardReadErrors;
 
 #if DISABLED(LCD_PROGRESS_BAR) && BOTH(FILAMENT_LCD_DISPLAY, SDSUPPORT)
   #include "../../feature/filwidth.h"
@@ -116,6 +122,7 @@ void MarlinUI::draw_kill_screen() {
   tft.queue.sync();
 }
 
+
 void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
   MarlinImage image = imgHotEnd;
   uint16_t Color;
@@ -182,6 +189,15 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
 
   tft_string.set((uint8_t *)i16tostr3rj(currentTemperature));
   tft_string.add(LCD_STR_DEGREE);
+  /**
+   *  Debug informations
+  if (Heater >= 0) { 
+  tft_string.add((uint8_t *)i16tostr3rj(numberOfPOLoads));
+  }
+  if (Heater == -1) { 
+  tft_string.add((uint8_t *)i16tostr3rj(actualPOSavedNumbers));
+  }
+  **/
   tft_string.trim();
   tft.add_text(tft_string.center(80) + 2, 82, Color, tft_string);
 
@@ -192,7 +208,6 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
     tft.add_text(tft_string.center(80) + 2, 8, Color, tft_string);
   }
 }
-
 void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
   TERN_(TOUCH_SCREEN, touch.add_control(FAN, x, y, 80, 120));
   tft.canvas(x, y, 80, 120);
@@ -211,8 +226,10 @@ void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
   tft.add_image(8, 20, image, COLOR_FAN);
 
   tft_string.set((uint8_t *)ui8tostr4pctrj(thermalManager.fan_speed[0]));
+  //tft_string.add(i16tostr3rj(sdCardReadErrors));
   tft_string.trim();
   tft.add_text(tft_string.center(80) + 6, 82, COLOR_FAN, tft_string);
+  
 }
 
 void MarlinUI::draw_status_screen() {
@@ -311,16 +328,32 @@ void MarlinUI::draw_status_screen() {
     TERN_(SDSUPPORT, add_control(12, y, menu_media, imgSD, !printingIsActive(), COLOR_CONTROL_ENABLED, card.isMounted() && printingIsActive() ? COLOR_BUSY : COLOR_CONTROL_DISABLED));
   #endif
 
+
+
   y += TERN(HAS_UI_480x272, 36, 44);
   // print duration
   char buffer[14];
-  duration_t elapsed = ui.get_remaining_time();//.get_progress_percent();//print_job_timer.duration();
+  duration_t elapsed = print_job_timer.duration();//ui.get_remaining_time();//.get_progress_percent();//print_job_timer.duration();
   elapsed.toDigital(buffer);
 
-  tft.canvas((TFT_WIDTH - 128) / 2, y, 128, 29);
+  tft.canvas(77, y, 128, 29);
   tft.set_background(COLOR_BACKGROUND);
   tft_string.set(buffer);
   tft.add_text(tft_string.center(128), 0, COLOR_PRINT_TIME, tft_string);
+
+
+
+  //y += TERN(HAS_UI_480x272, 36, 44);
+  // print duration
+  char bufferRemaining[14];
+  duration_t remaining = ui.get_remaining_time();//.get_progress_percent();//print_job_timer.duration();
+  remaining.toDigital(bufferRemaining);
+
+  tft.canvas((270 ) , y, 128, 29);
+  tft.set_background(COLOR_BACKGROUND);
+  tft_string.set(bufferRemaining);
+  tft.add_text(tft_string.center(128), 0, COLOR_PRINT_TIME, tft_string);
+
 
   y += TERN(HAS_UI_480x272, 28, 36);
   // progress bar
