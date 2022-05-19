@@ -140,11 +140,13 @@ void GcodeSuite::M48() {
     randomSeed(millis());
 
     float sample_sum = 0.0;
+    float pz = 0;
 
     LOOP_L_N(n, n_samples) {
       #if HAS_STATUS_MESSAGE
         // Display M48 progress in the status bar
-        ui.status_printf_P(0, PSTR(S_FMT ": %d/%d"), GET_TEXT(MSG_M48_POINT), int(n + 1), int(n_samples));
+        //
+        ui.status_printf_P(0, PSTR(S_FMT ": %d/%d: %d"), GET_TEXT(MSG_M48_POINT), int(n + 1), int(n_samples),int(pz*1000)); //todo add messurment number
       #endif
 
       // When there are "legs" of movement move around the point before probing
@@ -216,7 +218,7 @@ void GcodeSuite::M48() {
       } // n_legs
 
       // Probe a single point
-      const float pz = probe.probe_at_point(test_position, raise_after, 0);
+      pz = probe.probe_at_point(test_position, raise_after, 0);
 
       // Break the loop if the probe fails
       probing_good = !isnan(pz);
@@ -224,6 +226,7 @@ void GcodeSuite::M48() {
 
       // Store the new sample
       sample_set[n] = pz;
+      
 
       // Keep track of the largest and smallest samples
       NOMORE(min, pz);
@@ -239,14 +242,14 @@ void GcodeSuite::M48() {
       LOOP_LE_N(j, n) dev_sum += sq(sample_set[j] - mean);
       sigma = SQRT(dev_sum / (n + 1));
 
-      if (verbose_level > 1) {
+      //if (verbose_level > 1) {
         SERIAL_ECHO(n + 1);
         SERIAL_ECHOPAIR(" of ", n_samples);
         SERIAL_ECHOPAIR_F(": z: ", pz, 3);
         SERIAL_CHAR(' ');
         dev_report(verbose_level > 2, mean, sigma, min, max);
         SERIAL_EOL();
-      }
+      //}
 
     } // n_samples loop
   }
