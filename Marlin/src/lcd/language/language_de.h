@@ -63,7 +63,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_AUTO_HOME_Z                     = _UxGT("Home Z");
   PROGMEM Language_Str MSG_AUTO_Z_ALIGN                    = _UxGT("Z-Achsen ausgleichen");
   PROGMEM Language_Str MSG_ASSISTED_TRAMMING               = _UxGT("Bett ausrichten"); // Bettausrichtung
-  PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("XYZ homen");
+  PROGMEM Language_Str MSG_LEVEL_BED_HOMING                = _UxGT("XYZ Homen");
   PROGMEM Language_Str MSG_LEVEL_BED_WAITING               = _UxGT("Klick zum Starten");
   PROGMEM Language_Str MSG_LEVEL_BED_NEXT_POINT            = _UxGT("Nächste Koordinate");
   PROGMEM Language_Str MSG_LEVEL_BED_DONE                  = _UxGT("Kalibrieren fertig!");
@@ -303,6 +303,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_E_STEPS                         = LCD_STR_E _UxGT(" Steps/mm");
   PROGMEM Language_Str MSG_EN_STEPS                        = _UxGT("* Steps/mm");
   PROGMEM Language_Str MSG_TEMPERATURE                     = _UxGT("Temperatur");
+  PROGMEM Language_Str MSG_TEMPERATURE_PID                 = _UxGT("Temperatur PID");
   PROGMEM Language_Str MSG_MOTION                          = _UxGT("Bewegung");
   PROGMEM Language_Str MSG_FILAMENT                        = _UxGT("Filament");
   PROGMEM Language_Str MSG_VOLUMETRIC_ENABLED              = _UxGT("E in mm") SUPERSCRIPT_THREE;
@@ -640,7 +641,12 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MOVE_NOZZLE_TO_BED              = _UxGT("Bewege Düse zum Bett");
     
 
-
+  PROGMEM Language_Str MSG_TOP_LEFT                        = _UxGT("Oben Links");
+  PROGMEM Language_Str MSG_BOTTOM_LEFT                     = _UxGT("Unten Rechts");
+  PROGMEM Language_Str MSG_TOP_RIGHT                       = _UxGT("Oben Links");
+  PROGMEM Language_Str MSG_BOTTOM_RIGHT                    = _UxGT("Unten Rechts");
+  PROGMEM Language_Str MSG_CALIBRATION_COMPLETED           = _UxGT("Kalibrierung Erfolgreich");
+  PROGMEM Language_Str MSG_CALIBRATION_FAILED              = _UxGT("Kalibrierung Fehlgeschlagen");
 
 
 }

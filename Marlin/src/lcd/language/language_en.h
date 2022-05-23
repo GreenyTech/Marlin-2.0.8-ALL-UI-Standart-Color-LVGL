@@ -356,6 +356,7 @@ namespace Language_en {
   PROGMEM Language_Str MSG_E_STEPS                         = _UxGT("E steps/mm");
   PROGMEM Language_Str MSG_EN_STEPS                        = _UxGT("* Steps/mm");
   PROGMEM Language_Str MSG_TEMPERATURE                     = _UxGT("Temperature");
+  PROGMEM Language_Str MSG_TEMPERATURE_PID                 = _UxGT("Temperatur PID");
   PROGMEM Language_Str MSG_MOTION                          = _UxGT("Motion");
   PROGMEM Language_Str MSG_FILAMENT                        = _UxGT("Filament");
   PROGMEM Language_Str MSG_VOLUMETRIC_ENABLED              = _UxGT("E in mm") SUPERSCRIPT_THREE;
