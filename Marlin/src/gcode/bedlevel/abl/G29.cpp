@@ -726,6 +726,7 @@ G29_TYPE GcodeSuite::G29() {
     //TODO turn down bad temperatur.
     queue.inject_P(PSTR("M140 S0"));
     ui.reset_status();
+    ui.store_settings();
 
   }
   #endif // !PROBE_MANUALLY
