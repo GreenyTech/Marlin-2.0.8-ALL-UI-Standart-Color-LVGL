@@ -139,7 +139,7 @@ void PrintJobRecovery::load() {
     numberOfPOLoads++;
 
   useFirstFileCurrently =!useFirstFileCurrently; //make access more likeley; second one is the fist one that could be keaped 
-  uint32 lengthFirst=0;//1 means invalid
+  uint32_t lengthFirst=0;//1 means invalid
 
   if(card.singleFileExists(getFile(), getFileName())){
     //lengthFirst
@@ -153,7 +153,7 @@ void PrintJobRecovery::load() {
   }
 
   useFirstFileCurrently =!useFirstFileCurrently; //check the second file
-  uint32 lengthSecond=0; //can be implemented with one variable less.
+  uint32_t lengthSecond=0; //can be implemented with one variable less.
   if(card.singleFileExists(getFile(), getFileName())){
     open(true);
     (void)getFile().read(&info, sizeof(info));
