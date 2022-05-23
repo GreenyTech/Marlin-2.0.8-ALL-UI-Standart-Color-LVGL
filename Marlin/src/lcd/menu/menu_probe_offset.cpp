@@ -60,6 +60,10 @@ inline void z_clearance_move() {
 
 void set_offset_and_go_back(const_float_t z) {
   probe.offset.z = z;
+  
+          SERIAL_ECHOPGM("probmen offset: ");
+          SERIAL_ECHO(probe.offset.z );
+          SERIAL_EOL();
   SET_SOFT_ENDSTOP_LOOSE(false);
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
   ui.goto_previous_screen_no_defer();
@@ -102,8 +106,11 @@ void probe_offset_wizard_menu() {
   }
 
   ACTION_ITEM(MSG_BUTTON_DONE, []{
-    set_offset_and_go_back(calculated_z_offset);
-    current_position.z = z_offset_ref;  // Set Z to z_offset_ref, as we can expect it is at probe height
+    SERIAL_ECHOPGM("offsetMenuProbe: ");
+    SERIAL_ECHO(current_position.z);
+    SERIAL_EOL();
+    set_offset_and_go_back(current_position.z);
+    current_position.z = 0;  // Set Z to z_offset_ref, as we can expect it is at probe height
     sync_plan_position();
     z_clearance_move();                 // Raise Z as if it was homed
   });
