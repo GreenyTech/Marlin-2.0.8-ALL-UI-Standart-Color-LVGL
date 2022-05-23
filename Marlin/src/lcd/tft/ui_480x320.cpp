@@ -659,8 +659,13 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
                   );
       if (WITHIN(new_offs, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX)) {
         babystep.add_steps(Z_AXIS, babystep_increment);
-        if (do_probe)
+        if (do_probe){
+          
           probe.offset.z = new_offs;
+          SERIAL_ECHOPGM("ui offset baby steps: ");
+          SERIAL_ECHO(probe.offset.z );
+          SERIAL_EOL();
+        }
         else
           TERN(BABYSTEP_HOTEND_Z_OFFSET, hotend_offset[active_extruder].z = new_offs, NOOP);
         drawMessage(""); // clear the error

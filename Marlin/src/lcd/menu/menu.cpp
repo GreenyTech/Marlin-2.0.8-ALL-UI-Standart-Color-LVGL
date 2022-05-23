@@ -323,8 +323,12 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
 
         babystep.add_steps(Z_AXIS, babystep_increment);
 
-        if (do_probe)
+        if (do_probe){
           probe.offset.z = new_offs;
+          SERIAL_ECHOPGM("menu offset baby steps: ");
+          SERIAL_ECHO(probe.offset.z );
+          SERIAL_EOL();
+          }
         else
           TERN(BABYSTEP_HOTEND_Z_OFFSET, hotend_offset[active_extruder].z = new_offs, NOOP);
 
