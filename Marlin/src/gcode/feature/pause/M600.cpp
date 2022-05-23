@@ -46,6 +46,8 @@
   #include "../../../feature/runout.h"
 #endif
 
+
+
 /**
  * M600: Pause for filament change
  *
@@ -133,14 +135,14 @@ void GcodeSuite::M600() {
   #else
     // Unload filament
     const float unload_length = -ABS(parser.seen('U') ? parser.value_axis_units(E_AXIS)
-                                                      : fc_settings[active_extruder].unload_length);
+                                                      : FILAMENT_CHANGE_UNLOAD_LENGTH );//WARNING fc_settings[active_extruder].unload_length was replaced by the hardcoded value FILAMENT_CHANGE_FAST_LOAD_LENGTH...
 
     // Slow load filament
     constexpr float slow_load_length = FILAMENT_CHANGE_SLOW_LOAD_LENGTH;
 
     // Fast load filament
     const float fast_load_length = ABS(parser.seen('L') ? parser.value_axis_units(E_AXIS)
-                                                        : fc_settings[active_extruder].load_length);
+                                                        : FILAMENT_CHANGE_FAST_LOAD_LENGTH ); //WARNING fc_settings[active_extruder].load_length was replaced by the hardcoded value FILAMENT_CHANGE_FAST_LOAD_LENGTH...
   #endif
 
   const int beep_count = parser.intval('B', -1

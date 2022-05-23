@@ -107,7 +107,7 @@ void GcodeSuite::M701() {
     constexpr float     purge_length = ADVANCED_PAUSE_PURGE_LENGTH,
                     slow_load_length = FILAMENT_CHANGE_SLOW_LOAD_LENGTH;
         const float fast_load_length = ABS(parser.seen('L') ? parser.value_axis_units(E_AXIS)
-                                                            : fc_settings[active_extruder].load_length);
+                                                            : fc_settings[active_extruder].load_length);//WARNING fc_settings[target_extruder].load_length was replaced by the hardcoded value FILAMENT_CHANGE_FAST_LOAD_LENGTH...
     load_filament(
       slow_load_length, fast_load_length, purge_length,
       FILAMENT_CHANGE_ALERT_BEEPS,

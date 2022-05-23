@@ -59,7 +59,7 @@ void GcodeSuite::M603() {
     #if ENABLED(PREVENT_LENGTHY_EXTRUDE)
       NOMORE(fc_settings[target_extruder].load_length, EXTRUDE_MAXLENGTH);
     #endif
-  }
+  }//WARNING fc_settings[target_extruder].load_length was replaced by the hardcoded value FILAMENT_CHANGE_FAST_LOAD_LENGTH...
 }
 
 #endif // ADVANCED_PAUSE_FEATURE

@@ -146,7 +146,7 @@ void menu_backlash();
           EDIT_ITEM_FAST_N(float4, n, MSG_FILAMENTUNLOAD_E, &fc_settings[n].unload_length, 0, extrude_maxlength);
       #endif
 
-      EDIT_ITEM_FAST(float4, MSG_FILAMENT_LOAD, &fc_settings[active_extruder].load_length, 0, extrude_maxlength);
+      EDIT_ITEM_FAST(float4, MSG_FILAMENT_LOAD, &fc_settings[active_extruder].load_length, 0, extrude_maxlength); //WARNING &fc_settings[active_extruder].load_length was replaced by the hardcoded value FILAMENT_CHANGE_FAST_LOAD_LENGTH...
       #if HAS_MULTI_EXTRUDER
         LOOP_L_N(n, EXTRUDERS)
           EDIT_ITEM_FAST_N(float4, n, MSG_FILAMENTLOAD_E, &fc_settings[n].load_length, 0, extrude_maxlength);
