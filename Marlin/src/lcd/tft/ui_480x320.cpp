@@ -760,8 +760,8 @@ static void x_minus() { moveAxis(X_AXIS, -1); }
 static void x_plus()  { moveAxis(X_AXIS, 1);  }
 static void y_plus()  { moveAxis(Y_AXIS, 1);  }
 static void y_minus() { moveAxis(Y_AXIS, -1); }
-static void z_plus()  { moveAxis(Z_AXIS, 1);  }
-static void z_minus() { moveAxis(Z_AXIS, -1); }
+static void z_plus()  { moveAxis(Z_AXIS, -1);  }
+static void z_minus() { moveAxis(Z_AXIS, 1); }
 
 #if ENABLED(TOUCH_SCREEN)
   static void e_select() {
@@ -797,7 +797,7 @@ static void z_minus() { moveAxis(Z_AXIS, -1); }
 
 #if HAS_BED_PROBE
   static void z_select() {
-    motionAxisState.z_selection *= -1;
+    motionAxisState.z_selection *= -1; //TODO
     quick_feedback();
     drawCurZSelection();
     drawAxisValue(Z_AXIS);
@@ -864,7 +864,7 @@ void MarlinUI::move_axis_screen() {
   drawAxisValue(Y_AXIS);
 
   x += spacing;
-  drawBtn(x, y, "Z+", (intptr_t)z_plus, imgUp, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
+  drawBtn(x, y, "Z-", (intptr_t)z_plus, imgUp, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
 
   // ROW 2 -> "Ex"  X-  HOME X+  "Z"
   y += BTN_HEIGHT + (TFT_HEIGHT - Y_MARGIN * 2 - 4 * BTN_HEIGHT) / 3;
@@ -915,7 +915,7 @@ void MarlinUI::move_axis_screen() {
   drawBtn(x, y, "Y-", (intptr_t)y_minus, imgDown, Y_BTN_COLOR, !busy);
 
   x += BTN_WIDTH + spacing;
-  drawBtn(x, y, "Z-", (intptr_t)z_minus, imgDown, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
+  drawBtn(x, y, "Z+", (intptr_t)z_minus, imgDown, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
 
   // Cur Z
   motionAxisState.zValuePos.x = x;
