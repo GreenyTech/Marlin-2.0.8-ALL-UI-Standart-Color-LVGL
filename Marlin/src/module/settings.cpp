@@ -1465,7 +1465,11 @@ void MarlinSettings::postprocess() {
         store_mesh(ubl.storage_slot);
     #endif
 
-    if (!eeprom_error) LCD_MESSAGEPGM(MSG_SETTINGS_STORED);
+    if (!printingIsActive()){
+      if (!eeprom_error){
+        LCD_MESSAGEPGM(MSG_SETTINGS_STORED); //show always the correct printing file
+      }
+    }
 
     TERN_(EXTENSIBLE_UI, ExtUI::onConfigurationStoreWritten(!eeprom_error));
 
