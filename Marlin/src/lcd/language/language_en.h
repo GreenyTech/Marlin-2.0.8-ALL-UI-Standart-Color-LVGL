@@ -712,6 +712,8 @@ namespace Language_en {
   PROGMEM Language_Str MSG_CALIBRATION_FAILED              = _UxGT("Calibration Failed");
 
   PROGMEM Language_Str MSG_DRIVER_BACKWARD                 = _UxGT(" driver backward");
+  PROGMEM Language_Str MSG_HEATING_BED_AND_NOZZLE                = _UxGT("Bed and Nozzle heat up");
+  PROGMEM Language_Str MSG_THIS_MAY_TAKE_SOME_TIME                = _UxGT("This may take a few minutes");
 }
 
 #if FAN_COUNT == 1

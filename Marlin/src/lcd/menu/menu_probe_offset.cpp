@@ -32,6 +32,7 @@
 #include "menu_addon.h"
 #include "../../gcode/queue.h"
 #include "../../module/motion.h"
+//#include "../../module/temperature.h"
 #include "../../module/planner.h"
 #include "../../module/probe.h"
 
@@ -57,6 +58,15 @@ inline void z_clearance_move() {
     #endif
   );
 }
+inline void clear_temperature(){
+  
+    
+    
+    queue.inject_P(PSTR("M140 S0\nM104 S0")); //dont wait. Set bad temperatur 0
+    //queue.inject_P(PSTR("M104 S0")); //dont wait set nozzle temp. to 0
+
+}
+
 
 void set_offset_and_go_back(const_float_t z) {
   probe.offset.z = z;
@@ -71,8 +81,30 @@ void _goto_manual_move_z(const_float_t scale) {
 }
 
 void probe_offset_wizard_menu() {
+
+  
+    //queue.inject_P(PSTR("M190 S55")); //wait
+
+  //TODO retract
+  //thermalManager.setTargetHotend(210, 0);
+  //ui.pause_show_message(PAUSE_MESSAGE_HEATING, PAUSE_MODE_SAME);
+  
+    //const int8_t target_extruder = 0;//get_target_extruder_from_command();
+    //ui.pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, 0);
+
+    /**const int beep_count = parser.intval('B', -1
+    #ifdef FILAMENT_CHANGE_ALERT_BEEPS
+      + 1 + FILAMENT_CHANGE_ALERT_BEEPS
+    #endif
+  );
+
+    wait_for_confirmation(true, beep_count DXC_PASS);
+  **/
+  //
+  
   START_MENU(); //Initialize screen
   //TODO home 
+
   
   calculated_z_offset = probe.offset.z + current_position.z - z_offset_ref;
 
@@ -80,7 +112,7 @@ void probe_offset_wizard_menu() {
     //STATIC_ITEM(MSG_MOVE_NOZZLE_TO_BED, SS_CENTER|SS_INVERT); //Only for the menu
 
   //STATIC_ITEM_P(PSTR("Z="), SS_CENTER, ftostr42_52(current_position.z));
-  STATIC_ITEM(MSG_ZPROBE_ZOFFSET_SET, SS_LEFT, ftostr42_52(calculated_z_offset));
+  STATIC_ITEM( MSG_ZPROBE_ZOFFSET_SET, SS_LEFT, ftostr42_52(calculated_z_offset));
 
   SUBMENU(MSG_MOVE_1MM,  []{ _goto_manual_move_z( 1);    });
   SUBMENU(MSG_MOVE_01MM, []{ _goto_manual_move_z( 0.1f); });
@@ -105,8 +137,10 @@ void probe_offset_wizard_menu() {
     set_offset_and_go_back(calculated_z_offset);
     current_position.z = z_offset_ref;  // Set Z to z_offset_ref, as we can expect it is at probe height
     sync_plan_position();
-    z_clearance_move();                 // Raise Z as if it was homed
     ui.store_settings(); //Save settings 
+    z_clearance_move();                 // Raise Z as if it was homed
+    
+    clear_temperature();
   });
 
   ACTION_ITEM(MSG_BUTTON_CANCEL, []{
@@ -117,11 +151,15 @@ void probe_offset_wizard_menu() {
       queue.inject_P(PSTR("G28Z"));
     #else // Otherwise do a Z clearance move like after Homing
       z_clearance_move();
+      //clear_movement_and_Temperature();
     #endif
+    
+    clear_temperature();
   });
 
   END_MENU();
 }
+
 
 void prepare_for_probe_offset_wizard() {
   #if defined(PROBE_OFFSET_WIZARD_XY_POS) || !HOMING_Z_WITH_PROBE
@@ -161,10 +199,21 @@ void prepare_for_probe_offset_wizard() {
   ui.defer_status_screen();
 }
 
+inline void _lcd_draw_heating_up_temperature() {
+  if (ui.should_draw()) {
+    constexpr uint8_t line = (LCD_HEIGHT - 1) / 2;
+    MenuItem_static::draw(line, GET_TEXT(MSG_HEATING_BED_AND_NOZZLE)); //GET_TEXT(MSG_FILAMENT_CHANGE_LOAD)
+  MenuItem_static::draw(line+1, GET_TEXT(MSG_THIS_MAY_TAKE_SOME_TIME));
+  //MenuItem_static::draw(2, "Anschließend wird gehomet.");
+  /**MenuItem_static::draw(3, ftostr54sign(thermalManager.temp_bed.celsius)); //Wird nicht geupdatet...
+  MenuItem_static::draw(4, ftostr54sign(thermalManager.temp_hotend[0].celsius));**/
+  }
+}
 void goto_probe_offset_wizard() {
   ui.defer_status_screen();
   set_all_unhomed();
 
+  
   // Store probe.offset.z for Case: Cancel
   z_offset_backup = probe.offset.z;
 
@@ -177,10 +226,57 @@ void goto_probe_offset_wizard() {
     leveling_was_active = planner.leveling_active;
     set_bed_leveling_enabled(false);
   #endif
+  /**
+  queue.inject_P(PSTR("M140 S55"));//just set Bed temperatur
+  
+  queue.inject_P(PSTR("M104 S210")); //M109 waits and M104 dont wait. Only gcode queue 
 
   // Home all axes
   queue.inject_P(G28_STR);
+**/
 
+  queue.inject_P(PSTR("M190 S55\nM109 S210\nG28")); //G10 Retract
+
+
+
+      ui.goto_screen([]{
+
+        //ui.pause_show_message(PAUSE_MESSAGE_HEATING, PAUSE_MODE_SAME);
+        _lcd_draw_heating_up_temperature(); //temperature like that
+        //_lcd_draw_Heating_up_Temperature();
+        if (all_axes_homed()) {
+          z_offset_ref = 0;             // Set Z Value for Wizard Position to 0
+          ui.goto_screen(prepare_for_probe_offset_wizard);
+          ui.defer_status_screen();
+        }
+      });
+
+  //_lcd_draw_Heating_up_Temperature();
+/**
+  ui.goto_screen([]{
+
+    //_lcd_draw_homing(); //temperature like that
+    
+    ui.pause_show_message(PAUSE_MESSAGE_HEATING, PAUSE_MODE_SAME);
+    //_lcd_draw_Heating_up_Temperature();
+    //!thermalManager.isHeatingBed()
+    if (!thermalManager.isHeatingBed()) {
+      
+      ui.goto_screen([]{
+
+        _lcd_draw_homing(); //temperature like that
+        if (all_axes_homed()) {
+          z_offset_ref = 0;             // Set Z Value for Wizard Position to 0
+          ui.goto_screen(prepare_for_probe_offset_wizard);
+          ui.defer_status_screen();
+        }
+      });
+  
+    }
+  });
+  **/
+  /**
+ //temperature like that
   ui.goto_screen([]{
     _lcd_draw_homing();
     if (all_axes_homed()) {
@@ -189,7 +285,9 @@ void goto_probe_offset_wizard() {
       ui.defer_status_screen();
     }
   });
+  **/
 
+//clear_movement_and_Temperature();
 }
 
 #endif // PROBE_OFFSET_WIZARD

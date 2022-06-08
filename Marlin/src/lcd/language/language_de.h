@@ -426,7 +426,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_ZPROBE_XOFFSET                  = _UxGT("Sondenversatz X");
   PROGMEM Language_Str MSG_ZPROBE_YOFFSET                  = _UxGT("Sondenversatz Y");
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Abstand Düse zum Bett"); 
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("Abstand Düse zum Bett: "); 
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("Neuer Z Offset: "); 
   
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_BLIND            = _UxGT("Abstand Düse zu Bett (erster Layer)"); // TODO hinzugefuegt.
   PROGMEM Language_Str MSG_PROBE_WIZARD                    = _UxGT("Abstand Düse zu Bett Routine");
@@ -583,6 +583,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_REMINDER_SAVE_SETTINGS          = _UxGT("Bald speichern!");
   PROGMEM Language_Str MSG_PASSWORD_REMOVED                = _UxGT("Passwort gelöscht");
 
+
+  PROGMEM Language_Str MSG_HEATING_BED_AND_NOZZLE                = _UxGT("Bett und Düse heizen auf");
+  PROGMEM Language_Str MSG_THIS_MAY_TAKE_SOME_TIME                = _UxGT("das kann einige Minuten dauern");
   //
   // Die Filament-Change-Bildschirme können bis zu 3 Zeilen auf einem 4-Zeilen-Display anzeigen
   //                                       ...oder 2 Zeilen auf einem 3-Zeilen-Display.
@@ -590,7 +593,7 @@ namespace Language_de {
     PROGMEM Language_Str MSG_ADVANCED_PAUSE_WAITING        = _UxGT(MSG_2_LINE("Knopf drücken um", "Druck fortzusetzen"));
     PROGMEM Language_Str MSG_PAUSE_PRINT_PARKING           = _UxGT(MSG_2_LINE("Druck ist", "pausiert..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_INIT          = _UxGT(MSG_3_LINE("Warte auf den", "Start des", "Filamentwechsels..."));
-    PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("Filament einlegen", "und Knopf drücken", "um fortzusetzen"));
+    PROGMEM Language_Str MSG_FILAMENT_CHANGE_INSERT        = _UxGT(MSG_3_LINE("neues Filament einlegen und", "bis zur Düse Schieben", "zum Fortsetzen Berühren"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEAT          = _UxGT(MSG_2_LINE("Knopf drücken um", "Düse aufzuheizen"));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_HEATING       = _UxGT(MSG_2_LINE("Düse heizt auf", "bitte warten..."));
     PROGMEM Language_Str MSG_FILAMENT_CHANGE_UNLOAD        = _UxGT(MSG_3_LINE("Warte auf", "Entnahme", "des Filaments..."));
