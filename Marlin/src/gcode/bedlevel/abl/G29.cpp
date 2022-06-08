@@ -728,7 +728,7 @@ G29_TYPE GcodeSuite::G29() {
     ui.reset_status();
     ui.store_settings();
     
-    queue.inject_P(PSTR("M125 XY")); //park Position
+    //queue.inject_P(PSTR("M125 XY")); //park Position
 
   }
   #endif // !PROBE_MANUALLY
