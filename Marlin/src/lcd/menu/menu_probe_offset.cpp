@@ -62,7 +62,7 @@ inline void clear_temperature(){
   
     
     
-    queue.inject_P(PSTR("M140 S0\nM104 S0")); //dont wait. Set bad temperatur 0
+    queue.inject_P(PSTR("G1 E0\nM140 S0\nM104 S0")); //dont wait. Set bad temperatur 0
     //queue.inject_P(PSTR("M104 S0")); //dont wait set nozzle temp. to 0
 
 }
