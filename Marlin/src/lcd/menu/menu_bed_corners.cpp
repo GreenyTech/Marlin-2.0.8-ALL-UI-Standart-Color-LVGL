@@ -329,7 +329,9 @@ static void _lcd_level_bed_corners_get_next_position() {
 #endif // !LEVEL_CORNERS_USE_PROBE
 
 static void _lcd_level_bed_corners_homing() {
-  _lcd_draw_homing();
+  //todo
+  //_lcd_draw_homing();
+  _lcd_draw_heating_up_temperature();
   if (!all_axes_homed()) return;
   #if ENABLED(LEVEL_CORNERS_USE_PROBE)
     _lcd_test_corners();
@@ -345,6 +347,7 @@ static void _lcd_level_bed_corners_homing() {
         , []{
           //TODO Gabriel 
           //ui.chirp();
+            queue.inject_P(PSTR("G1 E0\nM140 S0\nM104 S0"));
             line_to_z(LEVEL_CORNERS_Z_HOP); // Raise Z off the bed when done
             TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
             ui.goto_previous_screen_no_defer();
@@ -359,17 +362,21 @@ static void _lcd_level_bed_corners_homing() {
 }
 
 void _lcd_level_bed_corners() {
+  //TODO insert Leveling
   ui.defer_status_screen();
-  if (!all_axes_trusted()) {
+  /**if (!all_axes_trusted()) {
     set_all_unhomed();
     queue.inject_P(G28_STR);
-  }
+  }**/
+  set_all_unhomed();
+  queue.inject_P(PSTR("M190 S55\nM109 S210\nG92 E0\nG1 E F500\nG1 E-6\nG28")); //TODO: G10 Retract
 
   // Disable leveling so the planner won't mess with us
   #if HAS_LEVELING
     leveling_was_active = planner.leveling_active;
     set_bed_leveling_enabled(false);
   #endif
+
 
   ui.goto_screen(_lcd_level_bed_corners_homing);
 }

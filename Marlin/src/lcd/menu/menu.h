@@ -208,6 +208,7 @@ void menu_move();
 
 void lcd_move_z();
 void _lcd_draw_homing();
+void _lcd_draw_heating_up_temperature();
 
 #define HAS_LINE_TO_Z ANY(DELTA, PROBE_MANUALLY, MESH_BED_LEVELING, LEVEL_BED_CORNERS)
 

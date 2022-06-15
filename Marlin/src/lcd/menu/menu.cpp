@@ -355,6 +355,17 @@ void _lcd_draw_homing() {
   }
 }
 
+void _lcd_draw_heating_up_temperature() {
+  if (ui.should_draw()) {
+    constexpr uint8_t line = (LCD_HEIGHT - 1) / 2;
+    MenuItem_static::draw(line, GET_TEXT(MSG_HEATING_BED_AND_NOZZLE)); //GET_TEXT(MSG_FILAMENT_CHANGE_LOAD)
+  MenuItem_static::draw(line+1, GET_TEXT(MSG_THIS_MAY_TAKE_SOME_TIME));
+  //MenuItem_static::draw(2, "Anschließend wird gehomet.");
+  /**MenuItem_static::draw(3, ftostr54sign(thermalManager.temp_bed.celsius)); //Wird nicht geupdatet...
+  MenuItem_static::draw(4, ftostr54sign(thermalManager.temp_hotend[0].celsius));**/
+  }
+}
+
 #if ENABLED(LCD_BED_LEVELING) || (HAS_LEVELING && DISABLED(SLIM_LCD_MENUS))
   #include "../../feature/bedlevel/bedlevel.h"
   void _lcd_toggle_bed_leveling() { set_bed_leveling_enabled(!planner.leveling_active); }

@@ -35,6 +35,7 @@
 //#include "../../module/temperature.h"
 #include "../../module/planner.h"
 #include "../../module/probe.h"
+//#include "menu.h"
 
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
@@ -199,16 +200,7 @@ void prepare_for_probe_offset_wizard() {
   ui.defer_status_screen();
 }
 
-inline void _lcd_draw_heating_up_temperature() {
-  if (ui.should_draw()) {
-    constexpr uint8_t line = (LCD_HEIGHT - 1) / 2;
-    MenuItem_static::draw(line, GET_TEXT(MSG_HEATING_BED_AND_NOZZLE)); //GET_TEXT(MSG_FILAMENT_CHANGE_LOAD)
-  MenuItem_static::draw(line+1, GET_TEXT(MSG_THIS_MAY_TAKE_SOME_TIME));
-  //MenuItem_static::draw(2, "Anschließend wird gehomet.");
-  /**MenuItem_static::draw(3, ftostr54sign(thermalManager.temp_bed.celsius)); //Wird nicht geupdatet...
-  MenuItem_static::draw(4, ftostr54sign(thermalManager.temp_hotend[0].celsius));**/
-  }
-}
+
 void goto_probe_offset_wizard() {
   ui.defer_status_screen();
   set_all_unhomed();
