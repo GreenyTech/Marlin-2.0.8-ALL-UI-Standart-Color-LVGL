@@ -57,7 +57,7 @@ enum XPTCoordinate : uint8_t {
 };
 
 #if !defined(XPT2046_Z1_THRESHOLD)
-  #define XPT2046_Z1_THRESHOLD 10
+  #define XPT2046_Z1_THRESHOLD 60
 #endif
 
 class XPT2046 {
