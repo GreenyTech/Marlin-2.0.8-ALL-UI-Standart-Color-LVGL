@@ -85,6 +85,10 @@ void menu_configuration();
   void menu_info();
 #endif
 
+#if ENABLED(SERVICE_ROUTINE)
+void menu_service();
+#endif
+
 #if EITHER(LED_CONTROL_MENU, CASE_LIGHT_MENU)
   void menu_led();
 #endif
@@ -462,6 +466,9 @@ void menu_main() {
  
   ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
 
+  
+  SUBMENU(MSG_Service_Routine_MENU, menu_service); //add menu information -> replace
+  
   SUBMENU(MSG_INFO_PRINTER_MENU, menu_new_info_printer);           // Printer Info >
     
 /**
@@ -522,35 +529,8 @@ void menu_main() {
 
   #endif // HAS_ENCODER_WHEEL && SDSUPPORT
 
-  #if HAS_SERVICE_INTERVALS
-    static auto _service_reset = [](const int index) {
-      print_job_timer.resetServiceInterval(index);
-      ui.completion_feedback();
-      ui.reset_status();
-      ui.return_to_status();
-    };
-    #if SERVICE_INTERVAL_1 > 0
-      CONFIRM_ITEM_P(PSTR(SERVICE_NAME_1),
-        MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
-        []{ _service_reset(1); }, ui.goto_previous_screen,
-        GET_TEXT(MSG_SERVICE_RESET), F(SERVICE_NAME_1), PSTR("?")
-      );
-    #endif
-    #if SERVICE_INTERVAL_2 > 0
-      CONFIRM_ITEM_P(PSTR(SERVICE_NAME_2),
-        MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
-        []{ _service_reset(2); }, ui.goto_previous_screen,
-        GET_TEXT(MSG_SERVICE_RESET), F(SERVICE_NAME_2), PSTR("?")
-      );
-    #endif
-    #if SERVICE_INTERVAL_3 > 0
-      CONFIRM_ITEM_P(PSTR(SERVICE_NAME_3),
-        MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
-        []{ _service_reset(3); }, ui.goto_previous_screen,
-        GET_TEXT(MSG_SERVICE_RESET), F(SERVICE_NAME_3), PSTR("?")
-      );
-    #endif
-  #endif
+
+
 
   #if HAS_GAMES && DISABLED(LCD_INFO_MENU)
     #if ENABLED(GAMES_EASTER_EGG)

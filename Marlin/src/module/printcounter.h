@@ -59,8 +59,7 @@ class PrintCounter: public Stopwatch {
       typedef uint16_t eeprom_address_t;
     #endif
 
-    static printStatistics data;
-
+    
     /**
      * @brief EEPROM address
      * @details Defines the start offset address where the data is stored.
@@ -109,6 +108,8 @@ class PrintCounter: public Stopwatch {
 
   public:
 
+    static printStatistics data;
+
     /**
      * @brief Initialize the print counter
      */
@@ -116,7 +117,7 @@ class PrintCounter: public Stopwatch {
       super::init();
       loadStats();
     }
-
+    
     /**
      * @brief Check if Print Statistics has been loaded
      * @details Return true if the statistical data has been loaded.

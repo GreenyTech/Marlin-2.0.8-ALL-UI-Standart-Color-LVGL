@@ -1167,6 +1167,9 @@
     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
   #endif
 
+
+  #define SERVICE_ROUTINE 
+
   // BACK menu items keep the highlight at the top
   //#define TURBO_BACK_MENU_ITEM
 
@@ -1293,6 +1296,7 @@
   #define EVENT_GCODE_SD_ABORT "G91\n G1 Z60\nG90" //parking G27 P2      // G-code to run on SD Abort Print (e.g., "G28XY" or "G27")
                                             //G28XY home X and Y achis
                                             //G1 Z10 //moves the z axes 10 cm up
+                                            //Todo
 
   #if ENABLED(PRINTER_EVENT_LEDS)
     #define PE_LEDS_COMPLETED_TIME  (30*60) // (seconds) Time to keep the LED "done" color before restoring normal illumination
@@ -1310,7 +1314,7 @@
   #if ENABLED(POWER_LOSS_RECOVERY)
     #define PLR_ENABLED_DEFAULT   true // Power Loss Recovery enabled by default. (Set with 'M413 Sn' & M500)
     //#define BACKUP_POWER_SUPPLY       // Backup power / UPS to move the steppers on power loss
-    #define POWER_LOSS_ZRAISE       8 // (mm) Z axis raise on resume (on power loss with UPS)
+    #define POWER_LOSS_ZRAISE       0 // (mm) Z axis raise on resume (on power loss with UPS)
     // #define POWER_LOSS_PIN         -1 // Pin to detect power loss. Set to -1 to disable default pin on boards without module.
     //#define POWER_LOSS_STATE     HIGH // State of pin indicating power loss
     //#define POWER_LOSS_PULLUP         // Set pullup / pulldown as appropriate for your sensor
@@ -3845,10 +3849,12 @@
 #if ENABLED(PRINTCOUNTER)
   #define SERVICE_WARNING_BUZZES  3
   // Activate up to 3 service interval watchdogs
-  //#define SERVICE_NAME_1      "Service S"
-  //#define SERVICE_INTERVAL_1  100 // print hours
-  //#define SERVICE_NAME_2      "Service L"
-  //#define SERVICE_INTERVAL_2  200 // print hours
+  #define SERVICE_NAME_1      "Service 1"
+  #define SERVICE_NAME_RESET_1      "Reset Service 1"
+  #define SERVICE_INTERVAL_1  70 // print hours //hours//todo 70
+  #define SERVICE_NAME_2      "Service 2"
+  #define SERVICE_NAME_RESET_2      "Reset Service 2"
+  #define SERVICE_INTERVAL_2  150 // print hours
   //#define SERVICE_NAME_3      "Service 3"
   //#define SERVICE_INTERVAL_3    1 // print hours
 #endif

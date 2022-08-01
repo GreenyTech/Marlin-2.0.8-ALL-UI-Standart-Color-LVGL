@@ -1547,7 +1547,7 @@
   // NOTE: After 'M412 H1' the host handles filament runout and this script does not apply.
   
   #ifndef TFT_LVGL_UI
-    #define FILAMENT_RUNOUT_SCRIPT "M600"
+    #define FILAMENT_RUNOUT_SCRIPT "M600 X3 Y5 Z0" //TODO Testen B5 why? //didnt work
   #else
     #define FILAMENT_RUNOUT_SCRIPT "M25"
   #endif
@@ -2064,7 +2064,7 @@
  *
  * View the current statistics with M78.
  */
-//#define PRINTCOUNTER //TODO eprom 
+#define PRINTCOUNTER //TODO eprom 
 #if ENABLED(PRINTCOUNTER)
   #define PRINTCOUNTER_SAVE_INTERVAL 60 // (minutes) EEPROM save interval during print
 #endif

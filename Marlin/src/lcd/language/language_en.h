@@ -534,6 +534,7 @@ namespace Language_en {
   PROGMEM Language_Str MSG_MESH_LEVELING                   = _UxGT("Mesh Leveling");
   PROGMEM Language_Str MSG_MESH_DONE                       = _UxGT("Mesh probing done");
   PROGMEM Language_Str MSG_INFO_STATS_MENU                 = _UxGT("Printer Stats");
+  PROGMEM Language_Str MSG_INFO_NEXT_SERVICE_MENU                 = _UxGT("Next Services");
   PROGMEM Language_Str MSG_INFO_BOARD_MENU                 = _UxGT("Board Info");
   PROGMEM Language_Str MSG_INFO_THERMISTOR_MENU            = _UxGT("Thermistors");
   PROGMEM Language_Str MSG_INFO_EXTRUDERS                  = _UxGT("Extruders");
@@ -714,6 +715,13 @@ namespace Language_en {
   PROGMEM Language_Str MSG_DRIVER_BACKWARD                 = _UxGT(" driver backward");
   PROGMEM Language_Str MSG_HEATING_BED_AND_NOZZLE                = _UxGT("Bed and Nozzle heat up");
   PROGMEM Language_Str MSG_THIS_MAY_TAKE_SOME_TIME                = _UxGT("This may take a few minutes");
+
+
+  PROGMEM Language_Str MSG_Service_Routine_MENU               = _UxGT("Service Routine");
+  PROGMEM Language_Str MSG_Service_Routine_1_Finalized           = _UxGT("Have you done service routine 1?");
+  PROGMEM Language_Str MSG_Service_Routine_2_Finalized           = _UxGT( "Have you done service routine 2?");
+  PROGMEM Language_Str MSG_Service_Routine_Both_Finalized           = _UxGT( "Have you done both service routines?");
+  
 }
 
 #if FAN_COUNT == 1

@@ -52,11 +52,44 @@ void lcd_sd_updir() {
 
 #endif
 
+#if ENABLED(SERVICE_ROUTINE)
+inline bool checkIfServiceLimitIsReached(){
+  return print_job_timer.data.nextService1<=0 || print_job_timer.data.nextService2<=0;
+}
+
+inline const char * getServiceLimitText(){
+                if(print_job_timer.data.nextService1<=0 && print_job_timer.data.nextService2<=0){
+                  return GET_TEXT(MSG_Service_Routine_Both_Finalized);
+                }
+                else if(print_job_timer.data.nextService1<=0){
+                  return GET_TEXT(MSG_Service_Routine_1_Finalized);//\n(Düse Reinigen,...)";
+                }else if(print_job_timer.data.nextService2<=0){
+                  
+                  return GET_TEXT(MSG_Service_Routine_1_Finalized);//"Hast du Serviceroutine 2 durchgeführt?";//\n(Achsen Fetten,...)";
+                }
+                return "Fehler keine ServicesZeit";
+}
+#endif
 inline void sdcard_start_selected_file() {
   card.openAndPrintFile(card.filename);
   ui.return_to_status();
   ui.reset_status();
 }
+#if ENABLED(SERVICE_ROUTINE)
+inline void resetActiveServiceRoutinen(){
+  if(print_job_timer.data.nextService1<=0){
+    print_job_timer.resetServiceInterval(1);
+  }
+  
+  if(print_job_timer.data.nextService2<=0){  
+    print_job_timer.resetServiceInterval(2);
+  }
+  ui.completion_feedback();
+  ui.reset_status();
+  ui.return_to_status();
+
+}
+#endif
 
 class MenuItem_sdfile : public MenuItem_sdbase {
   public:
@@ -71,8 +104,63 @@ class MenuItem_sdfile : public MenuItem_sdbase {
         sd_items = screen_items;
       #endif
       #if ENABLED(SD_MENU_CONFIRM_START)
+
+
+
+
+
         MenuItem_submenu::action(pstr, []{
           char * const longest = card.longest_filename();
+          
+          
+          #if ENABLED(SERVICE_ROUTINE)
+          char buffer[strlen(longest) + 2];
+          buffer[0] = ' ';
+          strcpy(buffer + 1, longest);
+
+          
+          MenuItem_confirm::select_screen(
+            GET_TEXT(MSG_BUTTON_PRINT), GET_TEXT(MSG_BUTTON_CANCEL),
+                            [] () {
+                
+
+                if(checkIfServiceLimitIsReached()){
+
+                    ui.goto_screen([](){
+                          //sprint zurück zum eigentlichen screen
+                          char * const longest = card.longest_filename();
+                          char buffer[strlen(longest) + 2];
+                          buffer[0] = ' ';
+                          strcpy(buffer + 1, longest);
+                          MenuItem_confirm::select_screen(
+                            GET_TEXT(MSG_BUTTON_PRINT), GET_TEXT(MSG_BUTTON_CANCEL),
+                            [] () { //TODO reset Serviceroutine
+                            //_service_reset(1);
+                            resetActiveServiceRoutinen();
+
+                              sdcard_start_selected_file();}, 
+                              [] () {
+                                ui.goto_previous_screen();
+                                //cancel option
+                                //sdcard_start_selected_file();
+                              },
+                            getServiceLimitText(), buffer, PSTR("?")
+                          );
+                          }
+                    );
+                }
+                else{
+                  sdcard_start_selected_file();
+                }
+                
+
+
+
+             }, ui.goto_previous_screen,
+            GET_TEXT(MSG_START_PRINT), buffer, PSTR("?")
+          );
+          #else
+          
           char buffer[strlen(longest) + 2];
           buffer[0] = ' ';
           strcpy(buffer + 1, longest);
@@ -81,6 +169,11 @@ class MenuItem_sdfile : public MenuItem_sdbase {
             sdcard_start_selected_file, ui.goto_previous_screen,
             GET_TEXT(MSG_START_PRINT), buffer, PSTR("?")
           );
+
+          #endif
+          
+
+
         });
       #else
         sdcard_start_selected_file();

@@ -474,6 +474,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_UBL_LEVELING                    = _UxGT("Unified Bed Leveling");
   PROGMEM Language_Str MSG_MESH_LEVELING                   = _UxGT("Netz-Nivellierung");
   PROGMEM Language_Str MSG_INFO_STATS_MENU                 = _UxGT("Drucker-Statistik");
+  PROGMEM Language_Str MSG_INFO_NEXT_SERVICE_MENU                 = _UxGT("Nächste Services");
   PROGMEM Language_Str MSG_INFO_BOARD_MENU                 = _UxGT("Board-Info");
   PROGMEM Language_Str MSG_INFO_THERMISTOR_MENU            = _UxGT("Thermistoren");
   PROGMEM Language_Str MSG_INFO_EXTRUDERS                  = _UxGT("Extruder");
@@ -622,7 +623,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_TMC_STEPPING_MODE               = _UxGT("Schrittmodus");
   PROGMEM Language_Str MSG_TMC_STEALTH_ENABLED             = _UxGT("StealthChop einsch.");
   PROGMEM Language_Str MSG_SERVICE_RESET                   = _UxGT("Reset");
-  PROGMEM Language_Str MSG_SERVICE_IN                      = _UxGT(" im:");
+  PROGMEM Language_Str MSG_SERVICE_IN                      = _UxGT(" in:");
   PROGMEM Language_Str MSG_BACKLASH                        = _UxGT("Spiel");
   PROGMEM Language_Str MSG_BACKLASH_A                      = LCD_STR_A;
   PROGMEM Language_Str MSG_BACKLASH_B                      = LCD_STR_B;
@@ -651,5 +652,11 @@ namespace Language_de {
   PROGMEM Language_Str MSG_CALIBRATION_COMPLETED           = _UxGT("Kalibrierung Erfolgreich");
   PROGMEM Language_Str MSG_CALIBRATION_FAILED              = _UxGT("Kalibrierung Fehlgeschlagen");
 
+  PROGMEM Language_Str MSG_Service_Routine_MENU            = _UxGT("Service Routine");
+  PROGMEM Language_Str MSG_Service_Routine_1_Finalized           = _UxGT("Hast du Serviceroutine 1 durchgeführt?");
+  PROGMEM Language_Str MSG_Service_Routine_2_Finalized           = _UxGT( "Hast du Serviceroutine 2 durchgeführt?");
+  PROGMEM Language_Str MSG_Service_Routine_Both_Finalized           = _UxGT( "Hast du beide Serviceroutinen erledigt?");
+ 
+  PROGMEM Language_Str MSG_Service_Routine_MENU            = _UxGT("Service Routine");
 
 }
