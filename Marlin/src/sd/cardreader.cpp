@@ -434,6 +434,7 @@ void CardReader::mount() {
 #endif
 
 void CardReader::manage_media() {
+  //TODO GABRiel Z achsen arriteren bevor continue print
   static uint8_t prev_stat = 2;       // First call, no prior state
   uint8_t stat = uint8_t(IS_SD_INSERTED());
   if (stat == prev_stat) return;
@@ -497,12 +498,54 @@ void CardReader::release() {
     nrFiles = 0;
   #endif
 }
-
+#include "../lcd/menu/menu_item.h"
 /**
  * Open a G-code file and set Marlin to start processing it.
  * Enqueues M23 and M24 commands to initiate a media print.
  */
 void CardReader::openAndPrintFile(const char *name) {
+  //TODO
+  /**ui.goto_screen(_lcd_level_bed_corners_homing);
+      CONFIRM_ITEM_P(PSTR(SERVICE_NAME_1),
+        MSG_BUTTON_RESET, MSG_BUTTON_CANCEL,
+        []{ _service_reset(1); }, ui.goto_previous_screen,
+        GET_TEXT(MSG_SERVICE_RESET), F(SERVICE_NAME_1), PSTR("?")
+      );**/
+
+      //ui.save_previous_screen();                               
+    //ui.goto_screen([]{MenuItem_confirm::select_screen(V);});
+      /**
+      ui.goto_screen([]{MenuItem_confirm::select_screen(
+          GET_TEXT(MSG_BUTTON_STOP), GET_TEXT(MSG_BACK),
+          ui.abort_print, ui.goto_previous_screen,
+          GET_TEXT(MSG_STOP_PRINT), (const char *)nullptr, PSTR("?")
+        );});
+        ui.goto_screen([]{
+      MenuItem_confirm::select_screen(
+          GET_TEXT(MSG_BUTTON_NEXT), GET_TEXT(MSG_BUTTON_DONE)
+        , []{}
+        , []{//Cancel
+          }
+        , GET_TEXT(TERN(LEVEL_CENTER_TOO, MSG_LEVEL_BED_NEXT_POINT, MSG_NEXT_CORNER))
+        , (const char*)nullptr, PSTR("?")
+      );
+    });
+    **/
+
+/*
+        ui.pause_show_message(PAUSE_MESSAGE_WAITING);
+
+
+        MenuItem_confirm::select_screen(
+            GET_TEXT(MSG_BUTTON_PRINT), GET_TEXT(MSG_BUTTON_CANCEL),
+            []{}, ui.goto_previous_screen,
+            GET_TEXT(MSG_START_PRINT), PSTR("?")
+          );
+        
+      
+  SERIAL_ECHO_MSG("Open and Print File");
+*/        
+
   char cmd[4 + strlen(name) + 1 + 3 + 1]; // Room for "M23 ", filename, "\n", "M24", and null
   sprintf_P(cmd, M23_STR, name);
   for (char *c = &cmd[4]; *c; c++) *c = tolower(*c);
@@ -767,7 +810,13 @@ void CardReader::write_command(char * const buf) {
    */
   void CardReader::autofile_begin() {
     autofile_index = 1;
+    //runs only if sd is inserted
+    //queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90"); //Z 0.007
     (void)autofile_check();
+    //TODO run boot
+
+    SERIAL_ECHO_MSG("runned at boot");
+
   }
 
   /**

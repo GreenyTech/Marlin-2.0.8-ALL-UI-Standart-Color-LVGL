@@ -1261,11 +1261,14 @@ void setup() {
 
   SETUP_RUN(thermalManager.init());   // Initialize temperature loop
 
-  SETUP_RUN(print_job_timer.init());  // Initial setup of print job timer
+  SETUP_RUN(print_job_timer.init());  // Initial setup of print job timer 
 
   SETUP_RUN(endstops.init());         // Init endstops and pullups
 
   SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
+
+  
+  SETUP_RUN(queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90")); //this runs on boot, but not when continue from sd card
 
   #if HAS_SERVOS
     SETUP_RUN(servo_init());

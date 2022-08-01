@@ -1343,6 +1343,12 @@ void MarlinUI::update() {
    */
 
   void MarlinUI::reset_status(const bool no_welcome) {
+    //runs only if no print recovery
+    //also a god location to arritate z achses
+    //queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90"); //Z 0.007
+
+    
+
     #if SERVICE_INTERVAL_1 > 0
       static PGMSTR(service1, "> " SERVICE_NAME_1 "!");
     #endif
