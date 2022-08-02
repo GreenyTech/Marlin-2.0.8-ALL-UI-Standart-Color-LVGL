@@ -49,7 +49,7 @@ Stopwatch print_job_timer;      // Global Print Job Timer instance
 // Service intervals
 #if HAS_SERVICE_INTERVALS
   #if SERVICE_INTERVAL_1 > 0
-    #define SERVICE_INTERVAL_SEC_1   (3600UL * SERVICE_INTERVAL_1)
+    #define SERVICE_INTERVAL_SEC_1   (3600UL * SERVICE_INTERVAL_1) //3600
   #else
     #define SERVICE_INTERVAL_SEC_1   (3600UL * 100)
   #endif
@@ -69,7 +69,8 @@ PrintCounter print_job_timer;   // Global Print Job Timer instance
 
 printStatistics PrintCounter::data;
 
-const PrintCounter::eeprom_address_t PrintCounter::address = STATS_EEPROM_ADDRESS;
+const PrintCounter::eeprom_address_t PrintCounter::address = STATS_EEPROM_ADDRESS; //TODO Store in eeprom
+
 
 millis_t PrintCounter::lastDuration;
 bool PrintCounter::loaded = false;
