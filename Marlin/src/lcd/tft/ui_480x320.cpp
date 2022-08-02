@@ -303,6 +303,7 @@ void MarlinUI::draw_status_screen() {
   TERN_(TOUCH_SCREEN, touch.add_control(MOVE_AXIS, 4, y, TFT_WIDTH - 8, FONT_LINE_HEIGHT));
 
   y += TERN(HAS_UI_480x272, 38, 48);
+/**
   // feed rate
   tft.canvas(96, y, 100, 32);
   tft.set_background(COLOR_BACKGROUND);
@@ -314,6 +315,7 @@ void MarlinUI::draw_status_screen() {
   TERN_(TOUCH_SCREEN, touch.add_control(FEEDRATE, 96, 176, 100, 32));
 
   // flow rate
+
   tft.canvas(284, y, 100, 32);
   tft.set_background(COLOR_BACKGROUND);
   color = planner.flow_percentage[0] == 100 ? COLOR_RATE_100 : COLOR_RATE_ALTERED;
@@ -322,6 +324,7 @@ void MarlinUI::draw_status_screen() {
   tft_string.add('%');
   tft.add_text(36, 1, color , tft_string);
   TERN_(TOUCH_SCREEN, touch.add_control(FLOWRATE, 284, 176, 100, 32, active_extruder));
+**/
 
   #if ENABLED(TOUCH_SCREEN)
     add_control(404, y, menu_main, imgSettings);
@@ -329,8 +332,7 @@ void MarlinUI::draw_status_screen() {
   #endif
 
 
-
-  y += TERN(HAS_UI_480x272, 36, 44);
+  y += TERN(HAS_UI_480x272, 36, 44)/2;
   // print duration
   char buffer[14];
   duration_t elapsed = print_job_timer.duration();//ui.get_remaining_time();//.get_progress_percent();//print_job_timer.duration();
@@ -355,6 +357,7 @@ void MarlinUI::draw_status_screen() {
   tft.add_text(tft_string.center(128), 0, COLOR_PRINT_TIME, tft_string);
 
 
+  y += TERN(HAS_UI_480x272, 36, 44)/2;
   y += TERN(HAS_UI_480x272, 28, 36);
   // progress bar
   const uint8_t progress = ui.get_progress_percent();
