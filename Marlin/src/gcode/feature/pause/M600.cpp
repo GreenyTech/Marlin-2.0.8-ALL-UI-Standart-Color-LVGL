@@ -96,7 +96,7 @@ void GcodeSuite::M600() {
 
   // Show initial "wait for start" message
   #if DISABLED(MMU2_MENUS)
-    ui.pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, target_extruder);
+    ui.pause_show_message(PAUSE_MESSAGE_CHANGING, PAUSE_MODE_PAUSE_PRINT, target_extruder); //TODO possibel way to add UI during print
   #endif
 
   #if ENABLED(HOME_BEFORE_FILAMENT_CHANGE)
@@ -118,6 +118,7 @@ void GcodeSuite::M600() {
 
   // Lift Z axis
   if (parser.seenval('Z')) park_point.z = parser.linearval('Z');
+  //park_point.z =0;
 
   // Move XY axes to filament change position or given position
   if (parser.seenval('X')) park_point.x = parser.linearval('X');
