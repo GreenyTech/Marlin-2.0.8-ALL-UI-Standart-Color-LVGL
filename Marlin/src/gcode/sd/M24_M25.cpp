@@ -47,11 +47,40 @@
 
 #include "../../MarlinCore.h" // for startOrResumeJob
 
+//#include "../../module/printcounter.h" //print_job_timer
+
+//#include "../../lcd/menu/menu_item.h"
 /**
  * M24: Start or Resume SD Print
  */
 void GcodeSuite::M24() {
 
+  //TODO possibility to use the remaining print_job_time 
+  //BUT causes UI problems
+
+  
+  SERIAL_ECHO_MSG("M24 Print Starting");
+
+
+
+
+/**
+
+  //millis_t elapsed = print_job_timer.duration();//data.printTime;
+  char buffer[22];
+  
+  print_job_timer.totalPrintTime().toString(buffer);
+
+  SERIAL_ECHOPAIR("Total time: ", buffer);
+
+  //Todo 
+
+
+   * elapsed.toString(buffer);
+  SERIAL_ECHOPAIR("Total time: ", buffer);
+
+  print_job_timer.duration
+**/
   #if ENABLED(DGUS_LCD_UI_MKS)
     if ((print_job_timer.isPaused() || print_job_timer.isRunning()) && !parser.seen("ST"))
       MKS_resume_print_move();
