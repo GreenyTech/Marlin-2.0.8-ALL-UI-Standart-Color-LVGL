@@ -22,7 +22,7 @@
 #include "tft_io.h"
 
 #ifndef TOUCH_SCREEN_CALIBRATION_PRECISION
-  #define TOUCH_SCREEN_CALIBRATION_PRECISION  80
+  #define TOUCH_SCREEN_CALIBRATION_PRECISION  70
 #endif
 
 #ifndef TOUCH_SCREEN_HOLD_TO_CALIBRATE_MS
@@ -55,9 +55,13 @@ public:
   static calibrationState calibration_state;
   static touch_calibration_point_t calibration_points[4];
 
-  static bool validate_precision(int32_t a, int32_t b) { return (a > b ? (100 * b) / a :  (100 * a) / b) > TOUCH_SCREEN_CALIBRATION_PRECISION; }
+  static bool validate_precision(int32_t a, int32_t b) { 
+    SERIAL_ECHOLNPAIR("      a ",a);
+    SERIAL_ECHOLNPAIR("      b ",b);
+    SERIAL_ECHOLNPAIR("      ", (a > b ? (100 * b) / a :  (100 * a) / b) );
+    return (a > b ? (100 * b) / a :  (100 * a) / b) > TOUCH_SCREEN_CALIBRATION_PRECISION; }
   static bool validate_precision_x(uint8_t a, uint8_t b) { return validate_precision(calibration_points[a].raw_x, calibration_points[b].raw_x); }
-  static bool validate_precision_y(uint8_t a, uint8_t b) { return validate_precision(calibration_points[a].raw_y, calibration_points[b].raw_y); }
+  static bool validate_precision_y(uint8_t a, uint8_t b) { return validate_precision(calibration_points[a].raw_y, calibration_points[b].raw_y); } //not used?
   static void validate_calibration();
 
   static touch_calibration_t calibration;
