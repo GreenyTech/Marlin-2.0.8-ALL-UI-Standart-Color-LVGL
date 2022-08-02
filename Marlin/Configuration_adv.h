@@ -3886,4 +3886,13 @@
  */
 //#define POSTMORTEM_DEBUGGING
 
-
+#define PREHEAT_GCODE_BEVORE_MEASUREMENT "M190 S55\nM109 S210\nG92 E0\nG1 E F500\nG1 E-16\nG28"
+//queue.inject_P(PSTR("M190 S55\nM109 S210\nG28")); //G10 Retract
+                  //M190 S55 //heat upBed
+                  //M109 S210//heat up Nozzle temperatur
+                  //G92 E0   //set extruder position to 0
+                  //G1 E F500//set extruder speed
+                  //G1 E-6   //retract filament -//cold be redun but is just 6mm // the average retraction during a gap
+                  //G28      //home all axes
+                  //G1 Z0    //move z achse to orginal z probe offset
+#define CLEAR_PREHEAT_GCODE_BEVORE_MEASUREMENT "G1 E0\nM140 S0\nM104 S0"

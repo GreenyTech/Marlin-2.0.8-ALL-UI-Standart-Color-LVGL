@@ -347,7 +347,7 @@ static void _lcd_level_bed_corners_homing() {
         , []{
           //TODO Gabriel 
           //ui.chirp();
-            queue.inject_P(PSTR("G1 E0\nM140 S0\nM104 S0"));
+            queue.inject_P(PSTR(CLEAR_PREHEAT_GCODE_BEVORE_MEASUREMENT));
             line_to_z(LEVEL_CORNERS_Z_HOP); // Raise Z off the bed when done
             TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
             ui.goto_previous_screen_no_defer();
@@ -369,7 +369,7 @@ void _lcd_level_bed_corners() {
     queue.inject_P(G28_STR);
   }**/
   set_all_unhomed();
-  queue.inject_P(PSTR("M190 S55\nM109 S210\nG92 E0\nG1 E F500\nG1 E-6\nG28")); //TODO: G10 Retract
+  queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT)); //TODO: G10 Retract
 
   // Disable leveling so the planner won't mess with us
   #if HAS_LEVELING
