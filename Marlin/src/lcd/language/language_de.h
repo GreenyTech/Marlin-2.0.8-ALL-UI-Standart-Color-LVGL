@@ -646,8 +646,8 @@ namespace Language_de {
     
 
   PROGMEM Language_Str MSG_TOP_LEFT                        = _UxGT("Oben Links");
-  PROGMEM Language_Str MSG_BOTTOM_LEFT                     = _UxGT("Unten Rechts");
-  PROGMEM Language_Str MSG_TOP_RIGHT                       = _UxGT("Oben Links");
+  PROGMEM Language_Str MSG_BOTTOM_LEFT                     = _UxGT("Unten Links");
+  PROGMEM Language_Str MSG_TOP_RIGHT                       = _UxGT("Oben Rechts");
   PROGMEM Language_Str MSG_BOTTOM_RIGHT                    = _UxGT("Unten Rechts");
   PROGMEM Language_Str MSG_CALIBRATION_COMPLETED           = _UxGT("Kalibrierung Erfolgreich");
   PROGMEM Language_Str MSG_CALIBRATION_FAILED              = _UxGT("Kalibrierung Fehlgeschlagen");

@@ -192,10 +192,12 @@ void MarlinUI::clear_lcd() {
 #if ENABLED(TOUCH_SCREEN_CALIBRATION)
 
   void MarlinUI::touch_calibration_screen() {
+    //TODO check out wrong numberng...
     uint16_t x, y;
 
     calibrationState calibration_stage = touch_calibration.get_calibration_state();
 
+    //get Calibration position
     if (calibration_stage == CALIBRATION_NONE) {
       defer_status_screen(true);
       clear_lcd();
@@ -210,10 +212,11 @@ void MarlinUI::clear_lcd() {
 
     touch.clear();
 
+    //set Calibration location
     if (calibration_stage < CALIBRATION_SUCCESS) {
       switch (calibration_stage) {
         case CALIBRATION_TOP_LEFT: tft_string.set(GET_TEXT(MSG_TOP_LEFT)); break;
-        case CALIBRATION_BOTTOM_LEFT: tft_string.set(GET_TEXT(MSG_BOTTOM_LEFT)); break;
+        case CALIBRATION_BOTTOM_LEFT: tft_string.set(GET_TEXT(MSG_BOTTOM_LEFT)); SERIAL_ECHOLNPAIR("Bottom Left ",GET_TEXT(MSG_BOTTOM_LEFT) ); break;
         case CALIBRATION_TOP_RIGHT: tft_string.set(GET_TEXT(MSG_TOP_RIGHT)); break;
         case CALIBRATION_BOTTOM_RIGHT: tft_string.set(GET_TEXT(MSG_BOTTOM_RIGHT)); break;
         default: break;
@@ -222,6 +225,7 @@ void MarlinUI::clear_lcd() {
       x = touch_calibration.calibration_points[calibration_stage].x;
       y = touch_calibration.calibration_points[calibration_stage].y;
 
+      //Draw a cross
       tft.canvas(x - 15, y - 15, 31, 31);
       tft.set_background(COLOR_BACKGROUND);
       tft.add_bar(0, 15, 31, 1, COLOR_TOUCH_CALIBRATION);

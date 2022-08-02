@@ -51,7 +51,17 @@ void TouchCalibration::validate_calibration() {
                      && VALIDATE_PRECISION(y, TOP_RIGHT, BOTTOM_RIGHT)
                      && VALIDATE_PRECISION(x, TOP_LEFT, TOP_RIGHT)
                      && VALIDATE_PRECISION(x, BOTTOM_LEFT, BOTTOM_RIGHT);
-  #undef VALIDATE_PRECISION
+
+
+  
+
+    SERIAL_ECHOLNPGM("************************");
+    SERIAL_ECHOLNPAIR("Left x",  VALIDATE_PRECISION(x, TOP_LEFT, BOTTOM_LEFT));
+    SERIAL_ECHOLNPAIR("right x",  VALIDATE_PRECISION(x, TOP_RIGHT, BOTTOM_RIGHT));
+    SERIAL_ECHOLNPAIR("Top y ",  VALIDATE_PRECISION(y, TOP_LEFT, TOP_RIGHT));
+    SERIAL_ECHOLNPAIR("bottom y ",  VALIDATE_PRECISION(y, BOTTOM_LEFT, BOTTOM_RIGHT));
+#undef VALIDATE_PRECISION
+
 
   #define CAL_PTS(N) calibration_points[CALIBRATION_##N]
   if (landscape) {
@@ -71,19 +81,26 @@ void TouchCalibration::validate_calibration() {
     calibration.orientation = TOUCH_PORTRAIT;
   }
   else {
+    
     calibration_state = CALIBRATION_FAIL;
     calibration_reset();
     if (need_calibration() && failed_count++ < TOUCH_CALIBRATION_MAX_RETRIES) calibration_state = CALIBRATION_TOP_LEFT;
   }
   #undef CAL_PTS
 
-  if (calibration_state == CALIBRATION_SUCCESS) {
+
     SERIAL_ECHOLNPGM("Touch screen calibration completed");
     SERIAL_ECHOLNPAIR("TOUCH_CALIBRATION_X ", calibration.x);
     SERIAL_ECHOLNPAIR("TOUCH_CALIBRATION_Y ", calibration.y);
     SERIAL_ECHOLNPAIR("TOUCH_OFFSET_X ", calibration.offset_x);
     SERIAL_ECHOLNPAIR("TOUCH_OFFSET_Y ", calibration.offset_y);
     SERIAL_ECHO_TERNARY(calibration.orientation == TOUCH_LANDSCAPE, "TOUCH_ORIENTATION ", "TOUCH_LANDSCAPE", "TOUCH_PORTRAIT", "\n");
+
+  if (calibration_state == CALIBRATION_SUCCESS) {
+
+    SERIAL_ECHOLNPGM("Touch screen calibration completed");
+    
+    
     TERN_(TOUCH_CALIBRATION_AUTO_SAVE, settings.save());
   }
 }
@@ -101,9 +118,13 @@ bool TouchCalibration::handleTouch(uint16_t x, uint16_t y) {
   if (calibration_state < CALIBRATION_SUCCESS) {
     calibration_points[calibration_state].raw_x = x;
     calibration_points[calibration_state].raw_y = y;
-    DEBUG_ECHOLNPAIR("TouchCalibration - State: ", calibration_state, ", x: ", calibration_points[calibration_state].x, ", raw_x: ", x, ", y: ", calibration_points[calibration_state].y, ", raw_y: ", y);
+    
+    //SERIAL_ECHOLNPGM("Touch screen calibration completed");
+    SERIAL_ECHOLNPAIR("TouchCalibration - State: ", calibration_state, ", x: ", calibration_points[calibration_state].x, ", raw_x: ", x, ", y: ", calibration_points[calibration_state].y, ", raw_y: ", y);
+    //DEBUG_ECHOLNPAIR("TouchCalibration - State: ", calibration_state, ", x: ", calibration_points[calibration_state].x, ", raw_x: ", x, ", y: ", calibration_points[calibration_state].y, ", raw_y: ", y);
   }
 
+  //Select Next Calibration state
   switch (calibration_state) {
     case CALIBRATION_TOP_LEFT: calibration_state = CALIBRATION_BOTTOM_LEFT; break;
     case CALIBRATION_BOTTOM_LEFT: calibration_state = CALIBRATION_TOP_RIGHT; break;
