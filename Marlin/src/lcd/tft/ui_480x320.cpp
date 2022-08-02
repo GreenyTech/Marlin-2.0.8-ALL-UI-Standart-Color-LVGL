@@ -97,9 +97,13 @@ void MarlinUI::tft_idle() {
 
 #endif
 
+void MarlinUI::draw_red(){
+  tft.fill(0, 0, TFT_WIDTH, TFT_HEIGHT, COLOR_KILL_SCREEN_BG); //TODO Background Color
+}
+
 void MarlinUI::draw_kill_screen() {
   tft.queue.reset();
-  tft.fill(0, 0, TFT_WIDTH, TFT_HEIGHT, COLOR_KILL_SCREEN_BG);
+  tft.fill(0, 0, TFT_WIDTH, TFT_HEIGHT, COLOR_KILL_SCREEN_BG); //TODO Background Color
 
   uint16_t line = 2;
 

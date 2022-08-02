@@ -50,6 +50,8 @@ void lcd_power_loss_recovery_cancel() {
 //       Requires supporting methods in PLR class.
 void menu_job_recovery() {
   ui.defer_status_screen();
+    ui.draw_red();
+  //ui.tft_idle();
   START_MENU();
   STATIC_ITEM(MSG_OUTAGE_RECOVERY);
   ACTION_ITEM(MSG_RESUME_PRINT, lcd_power_loss_recovery_resume);

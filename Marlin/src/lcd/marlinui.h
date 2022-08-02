@@ -202,6 +202,9 @@ public:
     TERN_(HAS_LCD_MENU, currentScreen = status_screen);
   }
 
+  static void draw_red();
+
+
   #if HAS_MULTI_LANGUAGE
     static uint8_t language;
     static inline void set_language(const uint8_t lang) {
