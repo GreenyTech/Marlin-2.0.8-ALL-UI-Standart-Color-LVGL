@@ -775,6 +775,10 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     drawAxisValue(E_AXIS);
   }
 
+
+  static void save_settings() {
+    ui.store_settings();
+  }
   static void do_home() {
     quick_feedback();
     drawMessage(GET_TEXT(MSG_LEVEL_BED_HOMING));
@@ -914,6 +918,11 @@ void MarlinUI::move_axis_screen() {
   x += BTN_WIDTH + spacing;
   drawBtn(x, y, "Y-", (intptr_t)y_minus, imgDown, Y_BTN_COLOR, !busy);
 
+  //x += BTN_WIDTH + spacing;
+  //x += BTN_WIDTH/2 + spacing/2; //imgHome is 64x64
+  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *3/4 - 20  - Images[imgSD].width / 2, y - (Images[imgSD].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)save_settings, imgSD, !busy));
+  
+  //x += BTN_WIDTH/2 + spacing/2;
   x += BTN_WIDTH + spacing;
   drawBtn(x, y, "Z+", (intptr_t)z_minus, imgDown, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
 
