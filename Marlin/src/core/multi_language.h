@@ -84,3 +84,4 @@ typedef const char Language_Str[];
 #define MSG_1_LINE(A)     A "\0"   "\0"
 #define MSG_2_LINE(A,B)   A "\0" B "\0"
 #define MSG_3_LINE(A,B,C) A "\0" B "\0" C
+#define MSG_4_LINE(A,B,C,D) A "\0" B "\0" C "\0" D
