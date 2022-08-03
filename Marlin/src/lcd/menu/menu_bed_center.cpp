@@ -210,7 +210,7 @@ void _lcd_level_bed_plane() {
   //ui.defer_status_screen();
   
   ui.return_to_status();
-  ui.set_status_P("Bett wird vermessen. Bitte Warten.",-1);
+  ui.set_status_P(GET_TEXT(MSG_LEVEL_BED_PLEASE_WAIT),-1);
   
   //ui.status_printf_P(0, PSTR(S_FMT " %i/%i"), GET_TEXT(MSG_PROBING_MESH), int(pt_index), int(abl.abl_points));
 

@@ -103,6 +103,8 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MOVE_AXIS                       = _UxGT("Achsen Bewegen");
   PROGMEM Language_Str MSG_BED_LEVELING                    = _UxGT("Bett Kalibrieren");
   PROGMEM Language_Str MSG_LEVEL_BED                       = _UxGT("Bett automatisch Vermessen");
+  PROGMEM Language_Str MSG_LEVEL_BED_PLEASE_WAIT           = _UxGT("Bett wird vermessen. Bitte warten.");
+  
   PROGMEM Language_Str MSG_LEVEL_CORNERS                   = _UxGT("Referenz: Ecken");
   PROGMEM Language_Str MSG_NEXT_CORNER                     = _UxGT("Nächste Ecke");
   PROGMEM Language_Str MSG_MESH_EDITOR                     = _UxGT("Netz Editor");

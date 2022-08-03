@@ -724,6 +724,8 @@ namespace Language_en {
 
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("New Z Offset: "); 
   
+  PROGMEM Language_Str MSG_LEVEL_BED_PLEASE_WAIT           = _UxGT("Bed is being measured. Please wait.");
+  
 }
 
 #if FAN_COUNT == 1
