@@ -780,8 +780,25 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
 
 
   static void save_settings() {
+    quick_feedback();
+    drawMessage(GET_TEXT(MSG_TOUCHMI_SAVE));
     ui.store_settings();
+    //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
+
+  static void cleaning_position(){
+    quick_feedback();
+    drawMessage("Cleaning Position");
+    if(homing_needed()){   
+      queue.enqueue_now_P(G28_STR);
+    }
+    
+    queue.enqueue_now_P("G0 X170 Y130 Z180");  
+    
+    TERN_(HAS_TFT_XPT2046, touch.disable());
+  }
+
+
   static void do_home() {
     quick_feedback();
     drawMessage(GET_TEXT(MSG_LEVEL_BED_HOMING));
@@ -859,6 +876,10 @@ void MarlinUI::move_axis_screen() {
   int x = X_MARGIN, y = Y_MARGIN, spacing = 0;
 
   drawBtn(x, y, "E+", (intptr_t)e_plus, imgUp, E_BTN_COLOR, !busy);
+  
+  //TFT_WIDTH *2/6 
+  TERN_(HAS_TFT_XPT2046, add_control(x+(BTN_WIDTH + spacing)*2   - Images[imgSettings].width / 2, y - (Images[imgSettings].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)cleaning_position, imgSettings, !busy));
+  
 
   spacing = (TFT_WIDTH - X_MARGIN * 2 - 3 * BTN_WIDTH) / 2;
   x += BTN_WIDTH + spacing;
@@ -923,7 +944,7 @@ void MarlinUI::move_axis_screen() {
 
   //x += BTN_WIDTH + spacing;
   //x += BTN_WIDTH/2 + spacing/2; //imgHome is 64x64
-  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *3/4 - 20  - Images[imgSD].width / 2, y - (Images[imgSD].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)save_settings, imgSD, !busy));
+  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *3/4 - 20  - Images[imgSD].width / 2, y - (Images[imgSD].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)save_settings, imgSD, true));
   
   //x += BTN_WIDTH/2 + spacing/2;
   x += BTN_WIDTH + spacing;
@@ -944,6 +965,8 @@ void MarlinUI::move_axis_screen() {
     TERN_(HAS_TFT_XPT2046, touch.add_control(BUTTON, motionAxisState.stepValuePos.x, motionAxisState.stepValuePos.y, CUR_STEP_VALUE_WIDTH, BTN_HEIGHT, (intptr_t)step_size));
   }
 
+
+  
   // aligned with x+
   drawBtn(xplus_x, TFT_HEIGHT - Y_MARGIN - BTN_HEIGHT, "off", (intptr_t)disable_steppers, imgCancel, COLOR_WHITE, !busy);
 
