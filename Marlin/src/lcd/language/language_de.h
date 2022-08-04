@@ -661,4 +661,8 @@ namespace Language_de {
  
   PROGMEM Language_Str MOVE_AXES_FOR_GRASPING_ROUTINE_MENU           = _UxGT("Achsen Fetten Routine");
 
+  
+  PROGMEM Language_Str MSG_BUTTON_CHANGE                     = _UxGT("Wechseln");
+  PROGMEM Language_Str MSG_CHANGE_FILAMENT                      = _UxGT("Filament Wechseln");
+  
 }

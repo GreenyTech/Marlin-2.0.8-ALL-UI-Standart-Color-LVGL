@@ -136,7 +136,13 @@ static void _change_filament_with_temp(const uint16_t celsius) {
 }
 
 static void _change_filament_with_preset() {
-  _change_filament_with_temp(ui.material_preset[MenuItemBase::itemIndex].hotend_temp);
+  //todo ask if realy wanted
+        MenuItem_confirm::select_screen(
+          GET_TEXT(MSG_BUTTON_CHANGE), GET_TEXT(MSG_BACK),
+          []{_change_filament_with_temp(ui.material_preset[MenuItemBase::itemIndex].hotend_temp);},
+           ui.goto_previous_screen,
+          GET_TEXT(MSG_CHANGE_FILAMENT), (const char *)nullptr, PSTR("?")
+        );
 }
 
 

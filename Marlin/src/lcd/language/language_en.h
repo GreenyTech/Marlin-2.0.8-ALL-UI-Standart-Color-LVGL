@@ -727,6 +727,10 @@ namespace Language_en {
   PROGMEM Language_Str MSG_LEVEL_BED_PLEASE_WAIT           = _UxGT("Bed is being measured. Please wait.");
   
   PROGMEM Language_Str MOVE_AXES_FOR_GRASPING_ROUTINE_MENU           = _UxGT("Greasing Routine");
+
+  PROGMEM Language_Str MSG_BUTTON_CHANGE                     = _UxGT("Change");
+  PROGMEM Language_Str MSG_CHANGE_FILAMENT                      = _UxGT("Change Filament");
+  
   
 }
 
