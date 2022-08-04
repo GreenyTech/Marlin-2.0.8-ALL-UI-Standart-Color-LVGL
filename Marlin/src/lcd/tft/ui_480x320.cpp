@@ -647,6 +647,7 @@ static void drawCurESelection() {
   tft.add_text(tft_string.width(), 0, E_BTN_COLOR, ui8tostr3rj(motionAxisState.e_selection));
 }
 
+//ONLY  13 Character seems to be viewd
 static void drawMessage(const char *msg) {
   tft.canvas(X_MARGIN, TFT_HEIGHT - Y_MARGIN - 34, TFT_HEIGHT / 2, 34);
   tft.set_background(COLOR_BACKGROUND);
@@ -789,7 +790,8 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
   static void cleaning_position(){
     quick_feedback();
     if(homing_needed()){
-      drawMessage("Homing first"); 
+      drawMessage(GET_TEXT(MSG_HOME_FIRST_PLAIN));  
+      //only 13 Characters are allowed
       //"Views only:
       //"Homing is req"uiert
       // Home first!
@@ -797,13 +799,13 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     }
     else{
       if(current_position.z<180){ 
-        //Todo man könnte bei diesen bewegungen blockieren.
-      drawMessage("cleaning position");
+        //Todo Block UI at movement to avoid strange behavior
+      drawMessage(GET_TEXT(MSG_CLEANING_POSITION));
         queue.enqueue_now_P("G0 X170 Y130 Z180");  
-      //todo get current position
       }  
       else{
-        drawMessage("allready below");
+        //TODO drive complety down.
+        drawMessage(GET_TEXT(MSG_ALLREADY_BELOW));
         queue.enqueue_now_P("G0 X170 Y130");  
       }
     }
@@ -812,6 +814,7 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
 
+/**
   static void move_bett_down(){
     quick_feedback();
     drawMessage("Bed Down");
@@ -824,7 +827,7 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     
     //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
-
+**/
 
   static void do_home() {
     quick_feedback();
@@ -848,7 +851,7 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
 
 #if HAS_BED_PROBE
   static void z_select() {
-    motionAxisState.z_selection *= -1; //TODO
+    motionAxisState.z_selection *= -1; 
     quick_feedback();
     drawCurZSelection();
     drawAxisValue(Z_AXIS);

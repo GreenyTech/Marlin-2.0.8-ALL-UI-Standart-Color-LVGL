@@ -731,6 +731,10 @@ namespace Language_en {
   PROGMEM Language_Str MSG_BUTTON_CHANGE                     = _UxGT("Change");
   PROGMEM Language_Str MSG_CHANGE_FILAMENT                      = _UxGT("Change Filament");
   
+  PROGMEM Language_Str MSG_HOME_FIRST_PLAIN                      = _UxGT("Home First");
+  
+  PROGMEM Language_Str MSG_CLEANING_POSITION                      = _UxGT("Cleaning Position");
+  PROGMEM Language_Str MSG_ALLREADY_BELOW                      = _UxGT("Allready Below");
   
 }
 

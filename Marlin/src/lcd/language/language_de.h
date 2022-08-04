@@ -425,6 +425,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_MANUAL_DEPLOY                   = _UxGT("Z-Sonde ausfahren");
   PROGMEM Language_Str MSG_MANUAL_STOW                     = _UxGT("Z-Sonde einfahren");
   PROGMEM Language_Str MSG_HOME_FIRST                      = _UxGT("Vorher %s%s%s homen");
+  PROGMEM Language_Str MSG_HOME_FIRST_PLAIN                      = _UxGT("Vorher homen");
   PROGMEM Language_Str MSG_ZPROBE_XOFFSET                  = _UxGT("Sondenversatz X");
   PROGMEM Language_Str MSG_ZPROBE_YOFFSET                  = _UxGT("Sondenversatz Y");
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Abstand Düse zum Bett"); 
@@ -664,5 +665,7 @@ namespace Language_de {
   
   PROGMEM Language_Str MSG_BUTTON_CHANGE                     = _UxGT("Wechseln");
   PROGMEM Language_Str MSG_CHANGE_FILAMENT                      = _UxGT("Filament Wechseln");
-  
+  PROGMEM Language_Str MSG_CLEANING_POSITION                      = _UxGT("Reinigungs Position");
+  PROGMEM Language_Str MSG_ALLREADY_BELOW                      = _UxGT("Bereits Unten");
+ 
 }
