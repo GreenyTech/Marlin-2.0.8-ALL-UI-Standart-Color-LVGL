@@ -788,14 +788,28 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
 
   static void cleaning_position(){
     quick_feedback();
-    drawMessage("Cleaning Position");
-    if(homing_needed()){   
-      queue.enqueue_now_P(G28_STR);
+    if(homing_needed()){
+      drawMessage("Homing first"); 
+      //"Views only:
+      //"Homing is req"uiert
+      // Home first!
+      //"Bitte Homen!" 
     }
-    
-    queue.enqueue_now_P("G0 X170 Y130 Z180");  
-    
-    TERN_(HAS_TFT_XPT2046, touch.disable());
+    else{
+      if(current_position.z<180){ 
+        //Todo man könnte bei diesen bewegungen blockieren.
+      drawMessage("cleaning position");
+        queue.enqueue_now_P("G0 X170 Y130 Z180");  
+      //todo get current position
+      }  
+      else{
+        drawMessage("allready below");
+        queue.enqueue_now_P("G0 X170 Y130");  
+      }
+    }
+
+
+    //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
 
   static void move_bett_down(){
@@ -808,7 +822,7 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     //TODO check if bed is higher than
     queue.enqueue_now_P("G0 Z360");  
     
-    TERN_(HAS_TFT_XPT2046, touch.disable());
+    //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
 
 
@@ -900,12 +914,18 @@ void MarlinUI::move_axis_screen() {
   spacing = (TFT_WIDTH - X_MARGIN * 2 - 3 * BTN_WIDTH) / 2;
   x += BTN_WIDTH + spacing;
   drawBtn(x, y, "Y+", (intptr_t)y_plus, imgUp, Y_BTN_COLOR, !busy);
+  
+  
 
   // Cur Y
   x += BTN_WIDTH;
   motionAxisState.yValuePos.x = x + 2;
   motionAxisState.yValuePos.y = y;
   drawAxisValue(Y_AXIS);
+
+  //TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *3/4    - Images[imgHome].width / 2, y +5 - (Images[imgHome].height - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgHome, !busy));
+  //TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *3/4 - 20  - Images[imgDown].width / 2, y - (Images[imgDown].height - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgDown, !busy));
+
 
   x += spacing;
   drawBtn(x, y, "Z-", (intptr_t)z_plus, imgUp, Z_BTN_COLOR, !busy || ENABLED(BABYSTEP_ZPROBE_OFFSET)); //only enabled when not busy or have baby step
@@ -952,8 +972,9 @@ void MarlinUI::move_axis_screen() {
 
 
   
-  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *2/7  - Images[imgBed].width / 2, y +5 +30- (Images[imgBed].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgBed, !busy));
-  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *2/7  - Images[imgDown].width / 2, y +30- (Images[imgDown].height - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgDown, !busy));
+  //TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *2/7  - Images[imgHome].width / 2, y +5 - (Images[imgHome].height - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgHome, !busy));
+  //TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH *2/7  - Images[imgDown].width / 2, y - (Images[imgDown].height - BTN_HEIGHT) / 2, BUTTON, (intptr_t)move_bett_down, imgDown, !busy));
+  
   
 
   // Cur X
@@ -992,7 +1013,7 @@ void MarlinUI::move_axis_screen() {
   // aligned with x+
   drawBtn(xplus_x, TFT_HEIGHT - Y_MARGIN - BTN_HEIGHT, "off", (intptr_t)disable_steppers, imgCancel, COLOR_WHITE, !busy);
 
-  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH - X_MARGIN - BTN_WIDTH, y, BACK, imgBack));
+  TERN_(HAS_TFT_XPT2046, add_control(TFT_WIDTH - X_MARGIN - BTN_WIDTH, y-5, BACK, imgBack));
 }
 
 #endif // HAS_UI_480x320
