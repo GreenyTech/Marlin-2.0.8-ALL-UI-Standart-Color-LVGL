@@ -659,5 +659,6 @@ namespace Language_de {
   PROGMEM Language_Str MSG_Service_Routine_2_Finalized           = _UxGT( "Hast du Serviceroutine 2 durchgeführt?");
   PROGMEM Language_Str MSG_Service_Routine_Both_Finalized           = _UxGT( "Hast du beide Serviceroutinen erledigt?");
  
+  PROGMEM Language_Str MOVE_AXES_FOR_GRASPING_ROUTINE_MENU           = _UxGT("Achsen Fetten Routine");
 
 }
