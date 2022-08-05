@@ -667,5 +667,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_CHANGE_FILAMENT                      = _UxGT("Filament Wechseln");
   PROGMEM Language_Str MSG_CLEANING_POSITION                      = _UxGT("Reinigungs Position");
   PROGMEM Language_Str MSG_ALLREADY_BELOW                      = _UxGT("Bereits Unten");
+  PROGMEM Language_Str MSG_LOWEST_POSITION                      = _UxGT("Ganz Runter");
+  
  
 }

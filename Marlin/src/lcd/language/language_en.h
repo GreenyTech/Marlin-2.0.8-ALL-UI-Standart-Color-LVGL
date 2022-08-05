@@ -734,6 +734,8 @@ namespace Language_en {
   PROGMEM Language_Str MSG_HOME_FIRST_PLAIN                      = _UxGT("Home First");
   
   PROGMEM Language_Str MSG_CLEANING_POSITION                      = _UxGT("Cleaning Position");
+  PROGMEM Language_Str MSG_LOWEST_POSITION                      = _UxGT("Lowest Position");
+  
   PROGMEM Language_Str MSG_ALLREADY_BELOW                      = _UxGT("Allready Below");
   
 }

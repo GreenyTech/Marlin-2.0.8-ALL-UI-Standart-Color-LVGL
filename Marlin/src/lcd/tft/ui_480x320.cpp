@@ -766,7 +766,7 @@ static void y_plus()  { moveAxis(Y_AXIS, 1);  }
 static void y_minus() { moveAxis(Y_AXIS, -1); }
 static void z_plus()  { moveAxis(Z_AXIS, -1);  }
 static void z_minus() { moveAxis(Z_AXIS, 1); }
-
+static bool plotMoveDown = false;
 #if ENABLED(TOUCH_SCREEN)
   static void e_select() {
     motionAxisState.e_selection++;
@@ -788,9 +788,24 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
   }
 
   static void cleaning_position(){
+
+
+    /*
+void MarlinUI::move_axis_screen() {
+  // Reset
+  defer_status_screen(true);
+  motionAxisState.blocked = false;
+  TERN_(HAS_TFT_XPT2046, touch.enable());*/
+
+  //ui.clear_lcd();
+  //ove_axis_screen();
+  const char * message;
+  
+
     quick_feedback();
-    if(homing_needed()){
-      drawMessage(GET_TEXT(MSG_HOME_FIRST_PLAIN));  
+    if(false && homing_needed()){
+      //drawMessage();  
+      message = GET_TEXT(MSG_HOME_FIRST_PLAIN);
       //only 13 Characters are allowed
       //"Views only:
       //"Homing is req"uiert
@@ -800,15 +815,28 @@ static void z_minus() { moveAxis(Z_AXIS, 1); }
     else{
       if(current_position.z<180){ 
         //Todo Block UI at movement to avoid strange behavior
-      drawMessage(GET_TEXT(MSG_CLEANING_POSITION));
+      message = (GET_TEXT(MSG_CLEANING_POSITION));
         queue.enqueue_now_P("G0 X170 Y130 Z180");  
       }  
       else{
         //TODO drive complety down.
-        drawMessage(GET_TEXT(MSG_ALLREADY_BELOW));
-        queue.enqueue_now_P("G0 X170 Y130");  
+        if(current_position.z<360){
+          message = (GET_TEXT(MSG_LOWEST_POSITION));
+          queue.enqueue_now_P("G0 X170 Y130 Z360");
+          
+        }
+        else{
+          message = (GET_TEXT(MSG_ALLREADY_BELOW));
+        }  
       }
     }
+    
+    //queue.exhaust();
+    plotMoveDown = true;
+    MarlinUI::move_axis_screen();
+    drawMessage(message);
+    
+    plotMoveDown = false;
 
 
     //TERN_(HAS_TFT_XPT2046, touch.disable());
@@ -907,8 +935,15 @@ void MarlinUI::move_axis_screen() {
 
   drawBtn(x, y, "E+", (intptr_t)e_plus, imgUp, E_BTN_COLOR, !busy);
   
+  
+      //if(current_position.z<180){ 
   //TFT_WIDTH *2/6 
-  TERN_(HAS_TFT_XPT2046, add_control(x+(BTN_WIDTH + spacing)*2   - Images[imgSettings].width / 2, y - (Images[imgSettings].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)cleaning_position, imgSettings, !busy));
+  MarlinImage tmpIMG =  imgSettings;
+  if(current_position.z>=180||plotMoveDown){
+    tmpIMG=imgDown;
+  }
+
+  TERN_(HAS_TFT_XPT2046, add_control(x+(BTN_WIDTH + spacing)*2   - Images[tmpIMG].width / 2, y - (Images[tmpIMG].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)cleaning_position, tmpIMG, !busy));
   
   
 
