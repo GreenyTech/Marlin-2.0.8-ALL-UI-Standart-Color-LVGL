@@ -136,6 +136,7 @@ static void _change_filament_with_temp(const uint16_t celsius) {
 }
 
 static void _change_filament_with_preset() {
+  //_change_filament_with_temp(ui.material_preset[MenuItemBase::itemIndex].hotend_temp);
   //todo ask if realy wanted
         MenuItem_confirm::select_screen(
           GET_TEXT(MSG_BUTTON_CHANGE), GET_TEXT(MSG_BACK),
@@ -143,6 +144,9 @@ static void _change_filament_with_preset() {
            ui.goto_previous_screen,
           GET_TEXT(MSG_CHANGE_FILAMENT), (const char *)nullptr, PSTR("?")
         );
+
+
+        
 }
 
 
@@ -470,7 +474,9 @@ void menu_main() {
   */
 
  
-  ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
+  //ACTION_ITEM_N_S(0, "", MSG_FILAMENTCHANGE, _change_filament_with_preset);
+
+  SUBMENU(MSG_FILAMENTCHANGE,_change_filament_with_preset);
 
   
   SUBMENU(MSG_Service_Routine_MENU, menu_service); //add menu information -> replace
