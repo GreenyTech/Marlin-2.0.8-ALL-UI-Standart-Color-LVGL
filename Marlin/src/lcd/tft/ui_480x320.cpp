@@ -674,11 +674,18 @@ static void drawAxisValue(const AxisEnum axis) {
   tft.add_text(0, 0, color, tft_string);
 }
 
-static void moveAxis(const AxisEnum axis, const int8_t direction) {
-  quick_feedback();
+static millis_t block_interactin_till = 0;
 
+static void moveAxis(const AxisEnum axis, const int8_t direction) {
+
+
+  if(block_interactin_till>millis()){
+    drawMessage(GET_TEXT(MSG_BUSY));
+    return;
+  } 
+  
   if (axis == E_AXIS && thermalManager.tooColdToExtrude(motionAxisState.e_selection)) {
-    drawMessage("Too cold");
+    drawMessage(GET_TEXT(MSG_TOO_COLD));
     return;
   }
 
@@ -758,6 +765,9 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
   drawAxisValue(axis);
 }
 
+
+
+
 static void e_plus()  { moveAxis(E_AXIS, 1);  }
 static void e_minus() { moveAxis(E_AXIS, -1); }
 static void x_minus() { moveAxis(X_AXIS, -1); }
@@ -767,6 +777,7 @@ static void y_minus() { moveAxis(Y_AXIS, -1); }
 static void z_plus()  { moveAxis(Z_AXIS, -1);  }
 static void z_minus() { moveAxis(Z_AXIS, 1); }
 static bool plotMoveDown = false;
+
 #if ENABLED(TOUCH_SCREEN)
   static void e_select() {
     motionAxisState.e_selection++;
@@ -803,7 +814,7 @@ void MarlinUI::move_axis_screen() {
   
 
     quick_feedback();
-    if(false && homing_needed()){
+    if(homing_needed()){
       //drawMessage();  
       message = GET_TEXT(MSG_HOME_FIRST_PLAIN);
       //only 13 Characters are allowed
@@ -817,12 +828,16 @@ void MarlinUI::move_axis_screen() {
         //Todo Block UI at movement to avoid strange behavior
       message = (GET_TEXT(MSG_CLEANING_POSITION));
         queue.enqueue_now_P("G0 X170 Y130 Z180");  
+        
+          block_interactin_till=millis()+4*1000;
+          
       }  
       else{
         //TODO drive complety down.
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
           queue.enqueue_now_P("G0 X170 Y130 Z360");
+          block_interactin_till=millis()+4*1000;
           
         }
         else{
@@ -830,6 +845,8 @@ void MarlinUI::move_axis_screen() {
         }  
       }
     }
+
+    //current_position.z
     
     //queue.exhaust();
     plotMoveDown = true;
@@ -919,6 +936,7 @@ void MarlinUI::move_axis_screen() {
   defer_status_screen(true);
   motionAxisState.blocked = false;
   TERN_(HAS_TFT_XPT2046, touch.enable());
+  
 
   ui.clear_lcd();
 

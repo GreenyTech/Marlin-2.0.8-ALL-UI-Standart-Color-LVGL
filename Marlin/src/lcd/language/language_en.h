@@ -737,6 +737,9 @@ namespace Language_en {
   PROGMEM Language_Str MSG_LOWEST_POSITION                      = _UxGT("Lowest Position");
   
   PROGMEM Language_Str MSG_ALLREADY_BELOW                      = _UxGT("Allready Below");
+  PROGMEM Language_Str MSG_BUSY                      = _UxGT("busy");
+  
+  PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("Too cold");
   
 }
 
