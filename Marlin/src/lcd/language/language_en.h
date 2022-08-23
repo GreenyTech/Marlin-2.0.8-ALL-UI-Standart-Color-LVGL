@@ -740,6 +740,7 @@ namespace Language_en {
   PROGMEM Language_Str MSG_BUSY                      = _UxGT("busy");
   
   PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("Too cold");
+  PROGMEM Language_Str MSG_BUTTON_HEAT_UP_DEFAULT_VALUES = _UxGT("Heat up Nozzle and Bed"); 
   
 }
 

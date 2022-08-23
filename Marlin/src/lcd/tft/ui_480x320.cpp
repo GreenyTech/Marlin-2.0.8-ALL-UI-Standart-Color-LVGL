@@ -208,6 +208,7 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
     tft.add_text(tft_string.center(80) + 2, 8, Color, tft_string);
   }
 }
+/**
 void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
   TERN_(TOUCH_SCREEN, touch.add_control(FAN, x, y, 80, 120));
   tft.canvas(x, y, 80, 120);
@@ -231,7 +232,16 @@ void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
   tft.add_text(tft_string.center(80) + 6, 82, COLOR_FAN, tft_string);
   
 }
+**/
 
+void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {
+  TERN_(TOUCH_SCREEN, touch.add_control(FAN, x, y, 80, 120));
+  tft.canvas(x, y, 80, 120);
+  tft.set_background(COLOR_BACKGROUND);
+  
+  tft.add_image(8, 30, imgBed, COLOR_FAN);
+  tft.add_image(8, 10, imgHotEnd, COLOR_FAN);
+}
 void MarlinUI::draw_status_screen() {
   const bool blink = get_blink();
 
@@ -690,6 +700,7 @@ static void moveAxis(const AxisEnum axis, const int8_t direction) {
   }
 
   const float diff = motionAxisState.currentStepSize * direction;
+  
 
   if (axis == Z_AXIS && motionAxisState.z_selection == Z_SELECTION_Z_PROBE) {
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
@@ -814,9 +825,10 @@ void MarlinUI::move_axis_screen() {
   
 
     quick_feedback();
-    if(homing_needed()){
+    if(false && homing_needed()){ //TODO
       //drawMessage();  
       message = GET_TEXT(MSG_HOME_FIRST_PLAIN);
+      return;
       //only 13 Characters are allowed
       //"Views only:
       //"Homing is req"uiert
@@ -828,7 +840,8 @@ void MarlinUI::move_axis_screen() {
         //Todo Block UI at movement to avoid strange behavior
       message = (GET_TEXT(MSG_CLEANING_POSITION));
         queue.enqueue_now_P("G0 X170 Y130 Z180");  
-        
+          planner.synchronize(); //todo sync touch
+          
           block_interactin_till=millis()+4*1000;
           
       }  
@@ -837,6 +850,7 @@ void MarlinUI::move_axis_screen() {
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
           queue.enqueue_now_P("G0 X170 Y130 Z360");
+          planner.synchronize(); //todo sync touch
           block_interactin_till=millis()+4*1000;
           
         }

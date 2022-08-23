@@ -671,6 +671,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_BUSY                      = _UxGT("Beschaeftigt");
   PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("zu Kalt");
 
+  PROGMEM Language_Str MSG_BUTTON_HEAT_UP_DEFAULT_VALUES                     = _UxGT("Düse und Bett aufheizen");
 
 
 
