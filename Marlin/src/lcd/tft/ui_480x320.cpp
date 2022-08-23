@@ -687,7 +687,7 @@ static void drawAxisValue(const AxisEnum axis) {
 static millis_t block_interactin_till = 0;
 
 static void moveAxis(const AxisEnum axis, const int8_t direction) {
-
+  quick_feedback();
 
   if(block_interactin_till>millis()){
     drawMessage(GET_TEXT(MSG_BUSY));
