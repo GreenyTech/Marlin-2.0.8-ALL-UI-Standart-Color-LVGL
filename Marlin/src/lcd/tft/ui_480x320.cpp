@@ -839,7 +839,7 @@ void MarlinUI::move_axis_screen() {
       if(current_position.z<180){ 
         //Todo Block UI at movement to avoid strange behavior
       message = (GET_TEXT(MSG_CLEANING_POSITION));
-        queue.enqueue_now_P("G0 X170 Y130 Z180");  
+        queue.enqueue_now_P("G0 X170 Y130 Z180\n M18 X Y");  
           planner.synchronize(); //todo sync touch
           
           block_interactin_till=millis()+4*1000;
@@ -849,7 +849,7 @@ void MarlinUI::move_axis_screen() {
         //TODO drive complety down.
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
-          queue.enqueue_now_P("G0 X170 Y130 Z360");
+          queue.enqueue_now_P("G0 X170 Y130 Z360\n M18 X Y");
           planner.synchronize(); //todo sync touch
           block_interactin_till=millis()+4*1000;
           
