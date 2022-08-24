@@ -246,6 +246,7 @@ void menu_pause_option() {
   #endif
   ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_PURGE, []{ pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE; });
 
+
   #if HAS_FILAMENT_SENSOR
     const bool still_out = runout.filament_ran_out;
     if (still_out)
@@ -309,7 +310,7 @@ FORCE_INLINE screenFunc_t ap_message_screen(const PauseMessage message) {
     case PAUSE_MESSAGE_WAITING:  return lcd_pause_waiting_message;
     case PAUSE_MESSAGE_INSERT:   return lcd_pause_insert_message;
     case PAUSE_MESSAGE_LOAD:     return lcd_pause_load_message;
-    case PAUSE_MESSAGE_PURGE:    return lcd_pause_purge_message;
+    case PAUSE_MESSAGE_PURGE:    return lcd_pause_purge_message; //warten auf Filament Purge
     case PAUSE_MESSAGE_RESUME:   return lcd_pause_resume_message;
     case PAUSE_MESSAGE_HEAT:     return lcd_pause_heat_message;
     case PAUSE_MESSAGE_HEATING:  return lcd_pause_heating_message;
@@ -332,6 +333,7 @@ void MarlinUI::pause_show_message(
   if (next_screen) {
     ui.defer_status_screen();
     ui.goto_screen(next_screen);
+    ui.buzz(200,400); //chirpt manchaml doppelt.
   }
   else
     ui.return_to_status();
