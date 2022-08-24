@@ -689,7 +689,7 @@ static millis_t block_interactin_till = 0;
 static void moveAxis(const AxisEnum axis, const int8_t direction) {
   quick_feedback();
 
-  if(block_interactin_till>millis()){
+ if(block_interactin_till>millis()){
     drawMessage(GET_TEXT(MSG_BUSY));
     return;
   } 
@@ -809,6 +809,15 @@ static bool plotMoveDown = false;
     //TERN_(HAS_TFT_XPT2046, touch.disable());
   }
 
+   static void move_to_cleainig_position(const char* p){
+          queue.enqueue_now_P(p);  
+          planner.synchronize(); //todo sync touch
+          
+          block_interactin_till=millis()+12*1000;
+          //set_axis_unhomed(X_AXIS);
+          //set_axis_unhomed(Y_AXIS);
+   }
+
   static void cleaning_position(){
 
 
@@ -825,9 +834,11 @@ void MarlinUI::move_axis_screen() {
   
 
     quick_feedback();
-    if(false && homing_needed()){ //TODO
+    if(homing_needed()){ //TODO
       //drawMessage();  
       message = GET_TEXT(MSG_HOME_FIRST_PLAIN);
+      
+    drawMessage(message);
       return;
       //only 13 Characters are allowed
       //"Views only:
@@ -838,20 +849,17 @@ void MarlinUI::move_axis_screen() {
     else{
       if(current_position.z<180){ 
         //Todo Block UI at movement to avoid strange behavior
-      message = (GET_TEXT(MSG_CLEANING_POSITION));
-        queue.enqueue_now_P("G0 X170 Y130 Z180\n M18 X Y");  
-          planner.synchronize(); //todo sync touch
-          
-          block_interactin_till=millis()+4*1000;
+        message = (GET_TEXT(MSG_CLEANING_POSITION));
+        move_to_cleainig_position("G0 X170 Y130 Z180"); //\n M18 X Y
+        
           
       }  
       else{
         //TODO drive complety down.
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
-          queue.enqueue_now_P("G0 X170 Y130 Z360\n M18 X Y");
-          planner.synchronize(); //todo sync touch
-          block_interactin_till=millis()+4*1000;
+          
+        move_to_cleainig_position("G0 X170 Y130 Z360"); //\n M18 X Y
           
         }
         else{
