@@ -227,23 +227,20 @@ void Touch::touch(touch_control_t *control) {
 
       break;
     case FAN:
-      /**
-      ui.clear_lcd();
-      static uint8_t fan, fan_speed;
-      fan = 0;
-      fan_speed = thermalManager.fan_speed[fan];
-      MenuItem_percent::action((const char *)GET_TEXT_F(MSG_FIRST_FAN_SPEED), &fan_speed, 0, 255, []{ thermalManager.set_fan_speed(fan, fan_speed); });
-      **/
-/**
-     MenuItem_confirm::select_screen(
-          GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), GET_TEXT(MSG_BACK),
-          []{queue.enqueue_now_P("M140 S55\nM104 S215");},
-           ui.goto_previous_screen,
-          GET_TEXT(MSG_YES), (const char *)nullptr, PSTR("?")
-        );
-**/
-queue.enqueue_now_P("M140 S55\nM104 S215");
-      
+    
+    //ui.chirp();
+     
+    ui.goto_screen([]{
+        MenuItem_confirm::select_screen(
+              GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
+              []{queue.enqueue_now_P("M140 S55\nM104 S215"); ui.goto_previous_screen();},
+              ui.goto_previous_screen,
+              GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), (const char *)nullptr, PSTR("?")
+            );
+
+    });
+
+
       break;
     
 
