@@ -55,6 +55,8 @@
   #include "../../feature/password/password.h"
 #endif
 
+#include "../../feature/bed_temperature.h"
+
 void menu_tmc();
 void menu_backlash();
 
@@ -351,9 +353,11 @@ void menu_backlash();
         _PID_EDIT_ITEMS_TMPL(H_BED, thermalManager.temp_bed);
       #endif
       **/
-
       #if ENABLED(PID_AUTOTUNE_MENU)
+      
+     if(!bed_temperature_DISABLED){
         EDIT_ITEM_FAST_N(int3, H_BED, MSG_PID_AUTOTUNE_E, &autotune_temp_bed, PREHEAT_1_TEMP_BED, BED_MAX_TARGET, []{ _lcd_autotune(H_BED); });
+     }
       #endif
     #endif
 

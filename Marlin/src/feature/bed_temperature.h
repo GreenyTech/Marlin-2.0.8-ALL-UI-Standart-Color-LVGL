@@ -28,4 +28,4 @@
 
 
 
-extern bool bed_temperature_enabled_unique;
+extern bool bed_temperature_DISABLED;

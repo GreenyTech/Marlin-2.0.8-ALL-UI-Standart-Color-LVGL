@@ -722,7 +722,7 @@ void MarlinSettings::postprocess() {
 
     {
       
-      const bool &bed_temperature_enabled = bed_temperature_enabled_unique; //bed_temperature_enabled_unique //todo
+      const bool &bed_temperature_enabled = bed_temperature_DISABLED; 
       _FIELD_TEST(bed_temperature_enabled);
       EEPROM_WRITE(bed_temperature_enabled);
     }
@@ -1625,7 +1625,7 @@ void MarlinSettings::postprocess() {
         _FIELD_TEST(bed_temperature_enabled);
         EEPROM_READ(bed_temperature_enabled);
       
-        bed_temperature_enabled_unique = bed_temperature_enabled < 0 ? FIL_RUNOUT_ENABLED_DEFAULT : bed_temperature_enabled;
+        bed_temperature_DISABLED = bed_temperature_enabled < 0 ? FIL_RUNOUT_ENABLED_DEFAULT : bed_temperature_enabled;
     }
 
       //
@@ -2669,8 +2669,14 @@ void MarlinSettings::reset() {
     TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, runout.set_runout_distance(FILAMENT_RUNOUT_DISTANCE_MM));
   #endif
 
-  //TODO wird das benötigt:
-  //bed_temperature_enabled_unique = true;
+  
+    //
+    //Bed Temperature enabled
+    //
+
+    {
+      bed_temperature_DISABLED = false;
+    }
 
   //
   // Tool-change Settings

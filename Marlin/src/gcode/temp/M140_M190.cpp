@@ -43,7 +43,7 @@
  */
 void GcodeSuite::M140() {
   if (DEBUGGING(DRYRUN)) return;
-  if (!bed_temperature_enabled_unique){
+  if (bed_temperature_DISABLED){
     SERIAL_ECHO_MSG("Set no Temperature and return");
     return;
   }
@@ -97,7 +97,7 @@ void GcodeSuite::M140() {
  */
 void GcodeSuite::M190() {
   if (DEBUGGING(DRYRUN)) return;
-  if (!bed_temperature_enabled_unique){
+  if (bed_temperature_DISABLED){
     return;
   }
 

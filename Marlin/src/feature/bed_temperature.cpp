@@ -22,5 +22,5 @@
 
 #include "bed_temperature.h"
 
-bool bed_temperature_enabled_unique = true;
+bool bed_temperature_DISABLED = false;
 
