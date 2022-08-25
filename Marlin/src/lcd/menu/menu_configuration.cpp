@@ -611,14 +611,13 @@ void menu_configuration() {
     //if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
   #endif
 
-    EDIT_ITEM(bool, MSG_HEAT_BED, &bed_temperature_enabled_unique,
+    EDIT_ITEM(bool, MSG_HEAT_BED_DISABLED, &bed_temperature_DISABLED,
       [](){  
         SERIAL_ECHO_MSG("change temperature");
-        //if(bed_temperature_enabled_unique)
         thermalManager.temp_bed.target=0;
 
         thermalManager.start_watching_bed();
-
+ui.goto_screen([]{
         MenuItem_confirm::select_screen(
               GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
               []{
@@ -628,12 +627,14 @@ void menu_configuration() {
                 
                 },
                 []{
-                  bed_temperature_enabled_unique = !bed_temperature_enabled_unique;
+                  bed_temperature_DISABLED = !bed_temperature_DISABLED;
                 ui.goto_previous_screen();
                 }
               ,
-              bed_temperature_enabled_unique? GET_TEXT( MSG_DISCONECT_HEAT_BED): GET_TEXT(MSG_CONNECT_HEAT_BED)
+              bed_temperature_DISABLED? GET_TEXT( MSG_DISCONECT_HEAT_BED):GET_TEXT(MSG_CONNECT_HEAT_BED)
               , (const char *)nullptr, PSTR("!"));
+
+});
         }
       );
         
