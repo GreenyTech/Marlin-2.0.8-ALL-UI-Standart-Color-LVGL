@@ -36,6 +36,7 @@
 #include "../../module/printcounter.h"
 #include "../../module/planner.h"
 #include "../../module/motion.h"
+#include "../../feature/bed_temperature.h"
 
 
 extern int numberOfPOLoads;
@@ -167,6 +168,7 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
   }
   #if HAS_HEATED_BED
     else if (Heater == H_BED) {
+      if(!bed_temperature_enabled_unique) Color = COLOR_YELLOW; //COLOR_COLD
       if (currentTemperature >= 50) Color = COLOR_HEATED_BED;
       image = targetTemperature > 0 ? imgBedHeated : imgBed;
     }
@@ -201,12 +203,14 @@ void draw_heater_status(uint16_t x, uint16_t y, const int8_t Heater) {
   tft_string.trim();
   tft.add_text(tft_string.center(80) + 2, 82, Color, tft_string);
 
-  if (targetTemperature >= 0) {
-    tft_string.set((uint8_t *)i16tostr3rj(targetTemperature));
-    tft_string.add(LCD_STR_DEGREE);
-    tft_string.trim();
-    tft.add_text(tft_string.center(80) + 2, 8, Color, tft_string);
-  }
+  //if(!(!bed_temperature_enabled_unique && Heater == H_BED) ){
+    if (targetTemperature >= 0) {
+      tft_string.set((uint8_t *)i16tostr3rj(targetTemperature));
+      tft_string.add(LCD_STR_DEGREE);
+      tft_string.trim();
+      tft.add_text(tft_string.center(80) + 2, 8, Color, tft_string);
+    }
+  //}
 }
 /**
 void draw_fan_status(uint16_t x, uint16_t y, const bool blink) {

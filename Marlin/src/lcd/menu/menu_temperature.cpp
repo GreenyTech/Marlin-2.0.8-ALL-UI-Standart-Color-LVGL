@@ -51,6 +51,7 @@
 
 
 
+#include "../../feature/bed_temperature.h"
 
 
 
@@ -193,7 +194,10 @@ void menu_temperature() {
   // Bed:
   //
   #if HAS_HEATED_BED
+  if(bed_temperature_enabled_unique){
     EDIT_ITEM_FAST(int3, MSG_BED, &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
+    }
+  
   #endif
 
   //

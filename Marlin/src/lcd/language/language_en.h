@@ -741,7 +741,9 @@ namespace Language_en {
   
   PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("Too cold");
   PROGMEM Language_Str MSG_BUTTON_HEAT_UP_DEFAULT_VALUES = _UxGT("Heat up Nozzle and Bed"); 
-  
+  PROGMEM Language_Str MSG_DISCONECT_HEAT_BED                = _UxGT("Unplug the Heat Bed");
+  PROGMEM Language_Str MSG_CONNECT_HEAT_BED                = _UxGT("Connect Printer and Heat Bed");
+  PROGMEM Language_Str MSG_HEAT_BED                = _UxGT("Heat Bed");
 }
 
 #if FAN_COUNT == 1

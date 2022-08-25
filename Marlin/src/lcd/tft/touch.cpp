@@ -36,6 +36,9 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
+
+#include "../../feature/bed_temperature.h"
+
 #include "tft.h"
 
 bool Touch::enabled = true;
@@ -211,7 +214,11 @@ void Touch::touch(touch_control_t *control) {
       }
       #if HAS_HEATED_BED
         else if (heater == H_BED) {
-          MenuItem_int3::action((const char *)GET_TEXT_F(MSG_BED), &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
+          if(bed_temperature_enabled_unique){
+            MenuItem_int3::action((const char *)GET_TEXT_F(MSG_BED), &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
+          }else{
+            ui.buzz(100,200);
+          }
         }
       #endif
       #if HAS_HEATED_CHAMBER

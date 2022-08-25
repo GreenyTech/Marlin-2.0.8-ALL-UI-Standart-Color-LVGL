@@ -33,6 +33,7 @@
 #include "../gcode.h"
 #include "../../module/temperature.h"
 #include "../../lcd/marlinui.h"
+#include "../../feature/bed_temperature.h"
 
 /**
  * M140: Set bed temperature
@@ -42,6 +43,10 @@
  */
 void GcodeSuite::M140() {
   if (DEBUGGING(DRYRUN)) return;
+  if (!bed_temperature_enabled_unique){
+    SERIAL_ECHO_MSG("Set no Temperature and return");
+    return;
+  }
 
   bool got_temp = false;
   celsius_t temp = 0;
@@ -92,6 +97,9 @@ void GcodeSuite::M140() {
  */
 void GcodeSuite::M190() {
   if (DEBUGGING(DRYRUN)) return;
+  if (!bed_temperature_enabled_unique){
+    return;
+  }
 
   bool got_temp = false;
   celsius_t temp = 0;
