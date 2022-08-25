@@ -36,7 +36,7 @@
  */
 
 // Change EEPROM version if the structure changes
-#define EEPROM_VERSION "V83"
+#define EEPROM_VERSION "V83" //TODO updtaen? 
 #define EEPROM_OFFSET 100
 
 // Check the integrity of data offsets.
@@ -158,6 +158,8 @@
   #include "../lcd/extui/lib/dgus/DGUSDisplayDef.h"
 #endif
 
+#include "../feature/bed_temperature.h"
+
 #pragma pack(push, 1) // No padding between variables
 
 #if HAS_ETHERNET
@@ -212,6 +214,14 @@ typedef struct SettingsDataStruct {
   //
   bool runout_sensor_enabled;                           // M412 S
   float runout_distance_mm;                             // M412 D
+
+
+  //
+  // Bed Temperature enabled
+  //
+  bool bed_temperature_enabled;
+
+
 
   //
   // ENABLE_LEVELING_FADE_HEIGHT
@@ -704,6 +714,17 @@ void MarlinSettings::postprocess() {
         constexpr float runout_distance_mm = 0;
       #endif
       EEPROM_WRITE(runout_distance_mm);
+    }
+
+    //
+    //Bed Temperature enabled
+    //
+
+    {
+      
+      const bool &bed_temperature_enabled = bed_temperature_enabled_unique; //bed_temperature_enabled_unique //todo
+      _FIELD_TEST(bed_temperature_enabled);
+      EEPROM_WRITE(bed_temperature_enabled);
     }
 
     //
@@ -1594,6 +1615,18 @@ void MarlinSettings::postprocess() {
           if (!validating) runout.set_runout_distance(runout_distance_mm);
         #endif
       }
+
+      //
+      //Bed Temperature enabled
+      //
+
+    {
+        int8_t bed_temperature_enabled;
+        _FIELD_TEST(bed_temperature_enabled);
+        EEPROM_READ(bed_temperature_enabled);
+      
+        bed_temperature_enabled_unique = bed_temperature_enabled < 0 ? FIL_RUNOUT_ENABLED_DEFAULT : bed_temperature_enabled;
+    }
 
       //
       // Global Leveling
@@ -2635,6 +2668,9 @@ void MarlinSettings::reset() {
     runout.reset();
     TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, runout.set_runout_distance(FILAMENT_RUNOUT_DISTANCE_MM));
   #endif
+
+  //TODO wird das benötigt:
+  //bed_temperature_enabled_unique = true;
 
   //
   // Tool-change Settings
