@@ -71,7 +71,7 @@ inline void clear_temperature(){
 }
 
 
-void set_offset_and_go_back(const_float_t z) {
+void set_offset_and_end(const_float_t z) {
   probe.offset.z = z;
   SET_SOFT_ENDSTOP_LOOSE(false);
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
@@ -87,7 +87,7 @@ void _goto_manual_move_z(const_float_t scale) {
 inline void cancel_z_probe_offset(){
   
   SERIAL_ECHOLNPGM("Cancel z Probe");
-  set_offset_and_go_back(z_offset_backup);
+  set_offset_and_end(z_offset_backup);
   is_in_z_probe_offset_process =false;
     // If wizard-homing was done by probe with PROBE_OFFSET_WIZARD_START_Z
     #if HOMING_Z_WITH_PROBE && defined(PROBE_OFFSET_WIZARD_START_Z)
@@ -160,13 +160,15 @@ void probe_offset_wizard_menu() {
   }
 
   ACTION_ITEM(MSG_BUTTON_DONE, []{
-    set_offset_and_go_back(calculated_z_offset);
+    set_offset_and_end(calculated_z_offset);
     current_position.z = z_offset_ref;  // Set Z to z_offset_ref, as we can expect it is at probe height
     sync_plan_position();
     ui.store_settings(); //Save settings 
     z_clearance_move();                 // Raise Z as if it was homed
     
     clear_temperature();
+    
+    ui.goto_previous_screen_no_defer();
   });
 
   ACTION_ITEM(MSG_BUTTON_CANCEL, []{

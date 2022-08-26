@@ -674,7 +674,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_BUTTON_HEAT_UP_DEFAULT_VALUES                     = _UxGT("Düse und Bett aufheizen");
   PROGMEM Language_Str MSG_DISCONECT_HEAT_BED                = _UxGT("Stecke das Heizbett jetzt ab");
   PROGMEM Language_Str MSG_CONNECT_HEAT_BED                = _UxGT("Verbinde Heizbett und Drucker");
-  PROGMEM Language_Str MSG_HEAT_BED_DISABLED                = _UxGT("Heizbett Deaktiviert");
+  PROGMEM Language_Str MSG_HEAT_BED_DISABLED                = _UxGT("Heizbettsperre");
   
 
 
