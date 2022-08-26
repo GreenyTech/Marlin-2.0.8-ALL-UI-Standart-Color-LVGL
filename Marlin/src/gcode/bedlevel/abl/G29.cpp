@@ -723,8 +723,8 @@ G29_TYPE GcodeSuite::G29() {
       set_bed_leveling_enabled(abl.reenable);
       abl.measured_z = NAN;
     }
-    //TODO turn down bad temperatur.
-    queue.inject_P(PSTR("G0 X170 Y200")); //"M140 S0 \n
+    //TODO turn down bad temperatur. //not required as it turns it down automatically
+    queue.inject_P(PSTR("G0 X170 Y200\nM140 S0\n")); //"M140 S0 \n
     //queue.inject_P(PSTR("")); //park Position
     ui.reset_status();
     ui.store_settings();
