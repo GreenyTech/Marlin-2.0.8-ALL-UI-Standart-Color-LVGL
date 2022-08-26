@@ -218,6 +218,8 @@ void _lcd_draw_heating_up_temperature();
 
 #if ENABLED(PROBE_OFFSET_WIZARD)
   void goto_probe_offset_wizard();
+  extern bool is_in_z_probe_offset_process; //make commands available
+  void cancel_z_probe_offset();
 #endif
 
 #if ENABLED(LCD_BED_LEVELING) || (HAS_LEVELING && DISABLED(SLIM_LCD_MENUS))

@@ -37,6 +37,8 @@
 #include "../../module/probe.h"
 //#include "menu.h"
 
+#include "../../feature/hotend_idle_callback.h"
+
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
@@ -73,12 +75,32 @@ void set_offset_and_go_back(const_float_t z) {
   probe.offset.z = z;
   SET_SOFT_ENDSTOP_LOOSE(false);
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
-  ui.goto_previous_screen_no_defer();
+  
+  
 }
 
 void _goto_manual_move_z(const_float_t scale) {
   ui.manual_move.menu_scale = scale;
   ui.goto_screen(lcd_move_z);
+}
+
+inline void cancel_z_probe_offset(){
+  
+  SERIAL_ECHOLNPGM("Cancel z Probe");
+  set_offset_and_go_back(z_offset_backup);
+  is_in_z_probe_offset_process =false;
+    // If wizard-homing was done by probe with PROBE_OFFSET_WIZARD_START_Z
+    #if HOMING_Z_WITH_PROBE && defined(PROBE_OFFSET_WIZARD_START_Z)
+      set_axis_never_homed(Z_AXIS); // On cancel the Z position needs correction
+      queue.inject_P(PSTR("G28Z"));
+    #else // Otherwise do a Z clearance move like after Homing
+      z_clearance_move();
+      //clear_movement_and_Temperature();
+    #endif
+    
+    clear_temperature();
+    //ui.goto_previous_screen_no_defer();
+
 }
 
 void probe_offset_wizard_menu() {
@@ -105,6 +127,9 @@ void probe_offset_wizard_menu() {
   
   START_MENU(); //Initialize screen
   //TODO home 
+
+  
+  temperature_timeout_call_Back= cancel_z_probe_offset;
 
   
   calculated_z_offset = probe.offset.z + current_position.z - z_offset_ref;
@@ -145,21 +170,13 @@ void probe_offset_wizard_menu() {
   });
 
   ACTION_ITEM(MSG_BUTTON_CANCEL, []{
-    set_offset_and_go_back(z_offset_backup);
-    // If wizard-homing was done by probe with PROBE_OFFSET_WIZARD_START_Z
-    #if HOMING_Z_WITH_PROBE && defined(PROBE_OFFSET_WIZARD_START_Z)
-      set_axis_never_homed(Z_AXIS); // On cancel the Z position needs correction
-      queue.inject_P(PSTR("G28Z"));
-    #else // Otherwise do a Z clearance move like after Homing
-      z_clearance_move();
-      //clear_movement_and_Temperature();
-    #endif
-    
-    clear_temperature();
+    cancel_z_probe_offset();
+    ui.goto_previous_screen_no_defer();
   });
 
   END_MENU();
 }
+
 
 
 void prepare_for_probe_offset_wizard() {
@@ -200,6 +217,7 @@ void prepare_for_probe_offset_wizard() {
   ui.defer_status_screen();
 }
 
+bool is_in_z_probe_offset_process = false;
 
 void goto_probe_offset_wizard() {
   ui.defer_status_screen();
@@ -208,6 +226,7 @@ void goto_probe_offset_wizard() {
   
   // Store probe.offset.z for Case: Cancel
   z_offset_backup = probe.offset.z;
+  is_in_z_probe_offset_process = true;
 
   #ifdef PROBE_OFFSET_WIZARD_START_Z
     probe.offset.z = PROBE_OFFSET_WIZARD_START_Z;

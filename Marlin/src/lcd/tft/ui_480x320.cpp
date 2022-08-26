@@ -852,7 +852,7 @@ void MarlinUI::move_axis_screen() {
       if(current_position.z<180){ 
         //Todo Block UI at movement to avoid strange behavior
         message = (GET_TEXT(MSG_CLEANING_POSITION));
-        move_to_cleainig_position("G0 X170 Y130 Z180"); //\n M18 X Y
+        move_to_cleainig_position("G0 X170 Y200 Z180"); //\n M18 X Y
         
           
       }  
@@ -861,7 +861,7 @@ void MarlinUI::move_axis_screen() {
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
           
-        move_to_cleainig_position("G0 X170 Y130 Z360"); //\n M18 X Y
+        move_to_cleainig_position("G0 Z360"); //\n M18 X Y
           
         }
         else{

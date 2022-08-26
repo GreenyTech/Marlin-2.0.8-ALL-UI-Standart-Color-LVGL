@@ -512,16 +512,22 @@ void menu_configuration() {
   //SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard); 
     #if ENABLED(PROBE_OFFSET_WIZARD)
         if (!printingIsActive()) SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);//added from the menu advanced settings
-      #endif
+ 
 
+    if(is_in_z_probe_offset_process){
+      cancel_z_probe_offset();
+      ui.buzz(100,200);
+    }
+     #endif
   
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
         if (printingIsActive()) SUBMENU(MSG_ZPROBE_ZOFFSET_BLIND, lcd_babystep_zoffset);
     #endif
 
   //SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
-  SUBMENU(MSG_TEMPERATURE_PID, menu_advanced_temperature);//added from the menu advanced settings
-  
+  if(!printer_busy()){
+    SUBMENU(MSG_TEMPERATURE_PID, menu_advanced_temperature);//added from the menu advanced settings
+  }
   //menu_advanced_temperature();
 
 

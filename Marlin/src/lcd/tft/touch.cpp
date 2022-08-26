@@ -237,15 +237,22 @@ void Touch::touch(touch_control_t *control) {
     
     //ui.chirp();
      
-    ui.goto_screen([]{
-        MenuItem_confirm::select_screen(
-              GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
-              []{queue.enqueue_now_P("M140 S55\nM104 S215"); ui.goto_previous_screen();},
-              ui.goto_previous_screen,
-              GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), (const char *)nullptr, PSTR("?")
-            );
+      if(!printer_busy()){
+        ui.goto_screen([]{
 
-    });
+          
+            MenuItem_confirm::select_screen(
+                  GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
+                  []{queue.enqueue_now_P("M140 S55\nM104 S215"); ui.goto_previous_screen();},
+                  ui.goto_previous_screen,
+                  GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), (const char *)nullptr, PSTR("?")
+                );
+
+        }); 
+    }
+    else{
+            ui.buzz(100,200);
+          }
 
 
       break;

@@ -37,6 +37,8 @@
 #include "../module/planner.h"
 #include "../lcd/marlinui.h"
 
+#include "hotend_idle_callback.h"
+
 extern HotendIdleProtection hotend_idle;
 
 millis_t HotendIdleProtection::next_protect_ms = 0;
@@ -74,16 +76,25 @@ void HotendIdleProtection::check() {
 }
 
 
+
+  
 // Lower (but don't raise) hotend / bed temperatures
 void HotendIdleProtection::timed_out() {
   next_protect_ms = 0;
   SERIAL_ECHOLNPGM("reset timeout");
-  if(ui.on_status_screen()){
   //next_protect_ms = 0;
   SERIAL_ECHOLNPGM("Hotend Idle Timeout");
   //ui.return_to_status();
 
-
+  if(temperature_timeout_call_Back!=0){
+      temperature_timeout_call_Back();
+      temperature_timeout_call_Back=0;
+    }
+    printingIsActive()?SERIAL_ECHOLNPAIR("is Printing"):SERIAL_ECHOLNPAIR("printingIsActive -> false");
+    printingIsPaused()?SERIAL_ECHOLNPAIR("printing is paused"):SERIAL_ECHOLNPAIR("printingIsPaused -> is false");
+    //printer_busy()?SERIAL_ECHOLNPAIR("printer_busy"):SERIAL_ECHOLNPAIR("printer_busy -> is false");
+    //ui.clear_lcd();
+    //ui.status_screen();
 
 
   LCD_MESSAGEPGM(MSG_HOTEND_IDLE_TIMEOUT);
@@ -96,7 +107,6 @@ void HotendIdleProtection::timed_out() {
       thermalManager.setTargetBed(HOTEND_IDLE_BED_TARGET);
   #endif
   
-  }
 }
 
 #endif // HOTEND_IDLE_TIMEOUT
