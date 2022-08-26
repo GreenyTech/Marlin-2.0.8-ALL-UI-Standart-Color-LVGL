@@ -29,6 +29,8 @@
 
 #include "../inc/MarlinConfig.h"
 
+#include "../feature/bed_temperature.h"
+
 #if ENABLED(AUTO_POWER_CONTROL)
   #include "../feature/power.h"
 #endif
@@ -236,13 +238,13 @@ struct HeaterWatch {
   inline bool check(const celsius_t curr) { return curr >= target; }
 
   inline void restart(const celsius_t curr, const celsius_t tgt) {
-    if (tgt) {
+    if (tgt) { 
       const celsius_t newtarget = curr + INCREASE;
       if (newtarget < tgt - HYSTERESIS - 1) {
         target = newtarget;
         next_ms = millis() + SEC_TO_MS(PERIOD);
         return;
-      }
+      } 
     }
     next_ms = 0;
   }
@@ -709,7 +711,9 @@ class Temperature {
       #endif
       static inline celsius_float_t degBed()  { return temp_bed.celsius; }
       static inline celsius_t wholeDegBed()   { return static_cast<celsius_t>(degBed() + 0.5f); }
-      static inline celsius_t degTargetBed()  { return temp_bed.target; }
+      static inline celsius_t degTargetBed()  { 
+          return temp_bed.target; 
+        }
       static inline bool isHeatingBed()       { return temp_bed.target > temp_bed.celsius; }
       static inline bool isCoolingBed()       { return temp_bed.target < temp_bed.celsius; }
 
@@ -720,9 +724,17 @@ class Temperature {
       #endif
 
       static void setTargetBed(const celsius_t celsius) {
+        if(!bed_temperature_DISABLED){
+          
+          SERIAL_ECHO_MSG("setTargetBed");
         TERN_(AUTO_POWER_CONTROL, if (celsius) powerManager.power_on());
-        temp_bed.target = _MIN(celsius, BED_MAX_TARGET);
+          temp_bed.target = _MIN(celsius, BED_MAX_TARGET);
         start_watching_bed();
+        }
+        else{
+          
+          SERIAL_ECHO_MSG("Blocked setTargetBed");
+        }
       }
 
       static bool wait_for_bed(const bool no_wait_for_cooling=true
