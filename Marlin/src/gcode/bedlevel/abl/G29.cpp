@@ -724,7 +724,7 @@ G29_TYPE GcodeSuite::G29() {
       abl.measured_z = NAN;
     }
     //TODO turn down bad temperatur.
-    queue.inject_P(PSTR("M140 S0 \nG0 X160 Y100"));
+    queue.inject_P(PSTR("G0 X170 Y200")); //"M140 S0 \n
     //queue.inject_P(PSTR("")); //park Position
     ui.reset_status();
     ui.store_settings();
