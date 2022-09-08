@@ -598,11 +598,11 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   ensure_safe_temperature();
 
   // Retract to prevent oozing
-  unscaled_e_move(-(PAUSE_PARK_RETRACT_LENGTH), feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE));
+  unscaled_e_move(-(PAUSE_PARK_RETRACT_LENGTH), feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE)); //TODO Könnte probleme machen?
 
   if (!axes_should_home()) {
     // Move XY back to saved position
-    destination.set(resume_position.x, resume_position.y, current_position.z, current_position.e);
+    destination.set(resume_position.x, resume_position.y, current_position.z, current_position.e+10);
     prepare_internal_move_to_destination(NOZZLE_PARK_XY_FEEDRATE);
 
     // Move Z back to saved position
@@ -611,7 +611,18 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   }
 
   // Unretract
-  unscaled_e_move(PAUSE_PARK_RETRACT_LENGTH, feedRate_t(PAUSE_PARK_RETRACT_FEEDRATE));
+  unscaled_e_move(PAUSE_PARK_RETRACT_LENGTH, feedRate_t(PAUSE_PARK_UN_RETRACT_FEEDRATE));//todo
+  SERIAL_ECHO_MSG("undo Retract");
+
+
+
+
+
+
+  unscaled_e_move(2.6, feedRate_t(1));//todo
+
+  SERIAL_ECHO_MSG("additional feed");
+
 
   // Intelligent resuming
   #if ENABLED(FWRETRACT)
