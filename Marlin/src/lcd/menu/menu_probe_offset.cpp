@@ -86,6 +86,7 @@ void _goto_manual_move_z(const_float_t scale) {
 
 inline void cancel_z_probe_offset(){
   
+  temperature_timeout_call_Back=0;
   SERIAL_ECHOLNPGM("Cancel z Probe");
   set_offset_and_end(z_offset_backup);
   is_in_z_probe_offset_process =false;
@@ -164,6 +165,8 @@ void probe_offset_wizard_menu() {
     current_position.z = z_offset_ref;  // Set Z to z_offset_ref, as we can expect it is at probe height
     sync_plan_position();
     ui.store_settings(); //Save settings 
+    temperature_timeout_call_Back=0;
+    is_in_z_probe_offset_process = false;
     z_clearance_move();                 // Raise Z as if it was homed
     
     clear_temperature();
