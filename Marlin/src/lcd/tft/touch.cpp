@@ -243,7 +243,7 @@ void Touch::touch(touch_control_t *control) {
           
             MenuItem_confirm::select_screen(
                   GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
-                  []{queue.enqueue_now_P("M140 S55\nM104 S215"); ui.goto_previous_screen();},
+                  []{queue.enqueue_now_P("G0 X170 Y200 Z180\nM104 S220"); ui.goto_previous_screen();},
                   ui.goto_previous_screen,
                   GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), (const char *)nullptr, PSTR("?")
                 );
