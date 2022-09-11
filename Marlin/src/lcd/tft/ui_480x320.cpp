@@ -849,6 +849,8 @@ void MarlinUI::move_axis_screen() {
       //"Bitte Homen!" 
     }
     else{
+      
+    #ifdef DOUBLE_CLEANING_POSITION_MENUE
       if(current_position.z<180){ 
         //Todo Block UI at movement to avoid strange behavior
         message = (GET_TEXT(MSG_CLEANING_POSITION));
@@ -857,6 +859,7 @@ void MarlinUI::move_axis_screen() {
           
       }  
       else{
+      #endif
         //TODO drive complety down.
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
@@ -867,8 +870,12 @@ void MarlinUI::move_axis_screen() {
         else{
           message = (GET_TEXT(MSG_ALLREADY_BELOW));
         }  
-      }
+
+      #ifdef DOUBLE_CLEANING_POSITION_MENUE
+        }
+        #endif
     }
+    
 
     //current_position.z
     
@@ -980,10 +987,13 @@ void MarlinUI::move_axis_screen() {
   
       //if(current_position.z<180){ 
   //TFT_WIDTH *2/6 
-  MarlinImage tmpIMG =  imgSettings;
-  if(current_position.z>=180||plotMoveDown){
-    tmpIMG=imgDown;
+  MarlinImage tmpIMG =  imgDown;
+
+#ifdef DOUBLE_CLEANING_POSITION_MENUE
+  if((!current_position.z>=180) && ! plotMoveDown){
+    tmpIMG=imgSettings;
   }
+#endif
 
   TERN_(HAS_TFT_XPT2046, add_control(x+(BTN_WIDTH + spacing)*2   - Images[tmpIMG].width / 2, y - (Images[tmpIMG].width - BTN_HEIGHT) / 2, BUTTON, (intptr_t)cleaning_position, tmpIMG, !busy));
   

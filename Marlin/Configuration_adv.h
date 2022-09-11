@@ -3852,7 +3852,7 @@
   // Activate up to 3 service interval watchdogs
   #define SERVICE_NAME_1      "Service 1"
   #define SERVICE_NAME_RESET_1      "Reset Service 1"
-  #define SERVICE_INTERVAL_1  70 // print hours //hours//todo 70
+  #define SERVICE_INTERVAL_1  75 // print hours //hours//todo 70
   #define SERVICE_NAME_2      "Service 2"
   #define SERVICE_NAME_RESET_2      "Reset Service 2"
   #define SERVICE_INTERVAL_2  150 // print hours
@@ -3903,3 +3903,5 @@
 #else
 #define CLEAR_PREHEAT_GCODE_BEVORE_MEASUREMENT "G1 E0\nM140 S0\nM104 S0"//\nM140 S55\nM104 S215" // 
 #endif
+
+//#define DOUBLE_CLEANING_POSITION_MENUE
