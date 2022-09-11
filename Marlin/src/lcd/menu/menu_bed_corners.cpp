@@ -333,6 +333,7 @@ static void _lcd_level_bed_corners_homing() {
   //_lcd_draw_homing();
   _lcd_draw_heating_up_temperature();
   if (!all_axes_homed()) return;
+  ui.buzz(200,500); //TODO andere Ton?
   #if ENABLED(LEVEL_CORNERS_USE_PROBE)
     _lcd_test_corners();
     if (corner_probing_done) ui.goto_previous_screen_no_defer();

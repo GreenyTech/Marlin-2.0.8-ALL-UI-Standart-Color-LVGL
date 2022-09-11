@@ -333,7 +333,8 @@ void MarlinUI::pause_show_message(
   if (next_screen) {
     ui.defer_status_screen();
     ui.goto_screen(next_screen);
-    ui.buzz(200,400); //chirpt manchaml doppelt.
+    ui.buzz(200,500); //chirpt manchaml doppelt.
+    //chirp abgeschlossen
   }
   else
     ui.return_to_status();

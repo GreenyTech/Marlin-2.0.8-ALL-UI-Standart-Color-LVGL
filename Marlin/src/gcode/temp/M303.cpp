@@ -87,6 +87,7 @@ void GcodeSuite::M303() {
   ui.reset_status();
   ui.store_settings();
   //TODO save 
+  //ui.buzz(200,500);
 }
 
 #endif // HAS_PID_HEATING

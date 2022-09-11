@@ -263,6 +263,7 @@ void goto_probe_offset_wizard() {
         _lcd_draw_heating_up_temperature(); //temperature like that
         //_lcd_draw_Heating_up_Temperature();
         if (all_axes_homed()) {
+          ui.buzz(200,500);
           z_offset_ref = 0;             // Set Z Value for Wizard Position to 0
           ui.goto_screen(prepare_for_probe_offset_wizard);
           ui.defer_status_screen();

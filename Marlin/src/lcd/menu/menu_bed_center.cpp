@@ -149,6 +149,7 @@ static void _lcd_level_bed_center_homing() {
   //_lcd_draw_homing();
   _lcd_draw_heating_up_temperature();
   if (!all_axes_homed()) return;
+  ui.buzz(200,500); //TODO anderer Ton?
   #if ENABLED(LEVEL_CORNERS_USE_PROBE)
     _lcd_test_corners();
     if (corner_probing_done) ui.goto_previous_screen_no_defer();
@@ -163,7 +164,7 @@ static void _lcd_level_bed_center_homing() {
         , []{
           //TODO Gabriel 
           //ui.chirp();
-            queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT));
+            queue.inject_P(PSTR(CLEAR_PREHEAT_GCODE_BEVORE_MEASUREMENT)); //todo check if this is working
             line_to_z(LEVEL_CORNERS_Z_HOP); // Raise Z off the bed when done
             TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
             ui.goto_previous_screen_no_defer();
