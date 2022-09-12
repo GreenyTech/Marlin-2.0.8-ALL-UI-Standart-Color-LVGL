@@ -26,16 +26,15 @@
 
 #include "touch.h"
 
-#include "../marlinui.h"  // for ui methods
+#include "../marlinui.h"       // for ui methods
 #include "../menu/menu_item.h" // for touch_screen_calibration
 
 #include "../../module/temperature.h"
 #include "../../module/planner.h"
 
 #if ENABLED(AUTO_BED_LEVELING_UBL)
-  #include "../../feature/bedlevel/bedlevel.h"
+#include "../../feature/bedlevel/bedlevel.h"
 #endif
-
 
 #include "../../feature/bed_temperature.h"
 
@@ -50,20 +49,23 @@ millis_t Touch::last_touch_ms = 0,
          Touch::time_to_hold,
          Touch::repeat_delay,
          Touch::touch_time;
-TouchControlType  Touch::touch_control_type = NONE;
+TouchControlType Touch::touch_control_type = NONE;
 #if HAS_RESUME_CONTINUE
-  extern bool wait_for_user;
+extern bool wait_for_user;
 #endif
 
-void Touch::init() {
+void Touch::init()
+{
   TERN_(TOUCH_SCREEN_CALIBRATION, touch_calibration.calibration_reset());
   reset();
   io.Init();
   enable();
 }
 
-void Touch::add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t width, uint16_t height, intptr_t data) {
-  if (controls_count == MAX_CONTROLS) return;
+void Touch::add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t width, uint16_t height, intptr_t data)
+{
+  if (controls_count == MAX_CONTROLS)
+    return;
 
   controls[controls_count].type = type;
   controls[controls_count].x = x;
@@ -74,46 +76,58 @@ void Touch::add_control(TouchControlType type, uint16_t x, uint16_t y, uint16_t 
   controls_count++;
 }
 
-void Touch::idle() {
+void Touch::idle()
+{
   uint16_t i;
   int16_t _x, _y;
 
-  if (!enabled) return;
+  if (!enabled)
+    return;
 
   // Return if Touch::idle is called within the same millisecond
   const millis_t now = millis();
-  if (last_touch_ms == now) return;
+  if (last_touch_ms == now)
+    return;
   last_touch_ms = now;
 
-  if (get_point(&_x, &_y)) {
-    #if HAS_RESUME_CONTINUE
-      // UI is waiting for a click anywhere?
-      if (wait_for_user) {
-        touch_control_type = CLICK;
-        ui.lcd_clicked = true;
-        if (ui.external_control) wait_for_user = false;
-        return;
-      }
-    #endif
+  if (get_point(&_x, &_y))
+  {
+#if HAS_RESUME_CONTINUE
+    // UI is waiting for a click anywhere?
+    if (wait_for_user)
+    {
+      touch_control_type = CLICK;
+      ui.lcd_clicked = true;
+      if (ui.external_control)
+        wait_for_user = false;
+      return;
+    }
+#endif
 
-    #if LCD_TIMEOUT_TO_STATUS
-      ui.return_to_status_ms = last_touch_ms + LCD_TIMEOUT_TO_STATUS;
-    #endif
+#if LCD_TIMEOUT_TO_STATUS
+    ui.return_to_status_ms = last_touch_ms + LCD_TIMEOUT_TO_STATUS;
+#endif
 
-    if (touch_time) {
-      #if ENABLED(TOUCH_SCREEN_CALIBRATION)
-        if (touch_control_type == NONE && ELAPSED(last_touch_ms, touch_time + TOUCH_SCREEN_HOLD_TO_CALIBRATE_MS) && ui.on_status_screen())
-          ui.goto_screen(touch_screen_calibration);
-      #endif
+    if (touch_time)
+    {
+#if ENABLED(TOUCH_SCREEN_CALIBRATION)
+      if (touch_control_type == NONE && ELAPSED(last_touch_ms, touch_time + TOUCH_SCREEN_HOLD_TO_CALIBRATE_MS) && ui.on_status_screen())
+        ui.goto_screen(touch_screen_calibration);
+#endif
       return;
     }
 
-    if (time_to_hold == 0) time_to_hold = last_touch_ms + MINIMUM_HOLD_TIME;
-    if (PENDING(last_touch_ms, time_to_hold)) return;
+    if (time_to_hold == 0)
+      time_to_hold = last_touch_ms + MINIMUM_HOLD_TIME;
+    if (PENDING(last_touch_ms, time_to_hold))
+      return;
 
-    if (x != 0 && y != 0) {
-      if (current_control) {
-        if (WITHIN(x, current_control->x - FREE_MOVE_RANGE, current_control->x + current_control->width + FREE_MOVE_RANGE) && WITHIN(y, current_control->y - FREE_MOVE_RANGE, current_control->y + current_control->height + FREE_MOVE_RANGE)) {
+    if (x != 0 && y != 0)
+    {
+      if (current_control)
+      {
+        if (WITHIN(x, current_control->x - FREE_MOVE_RANGE, current_control->x + current_control->width + FREE_MOVE_RANGE) && WITHIN(y, current_control->y - FREE_MOVE_RANGE, current_control->y + current_control->height + FREE_MOVE_RANGE))
+        {
           NOLESS(x, current_control->x);
           NOMORE(x, current_control->x + current_control->width);
           NOLESS(y, current_control->y);
@@ -123,9 +137,12 @@ void Touch::idle() {
         else
           current_control = nullptr;
       }
-      else {
-        for (i = 0; i < controls_count; i++) {
-          if ((WITHIN(x, controls[i].x, controls[i].x + controls[i].width) && WITHIN(y, controls[i].y, controls[i].y + controls[i].height)) || (TERN(TOUCH_SCREEN_CALIBRATION, controls[i].type == CALIBRATE, false))) {
+      else
+      {
+        for (i = 0; i < controls_count; i++)
+        {
+          if ((WITHIN(x, controls[i].x, controls[i].x + controls[i].width) && WITHIN(y, controls[i].y, controls[i].y + controls[i].height)) || (TERN(TOUCH_SCREEN_CALIBRATION, controls[i].type == CALIBRATE, false)))
+          {
             touch_control_type = controls[i].type;
             touch(&controls[i]);
             break;
@@ -139,7 +156,8 @@ void Touch::idle() {
     x = _x;
     y = _y;
   }
-  else {
+  else
+  {
     x = y = 0;
     current_control = nullptr;
     touch_time = 0;
@@ -149,176 +167,238 @@ void Touch::idle() {
   }
 }
 
-
-
-
-
-
 millis_t timeDleayOnTouch = 0;
 millis_t MINIMUM_TIME_DELAY = 200;
 
-void Touch::touch(touch_control_t *control) {
-  //TODO add delay here
-  //also a good idear to add ui.chierps()
+void Touch::touch(touch_control_t *control)
+{
+  // TODO add delay here
+  // also a good idear to add ui.chierps()
   const millis_t now = millis();
-  if(timeDleayOnTouch>now){
+  if (timeDleayOnTouch > now)
+  {
     return;
-  } 
-  timeDleayOnTouch = now+MINIMUM_TIME_DELAY;
+  }
+  timeDleayOnTouch = now + MINIMUM_TIME_DELAY;
 
-
-  switch (control->type) {
-    #if ENABLED(TOUCH_SCREEN_CALIBRATION)
-      case CALIBRATE:
-        if (touch_calibration.handleTouch(x, y)) ui.refresh();
-        break;
-    #endif // TOUCH_SCREEN_CALIBRATION
-
-    case MENU_SCREEN: ui.goto_screen((screenFunc_t)control->data); break;
-    case BACK: ui.goto_previous_screen(); break;
-    case MENU_CLICK:
-      TERN_(SINGLE_TOUCH_NAVIGATION, ui.encoderPosition = control->data);
-      ui.lcd_clicked = true;
-      break;
-    case CLICK: ui.lcd_clicked = true; break;
-    #if HAS_RESUME_CONTINUE
-      case RESUME_CONTINUE: extern bool wait_for_user; wait_for_user = false; break;
-    #endif
-    case CANCEL:  ui.encoderPosition = 0; ui.selection = false; ui.lcd_clicked = true; break;
-    case CONFIRM: ui.encoderPosition = 1; ui.selection = true; ui.lcd_clicked = true; break;
-    case MENU_ITEM: ui.encoderPosition = control->data; ui.refresh(); break;
-    case PAGE_UP:
-      encoderTopLine = encoderTopLine > LCD_HEIGHT ? encoderTopLine - LCD_HEIGHT : 0;
-      ui.encoderPosition = ui.encoderPosition > LCD_HEIGHT ? ui.encoderPosition - LCD_HEIGHT : 0;
+  switch (control->type)
+  {
+#if ENABLED(TOUCH_SCREEN_CALIBRATION)
+  case CALIBRATE:
+    if (touch_calibration.handleTouch(x, y))
       ui.refresh();
-      break;
-    case PAGE_DOWN:
-      encoderTopLine = encoderTopLine + 2 * LCD_HEIGHT < screen_items ? encoderTopLine + LCD_HEIGHT : screen_items - LCD_HEIGHT;
-      ui.encoderPosition = ui.encoderPosition + LCD_HEIGHT < (uint32_t)screen_items ? ui.encoderPosition + LCD_HEIGHT : screen_items;
-      ui.refresh();
-      break;
-    case SLIDER:    hold(control); ui.encoderPosition = (x - control->x) * control->data / control->width; break;
-    case INCREASE:  hold(control, repeat_delay - 5); TERN(AUTO_BED_LEVELING_UBL, ui.external_control ? ubl.encoder_diff++ : ui.encoderPosition++, ui.encoderPosition++); break;
-    case DECREASE:  hold(control, repeat_delay - 5); TERN(AUTO_BED_LEVELING_UBL, ui.external_control ? ubl.encoder_diff-- : ui.encoderPosition--, ui.encoderPosition--); break;
-    case HEATER:
-      int8_t heater;
-      heater = control->data;
-      ui.clear_lcd();
-      if (heater >= 0) { // HotEnd
-        #if HOTENDS == 1
-          MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE), &thermalManager.temp_hotend[0].target, 0, thermalManager.hotend_max_target(0), []{ thermalManager.start_watching_hotend(0); });
-        #else
-          MenuItemBase::itemIndex = heater;
-          MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE_N), &thermalManager.temp_hotend[heater].target, 0, thermalManager.hotend_max_target(heater), []{ thermalManager.start_watching_hotend(MenuItemBase::itemIndex); });
-        #endif
-      }
-      #if HAS_HEATED_BED
-        else if (heater == H_BED) {
-          if(!bed_temperature_DISABLED){
-            MenuItem_int3::action((const char *)GET_TEXT_F(MSG_BED), &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
-          }else{
-            ui.buzz(100,200);
-          }
-        }
-      #endif
-      #if HAS_HEATED_CHAMBER
-        else if (heater == H_CHAMBER) {
-          MenuItem_int3::action((const char *)GET_TEXT_F(MSG_CHAMBER), &thermalManager.temp_chamber.target, 0, CHAMBER_MAX_TARGET, thermalManager.start_watching_chamber);
-        }
-      #endif
-      #if HAS_COOLER
-        else if (heater == H_COOLER) {
-          MenuItem_int3::action((const char *)GET_TEXT_F(MSG_COOLER), &thermalManager.temp_cooler.target, 0, COOLER_MAX_TARGET, thermalManager.start_watching_cooler);
-        }
-      #endif
+    break;
+#endif // TOUCH_SCREEN_CALIBRATION
 
-      break;
-    case FAN:
-    
-    //ui.chirp();
-     
-      if(!printer_busy()){
-        ui.goto_screen([]{
-
-          
-            MenuItem_confirm::select_screen(
-                  GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
-                  []{queue.enqueue_now_P("G0 X170 Y200 Z180\nM104 S220"); ui.goto_previous_screen();},
-                  ui.goto_previous_screen,
-                  GET_TEXT(MSG_BUTTON_HEAT_UP_DEFAULT_VALUES), (const char *)nullptr, PSTR("?")
-                );
-
-        }); 
+  case MENU_SCREEN:
+    ui.goto_screen((screenFunc_t)control->data);
+    break;
+  case BACK:
+    ui.goto_previous_screen();
+    break;
+  case MENU_CLICK:
+    TERN_(SINGLE_TOUCH_NAVIGATION, ui.encoderPosition = control->data);
+    ui.lcd_clicked = true;
+    break;
+  case CLICK:
+    ui.lcd_clicked = true;
+    break;
+#if HAS_RESUME_CONTINUE
+  case RESUME_CONTINUE:
+    extern bool wait_for_user;
+    wait_for_user = false;
+    break;
+#endif
+  case CANCEL:
+    ui.encoderPosition = 0;
+    ui.selection = false;
+    ui.lcd_clicked = true;
+    break;
+  case CONFIRM:
+    ui.encoderPosition = 1;
+    ui.selection = true;
+    ui.lcd_clicked = true;
+    break;
+  case MENU_ITEM:
+    ui.encoderPosition = control->data;
+    ui.refresh();
+    break;
+  case PAGE_UP:
+    encoderTopLine = encoderTopLine > LCD_HEIGHT ? encoderTopLine - LCD_HEIGHT : 0;
+    ui.encoderPosition = ui.encoderPosition > LCD_HEIGHT ? ui.encoderPosition - LCD_HEIGHT : 0;
+    ui.refresh();
+    break;
+  case PAGE_DOWN:
+    encoderTopLine = encoderTopLine + 2 * LCD_HEIGHT < screen_items ? encoderTopLine + LCD_HEIGHT : screen_items - LCD_HEIGHT;
+    ui.encoderPosition = ui.encoderPosition + LCD_HEIGHT < (uint32_t)screen_items ? ui.encoderPosition + LCD_HEIGHT : screen_items;
+    ui.refresh();
+    break;
+  case SLIDER:
+    hold(control);
+    ui.encoderPosition = (x - control->x) * control->data / control->width;
+    break;
+  case INCREASE:
+    hold(control, repeat_delay - 5);
+    TERN(AUTO_BED_LEVELING_UBL, ui.external_control ? ubl.encoder_diff++ : ui.encoderPosition++, ui.encoderPosition++);
+    break;
+  case DECREASE:
+    hold(control, repeat_delay - 5);
+    TERN(AUTO_BED_LEVELING_UBL, ui.external_control ? ubl.encoder_diff-- : ui.encoderPosition--, ui.encoderPosition--);
+    break;
+  case HEATER:
+    int8_t heater;
+    heater = control->data;
+    ui.clear_lcd();
+    if (heater >= 0)
+    { // HotEnd
+#if HOTENDS == 1
+      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE), &thermalManager.temp_hotend[0].target, 0, thermalManager.hotend_max_target(0), []
+                            { thermalManager.start_watching_hotend(0); });
+#else
+      MenuItemBase::itemIndex = heater;
+      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE_N), &thermalManager.temp_hotend[heater].target, 0, thermalManager.hotend_max_target(heater), []
+                            { thermalManager.start_watching_hotend(MenuItemBase::itemIndex); });
+#endif
     }
-    else{
-            ui.buzz(100,200);
-          }
+#if HAS_HEATED_BED
+    else if (heater == H_BED)
+    {
+      if (!bed_temperature_DISABLED)
+      {
+        MenuItem_int3::action((const char *)GET_TEXT_F(MSG_BED), &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
+      }
+      else
+      {
+        ui.buzz(100, 200);
+      }
+    }
+#endif
+#if HAS_HEATED_CHAMBER
+    else if (heater == H_CHAMBER)
+    {
+      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_CHAMBER), &thermalManager.temp_chamber.target, 0, CHAMBER_MAX_TARGET, thermalManager.start_watching_chamber);
+    }
+#endif
+#if HAS_COOLER
+    else if (heater == H_COOLER)
+    {
+      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_COOLER), &thermalManager.temp_cooler.target, 0, COOLER_MAX_TARGET, thermalManager.start_watching_cooler);
+    }
+#endif
 
+    break;
+  case FAN:
 
-      break;
-    
+    // ui.chirp();
 
+    if (!printer_busy())
+    {
+      if (homing_needed())
+      {
+        ui.goto_screen([]
+                       {
+                         MenuItem_confirm::select_screen(
+                             GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
+                             []
+                             {queue.enqueue_now_P("G28\nM104 S220\nG0 X170 Y200 Z180"); ui.goto_previous_screen(); },
+                             ui.goto_previous_screen,
+                             GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES_2),GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES), PSTR("?"));
+                       });
+      }
+      else
+      {
+        ui.goto_screen([]
+                       {
+                         MenuItem_confirm::select_screen(
+                             GET_TEXT(MSG_BUTTON_DONE), GET_TEXT(MSG_BUTTON_CANCEL),
+                             []
+                             {queue.enqueue_now_P("M104 S220\nG0 X170 Y200 Z180"); ui.goto_previous_screen(); },
+                             ui.goto_previous_screen,
+                             GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES), (const char *)nullptr, PSTR("?"));
+                       });
+      }
+    }
+    else
+    {
+      ui.buzz(100, 200);
+    }
 
-    case FEEDRATE:
-      ui.clear_lcd();
-      MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 150); //Gabriel speed Slider limit
-      break;
-    case FLOWRATE:
-      ui.clear_lcd();
-      MenuItemBase::itemIndex = control->data;
-      #if EXTRUDERS == 1
-        MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 150, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
-      #else
-        MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW_N), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
-      #endif
-      break;
+    break;
 
-    #if ENABLED(AUTO_BED_LEVELING_UBL)
-      case UBL: hold(control, UBL_REPEAT_DELAY); ui.encoderPosition += control->data; break;
-    #endif
+  case FEEDRATE:
+    ui.clear_lcd();
+    MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 150); // Gabriel speed Slider limit
+    break;
+  case FLOWRATE:
+    ui.clear_lcd();
+    MenuItemBase::itemIndex = control->data;
+#if EXTRUDERS == 1
+    MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 150, []
+                          { planner.refresh_e_factor(MenuItemBase::itemIndex); });
+#else
+    MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW_N), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []
+                          { planner.refresh_e_factor(MenuItemBase::itemIndex); });
+#endif
+    break;
 
-    case MOVE_AXIS:
-      ui.goto_screen((screenFunc_t)ui.move_axis_screen);
-      break;
+#if ENABLED(AUTO_BED_LEVELING_UBL)
+  case UBL:
+    hold(control, UBL_REPEAT_DELAY);
+    ui.encoderPosition += control->data;
+    break;
+#endif
 
-    // TODO: TOUCH could receive data to pass to the callback
-    case BUTTON: ((screenFunc_t)control->data)(); break;
+  case MOVE_AXIS:
+    ui.goto_screen((screenFunc_t)ui.move_axis_screen);
+    break;
 
-    default: break;
+  // TODO: TOUCH could receive data to pass to the callback
+  case BUTTON:
+    ((screenFunc_t)control->data)();
+    break;
+
+  default:
+    break;
   }
 }
 
-void Touch::hold(touch_control_t *control, millis_t delay) {
+void Touch::hold(touch_control_t *control, millis_t delay)
+{
   current_control = control;
-  if (delay) {
+  if (delay)
+  {
     repeat_delay = delay > MIN_REPEAT_DELAY ? delay : MIN_REPEAT_DELAY;
     time_to_hold = last_touch_ms + repeat_delay;
   }
   ui.refresh();
 }
 
-bool Touch::get_point(int16_t *x, int16_t *y) {
-  #if ENABLED(TOUCH_SCREEN_CALIBRATION)
-    bool is_touched = (touch_calibration.calibration.orientation == TOUCH_PORTRAIT ? io.getRawPoint(y, x) : io.getRawPoint(x, y));
+bool Touch::get_point(int16_t *x, int16_t *y)
+{
+#if ENABLED(TOUCH_SCREEN_CALIBRATION)
+  bool is_touched = (touch_calibration.calibration.orientation == TOUCH_PORTRAIT ? io.getRawPoint(y, x) : io.getRawPoint(x, y));
 
-    if (is_touched && touch_calibration.calibration.orientation != TOUCH_ORIENTATION_NONE) {
-      *x = int16_t((int32_t(*x) * touch_calibration.calibration.x) >> 16) + touch_calibration.calibration.offset_x;
-      *y = int16_t((int32_t(*y) * touch_calibration.calibration.y) >> 16) + touch_calibration.calibration.offset_y;
-    }
-  #else
-    bool is_touched = (TOUCH_ORIENTATION == TOUCH_PORTRAIT ? io.getRawPoint(y, x) : io.getRawPoint(x, y));
-    *x = uint16_t((uint32_t(*x) * TOUCH_CALIBRATION_X) >> 16) + TOUCH_OFFSET_X;
-    *y = uint16_t((uint32_t(*y) * TOUCH_CALIBRATION_Y) >> 16) + TOUCH_OFFSET_Y;
-  #endif
+  if (is_touched && touch_calibration.calibration.orientation != TOUCH_ORIENTATION_NONE)
+  {
+    *x = int16_t((int32_t(*x) * touch_calibration.calibration.x) >> 16) + touch_calibration.calibration.offset_x;
+    *y = int16_t((int32_t(*y) * touch_calibration.calibration.y) >> 16) + touch_calibration.calibration.offset_y;
+  }
+#else
+  bool is_touched = (TOUCH_ORIENTATION == TOUCH_PORTRAIT ? io.getRawPoint(y, x) : io.getRawPoint(x, y));
+  *x = uint16_t((uint32_t(*x) * TOUCH_CALIBRATION_X) >> 16) + TOUCH_OFFSET_X;
+  *y = uint16_t((uint32_t(*y) * TOUCH_CALIBRATION_Y) >> 16) + TOUCH_OFFSET_Y;
+#endif
   return is_touched;
 }
 Touch touch;
 
-bool MarlinUI::touch_pressed() {
+bool MarlinUI::touch_pressed()
+{
   return touch.is_clicked();
 }
 
-void add_control(uint16_t x, uint16_t y, TouchControlType control_type, intptr_t data, MarlinImage image, bool is_enabled, uint16_t color_enabled, uint16_t color_disabled) {
+void add_control(uint16_t x, uint16_t y, TouchControlType control_type, intptr_t data, MarlinImage image, bool is_enabled, uint16_t color_enabled, uint16_t color_disabled)
+{
   uint16_t width = Images[image].width;
   uint16_t height = Images[image].height;
   tft.canvas(x, y, width, height);
