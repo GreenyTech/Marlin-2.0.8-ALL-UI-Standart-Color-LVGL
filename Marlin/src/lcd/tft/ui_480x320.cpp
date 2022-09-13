@@ -864,10 +864,14 @@ void MarlinUI::move_axis_screen() {
         if(current_position.z<360){
           message = (GET_TEXT(MSG_LOWEST_POSITION));
           
-        move_to_cleainig_position("G0 Z360"); //\n M18 X Y
+        move_to_cleainig_position("G0  X170 Y200 Z360"); //\n M18 X Y
           
         }
         else{
+          
+          queue.enqueue_now_P("G0  X170 Y200");  
+          planner.synchronize(); //todo sync touch
+          
           message = (GET_TEXT(MSG_ALLREADY_BELOW));
         }  
 
