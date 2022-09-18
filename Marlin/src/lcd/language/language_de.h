@@ -682,6 +682,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_HEAT_BED_DISABLED                = _UxGT("Heizbettsperre");
   
 
-
+  PROGMEM Language_Str MSG_SERVICE_NAME_1                = _UxGT("Service Druckkopf");
+  PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Druckkopf durchgeführt");
+  PROGMEM Language_Str MSG_SERVICE_NAME_2                = _UxGT("Service Mechanik");
+  PROGMEM Language_Str MSG_SERVICE_NAME_RESET_2                = _UxGT("Service Mechanik durchgeführt");
 
 }

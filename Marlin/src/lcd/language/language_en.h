@@ -747,6 +747,15 @@ namespace Language_en {
   PROGMEM Language_Str MSG_DISCONECT_HEAT_BED                = _UxGT("Unplug the Heat Bed");
   PROGMEM Language_Str MSG_CONNECT_HEAT_BED                = _UxGT("Connect Printer and Heat Bed");
   PROGMEM Language_Str MSG_HEAT_BED_DISABLED                = _UxGT("Heat Bed Block");
+
+
+  PROGMEM Language_Str MSG_SERVICE_NAME_1                = _UxGT("Service Printhead");
+  PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Printhead Done");
+
+  PROGMEM Language_Str MSG_SERVICE_NAME_2                = _UxGT("Service Mechanic");
+  PROGMEM Language_Str MSG_SERVICE_NAME_RESET_2                = _UxGT("Service Mechanic Done");
+
+
 }
 
 #if FAN_COUNT == 1

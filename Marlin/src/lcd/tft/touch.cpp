@@ -302,7 +302,7 @@ void Touch::touch(touch_control_t *control)
                              []
                              {queue.enqueue_now_P("G28\nM104 S220\nG0 X170 Y200 Z180"); ui.goto_previous_screen(); },
                              ui.goto_previous_screen,
-                             GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES_2),GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES), PSTR("?"));
+                             GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES),GET_TEXT(MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES_2), PSTR("?"));
                        });
       }
       else
