@@ -722,7 +722,7 @@ namespace Language_en {
   PROGMEM Language_Str MSG_Service_Routine_2_Finalized           = _UxGT( "Have you done service routine 2?");
   PROGMEM Language_Str MSG_Service_Routine_Both_Finalized           = _UxGT( "Have you done both service routines?");
 
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("New Z Offset: "); 
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("New Z Offset (+0.15 paper): "); 
   
   PROGMEM Language_Str MSG_LEVEL_BED_PLEASE_WAIT           = _UxGT("Bed is being measured. Please wait.");
   

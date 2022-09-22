@@ -429,7 +429,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_ZPROBE_XOFFSET                  = _UxGT("Sondenversatz X");
   PROGMEM Language_Str MSG_ZPROBE_YOFFSET                  = _UxGT("Sondenversatz Y");
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET                  = _UxGT("Abstand Düse zum Bett"); 
-  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("Neuer Z Offset: "); 
+  PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_SET              = _UxGT("Neuer Z Offset (+0.15 Papier): "); 
   
   PROGMEM Language_Str MSG_ZPROBE_ZOFFSET_BLIND            = _UxGT("Abstand Düse zu Bett (erster Layer)"); // TODO hinzugefuegt.
   PROGMEM Language_Str MSG_PROBE_WIZARD                    = _UxGT("Abstand Düse zu Bett Routine");

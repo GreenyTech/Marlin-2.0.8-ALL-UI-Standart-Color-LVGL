@@ -161,7 +161,7 @@ void probe_offset_wizard_menu() {
   }
 
   ACTION_ITEM(MSG_BUTTON_DONE, []{
-    set_offset_and_end(calculated_z_offset);
+    set_offset_and_end(calculated_z_offset-0.15);
     current_position.z = z_offset_ref;  // Set Z to z_offset_ref, as we can expect it is at probe height
     sync_plan_position();
     ui.store_settings(); //Save settings 
@@ -252,7 +252,7 @@ void goto_probe_offset_wizard() {
 **/
 
   
-  queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT "\nG1 Z0")); //TODO: G10 Retract
+  queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT "\nG1 Z0.15")); //TODO: G10 Retract
   //queue.inject_P(PSTR("G28\nG90\nG1 Z0")); 
 
 
