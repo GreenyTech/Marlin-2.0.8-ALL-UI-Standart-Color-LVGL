@@ -527,7 +527,44 @@ void menu_configuration() {
   //SUBMENU(MSG_ADVANCED_SETTINGS, menu_advanced_settings);
   if(!printer_busy()){
     SUBMENU(MSG_TEMPERATURE_PID, menu_advanced_temperature);//added from the menu advanced settings
+
+
+    //METHOD:
+    /**
+     
+     
+
+    //sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), hid, tune_temp);
+    sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), 0, PREHEAT_1_TEMP_HOTEND); 
+    queue.inject(cmd);
+    ui.return_to_status();
+
+    if(!bed_temperature_DISABLED){
+        sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), H_BED, PREHEAT_1_TEMP_BED); 
+    }
+
+
+
+
+
+
+
+
+     **/
+
+    //TODO Menu das: nach einander
+    //1. Bed PID
+    //2. Nozzle PID
+    //3. Z Probe wizzard
+    //4. Ecken anfahren
+    //5. Bett Vermessen 
+    //durchführt.
+
+
   }
+
+
+
   //menu_advanced_temperature();
 
 
