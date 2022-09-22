@@ -36,7 +36,7 @@
  */
 
 // Change EEPROM version if the structure changes
-#define EEPROM_VERSION "V83" //TODO updtaen? 
+#define EEPROM_VERSION "V84" //TODO updtaen? EEPROM Version Bed Disable
 #define EEPROM_OFFSET 100
 
 // Check the integrity of data offsets.
