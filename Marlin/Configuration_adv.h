@@ -1168,7 +1168,7 @@
   #endif
 
 
-  #define SERVICE_ROUTINE 
+
 
   // BACK menu items keep the highlight at the top
   //#define TURBO_BACK_MENU_ITEM
@@ -3848,6 +3848,7 @@
  * Advanced Print Counter settings
  */
 #if ENABLED(PRINTCOUNTER)
+  #define SERVICE_ROUTINE 
   #define SERVICE_WARNING_BUZZES  3
   // Activate up to 3 service interval watchdogs
   #define SERVICE_NAME_1      "Service 1"

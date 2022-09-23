@@ -478,9 +478,10 @@ void menu_main() {
 
   SUBMENU(MSG_FILAMENTCHANGE,_change_filament_with_preset);
 
-  
+#if ENABLED(SERVICE_ROUTINE)
   SUBMENU(MSG_Service_Routine_MENU, menu_service); //add menu information -> replace
-  
+#endif
+
   SUBMENU(MSG_INFO_PRINTER_MENU, menu_new_info_printer);           // Printer Info >
     
 /**

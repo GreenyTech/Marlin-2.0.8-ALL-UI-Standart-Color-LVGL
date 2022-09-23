@@ -24,7 +24,11 @@
 // Info Menu
 //
 
+
 #include "../../inc/MarlinConfigPre.h"
+
+#if ENABLED(SERVICE_ROUTINE)
+
 
 #if BOTH(HAS_LCD_MENU, LCD_INFO_MENU)
 
@@ -119,7 +123,7 @@ void menu_service() {
   #endif
 
 
-   SUBMENU(MSG_INFO_NEXT_SERVICE_MENU, menu_info_stats_service_Routine);               // Printer Next Serviceses >
+    SUBMENU(MSG_INFO_NEXT_SERVICE_MENU, menu_info_stats_service_Routine);               // Printer Next Serviceses >
   
   
     #if HAS_SERVICE_INTERVALS
@@ -166,3 +170,6 @@ void menu_service() {
 }
 
 #endif // HAS_LCD_MENU && LCD_INFO_MENU
+
+
+#endif
