@@ -59,10 +59,13 @@ void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
     #endif
   ) {
 
+
+  #if ENABLED(POWER_LOSS_RECOVERY)
     if(parser.seen('Z')){
       SERIAL_ECHO_MSG("See z");
       recovery.save();
     }
+  #endif
 
 
     TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_RUNNING));

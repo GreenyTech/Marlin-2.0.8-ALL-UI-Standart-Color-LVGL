@@ -193,8 +193,23 @@ class PrintJobRecovery {
     static void enable(const bool onoff);
     static void changed();
 
-    static inline bool exists() { return card.jobRecoverFileExists(); }
-    static inline void open(const bool read) { card.openJobRecoveryFile(read); }
+    static inline bool exists() { 
+      #if ENABLED(POWER_LOSS_RECOVERY)
+        return card.jobRecoverFileExists(); 
+      #else
+        return false;
+      #endif
+      
+      }
+    static inline void open(const bool read) { 
+      
+      #if ENABLED(POWER_LOSS_RECOVERY)
+        card.openJobRecoveryFile(read); 
+      #endif
+      
+        
+        
+        }
     static inline void close() { getFile().close(); }
 
     static void check();
