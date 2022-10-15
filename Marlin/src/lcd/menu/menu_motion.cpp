@@ -51,6 +51,50 @@
   float manual_move_e_origin = 0;
 #endif
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 // "Motion" > "Move Axis" submenu
 //
@@ -353,6 +397,8 @@ void menu_motion() {
   //
   // Level Bed
   //
+
+
   #if ENABLED(AUTO_BED_LEVELING_UBL)
 
     SUBMENU(MSG_UBL_LEVEL_BED, _lcd_ubl_level_bed);
@@ -365,8 +411,10 @@ void menu_motion() {
 
   #elif HAS_LEVELING && DISABLED(SLIM_LCD_MENUS)
 
-    #if DISABLED(PROBE_MANUALLY)
-      GCODES_ITEM(MSG_LEVEL_BED, PSTR("G29N"));
+    #if ENABLED(LCD_BED_LEVELING)
+      #if DISABLED(PROBE_MANUALLY)
+        GCODES_ITEM(MSG_LEVEL_BED, PSTR("G29N"));
+      #endif
     #endif
 
 /*
@@ -383,9 +431,15 @@ void menu_motion() {
 
   #endif
 
-  #if ENABLED(LEVEL_BED_CORNERS) && DISABLED(LCD_BED_LEVELING)
-    SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
-  #endif
+//todo check if tis is working correctly
+  #if DISABLED(LCD_BED_LEVELING)
+    //SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
+    
+    #if ENABLED(LEVEL_BED_CORNERS)
+      SUBMENU(MSG_LEVEL_CORNERS, _lcd_level_bed_corners);
+      SUBMENU(MSG_LEVEL_CORNERS_CENTER, _lcd_level_bed_center);
+    #endif//LEVEL_BED_CORNERS
+  #endif //LCD_BED_LEVELING
 
 /** //useful tool to check if the sensor is working. Gabriels Deviation is 0.002964
   #if ENABLED(Z_MIN_PROBE_REPEATABILITY_TEST)
