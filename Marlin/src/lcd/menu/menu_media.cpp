@@ -65,7 +65,7 @@ inline const char * getServiceLimitText(){
                   return GET_TEXT(MSG_Service_Routine_1_Finalized);//\n(Düse Reinigen,...)";
                 }else if(print_job_timer.data.nextService2<=0){
                   
-                  return GET_TEXT(MSG_Service_Routine_1_Finalized);//"Hast du Serviceroutine 2 durchgeführt?";//\n(Achsen Fetten,...)";
+                  return GET_TEXT(MSG_Service_Routine_2_Finalized);//"Hast du Serviceroutine 2 durchgeführt?";//\n(Achsen Fetten,...)";
                 }
                 return "Fehler keine ServicesZeit";
 }
