@@ -31,6 +31,9 @@ private:
   static millis_t next_protect_ms;
   static void check_hotends(const millis_t &ms);
   static void check_e_motion(const millis_t &ms);
+#if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
+  static void check_xyz_motion(const millis_t &ms);
+#endif
   static void timed_out();
 };
 

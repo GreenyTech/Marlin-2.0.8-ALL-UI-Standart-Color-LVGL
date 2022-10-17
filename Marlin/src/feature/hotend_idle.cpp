@@ -64,11 +64,40 @@ void HotendIdleProtection::check_e_motion(const millis_t &ms) {
   }
 }
 
+#if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
+void HotendIdleProtection::check_xyz_motion(const millis_t &ms) {
+  static float old_x_position = 0;
+  static float old_y_position = 0;
+  static float old_z_position = 0;
+  if (old_x_position != current_position.x) {
+    old_x_position = current_position.x;          // Track filament motion
+    if (next_protect_ms)                          // If some heater is on then...
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+  }
+  if (old_y_position != current_position.y) {
+    old_y_position = current_position.y;          // Track filament motion
+    if (next_protect_ms)                          // If some heater is on then...
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+  }
+  if (old_z_position != current_position.z) {
+    old_z_position = current_position.z;          // Track filament motion
+    if (next_protect_ms)                          // If some heater is on then...
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+  }
+}
+#endif
+
+
 void HotendIdleProtection::check() {
   const millis_t ms = millis();                   // Shared millis
 
   check_hotends(ms);                              // Any hotends need protection?
   check_e_motion(ms);                             // Motion will protect them
+
+#if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
+  check_xyz_motion(ms);
+#endif
+
 
   // Hot and not moving for too long...
   if (next_protect_ms && ELAPSED(ms, next_protect_ms))
@@ -86,6 +115,8 @@ void HotendIdleProtection::timed_out() {
   SERIAL_ECHOLNPGM("Hotend Idle Timeout");
   //ui.return_to_status();
 
+  //TODO do not timeout
+
   if(temperature_timeout_call_Back!=0){
       temperature_timeout_call_Back();
       temperature_timeout_call_Back=0;
@@ -93,8 +124,9 @@ void HotendIdleProtection::timed_out() {
     printingIsActive()?SERIAL_ECHOLNPAIR("is Printing"):SERIAL_ECHOLNPAIR("printingIsActive -> false");
     printingIsPaused()?SERIAL_ECHOLNPAIR("printing is paused"):SERIAL_ECHOLNPAIR("printingIsPaused -> is false");
     //printer_busy()?SERIAL_ECHOLNPAIR("printer_busy"):SERIAL_ECHOLNPAIR("printer_busy -> is false");
-    //ui.clear_lcd();
-    //ui.status_screen();
+
+    ui.clear_lcd();
+    ui.status_screen();
 
 
   LCD_MESSAGEPGM(MSG_HOTEND_IDLE_TIMEOUT);
