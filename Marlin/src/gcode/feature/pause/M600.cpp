@@ -47,6 +47,11 @@
 #endif
 
 
+#if ENABLED(HOTEND_IDLE_TIMEOUT)
+#include "../../../feature/hotend_idle_callback.h"
+#endif
+
+
 
 /**
  * M600: Pause for filament change
@@ -64,6 +69,11 @@
  *  Default values are used for omitted arguments.
  */
 void GcodeSuite::M600() {
+
+
+  #if ENABLED(HOTEND_IDLE_TIMEOUT)
+    critical_section_that_prevents_temperature_timeout = true;
+  #endif
 
   #if ENABLED(MIXING_EXTRUDER)
     const int8_t target_e_stepper = get_target_e_stepper_from_command();
@@ -169,6 +179,11 @@ void GcodeSuite::M600() {
   #endif
 
   TERN_(MIXING_EXTRUDER, mixer.T(old_mixing_tool)); // Restore original mixing tool
+
+  #if ENABLED(HOTEND_IDLE_TIMEOUT)
+    critical_section_that_prevents_temperature_timeout = false;
+  #endif
+
 }
 
 #endif // ADVANCED_PAUSE_FEATURE

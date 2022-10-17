@@ -88,6 +88,13 @@ void HotendIdleProtection::check_xyz_motion(const millis_t &ms) {
 #endif
 
 
+void HotendIdleProtection::check_critical_section(const millis_t &ms) {
+  if (critical_section_that_prevents_temperature_timeout) {
+    if (next_protect_ms)                          // If some heater is on then...
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+  }
+}
+
 void HotendIdleProtection::check() {
   const millis_t ms = millis();                   // Shared millis
 
@@ -97,6 +104,12 @@ void HotendIdleProtection::check() {
 #if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
   check_xyz_motion(ms);
 #endif
+
+  check_critical_section(ms);
+
+
+
+
 
 
   // Hot and not moving for too long...

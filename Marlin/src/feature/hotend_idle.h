@@ -34,6 +34,8 @@ private:
 #if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
   static void check_xyz_motion(const millis_t &ms);
 #endif
+
+  static void check_critical_section(const millis_t &ms);
   static void timed_out();
 };
 
