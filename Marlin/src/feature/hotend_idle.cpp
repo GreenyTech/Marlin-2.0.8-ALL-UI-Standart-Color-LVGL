@@ -45,12 +45,29 @@ millis_t HotendIdleProtection::next_protect_ms = 0;
 
 void HotendIdleProtection::check_hotends(const millis_t &ms) {
   bool do_prot = false;
-  HOTEND_LOOP() {
-    const bool busy = (TERN0(HAS_RESUME_CONTINUE, wait_for_user) || planner.has_blocks_queued());
-    if (thermalManager.degHotend(e) >= (HOTEND_IDLE_MIN_TRIGGER) && !busy) {
-      do_prot = true; break;
+  
+  const bool busy = (TERN0(HAS_RESUME_CONTINUE, wait_for_user) || planner.has_blocks_queued());
+  if(!busy){
+    HOTEND_LOOP() {
+      if (thermalManager.degHotend(e) >= (HOTEND_IDLE_MIN_TRIGGER)) {
+        do_prot = true; break;
+      }
     }
-  }
+
+    //check Bed
+    if (thermalManager.degBed() >= (BED_IDLE_MIN_TRIGGER)) {
+      //todo hier könnte geprüft werden ob die Zieltemperatur gerade erreicht wurde
+      
+      //if(thermalManager.wait_for_hotend)
+        do_prot = true;
+    }
+
+
+  } 
+  // Check differenc to target temperature
+  //thermalManager.degTargetBed
+
+
   if (bool(next_protect_ms) != do_prot)
     next_protect_ms = do_prot ? ms + hp_interval : 0;
 }
@@ -59,6 +76,18 @@ void HotendIdleProtection::check_e_motion(const millis_t &ms) {
   static float old_e_position = 0;
   if (old_e_position != current_position.e) {
     old_e_position = current_position.e;          // Track filament motion
+    if (next_protect_ms)                          // If some heater is on then...
+      next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
+  }
+}
+
+void HotendIdleProtection::check_user_interaction_motion(const millis_t &ms) {
+  
+  extern int total_number_of_menu_clicks;
+  static int old_total_number_of_menu_clicks;
+  if (old_total_number_of_menu_clicks != total_number_of_menu_clicks) {
+    old_total_number_of_menu_clicks = total_number_of_menu_clicks;          // Track filament motion
+    SERIAL_ECHO_MSG("total number of userclickes inceased");
     if (next_protect_ms)                          // If some heater is on then...
       next_protect_ms = ms + hp_interval;         // ...delay the timeout till later
   }
@@ -95,11 +124,19 @@ void HotendIdleProtection::check_critical_section(const millis_t &ms) {
   }
 }
 
+
+
+
 void HotendIdleProtection::check() {
   const millis_t ms = millis();                   // Shared millis
 
   check_hotends(ms);                              // Any hotends need protection?
+
+
+
   check_e_motion(ms);                             // Motion will protect them
+
+  check_user_interaction_motion(ms);
 
 #if ENABLED(HOTEND_IDLE_TIMEOUT_PREVENTION_BY_XYZ_MOVMENT)
   check_xyz_motion(ms);

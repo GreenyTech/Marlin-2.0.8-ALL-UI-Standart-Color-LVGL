@@ -256,7 +256,7 @@ class MenuItem_bool : public MenuEditItemBase {
 #define _MENU_INNER_P(TYPE, USE_MULTIPLIER, PLABEL, V...) do { \
   PGM_P const plabel = PLABEL;                                 \
   if (encoderLine == _thisItemNr && ui.use_click()) {          \
-    ui.chirp();/**chirp on every menu item click. **/              \
+    ui.chirp();/**chirp on every menu item click. **/          \
     _MENU_ITEM_MULTIPLIER_CHECK(USE_MULTIPLIER);               \
     MenuItem_##TYPE::action(plabel, ##V);                      \
     if (ui.screen_changed) return;                             \

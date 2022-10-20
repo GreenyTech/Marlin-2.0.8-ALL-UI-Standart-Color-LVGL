@@ -485,7 +485,7 @@ namespace Language_de {
   PROGMEM Language_Str MSG_INFO_PROTOCOL                   = _UxGT("Protokoll");
   PROGMEM Language_Str MSG_INFO_RUNAWAY_OFF                = _UxGT("Runaway Watch: AUS");
   PROGMEM Language_Str MSG_INFO_RUNAWAY_ON                 = _UxGT("Runaway Watch: AN");
-  PROGMEM Language_Str MSG_HOTEND_IDLE_TIMEOUT             = _UxGT("Hotend Idle Timeout");
+  PROGMEM Language_Str MSG_HOTEND_IDLE_TIMEOUT             = _UxGT("Heizung aus wegen Leerlauf");
   PROGMEM Language_Str MSG_CASE_LIGHT                      = _UxGT("Beleuchtung");
   PROGMEM Language_Str MSG_CASE_LIGHT_BRIGHTNESS           = _UxGT("Helligkeit");
 
@@ -686,5 +686,6 @@ namespace Language_de {
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Druckkopf durchgeführt");
   PROGMEM Language_Str MSG_SERVICE_NAME_2                = _UxGT("Service Mechanik");
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_2                = _UxGT("Service Mechanik durchgeführt");
+
 
 }
