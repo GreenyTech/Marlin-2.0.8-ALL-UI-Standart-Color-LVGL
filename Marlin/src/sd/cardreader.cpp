@@ -811,7 +811,7 @@ void CardReader::write_command(char * const buf) {
   void CardReader::autofile_begin() {
     autofile_index = 1;
     //runs only if sd is inserted
-    //queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90"); //Z 0.007
+    //queue.inject_P(INITIAL_GCODE_COMMANDS); //Z 0.007
     (void)autofile_check();
     //TODO run boot
 

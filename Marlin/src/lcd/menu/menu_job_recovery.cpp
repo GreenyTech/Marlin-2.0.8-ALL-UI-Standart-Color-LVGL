@@ -42,7 +42,7 @@ void lcd_power_loss_recovery_cancel() {
   recovery.cancel();
   ui.return_to_status();
   //TODO arritate z Achsis
-  queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90");
+  queue.inject_P(INITIAL_GCODE_COMMANDS);
 
 }
 

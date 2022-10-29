@@ -1268,7 +1268,7 @@ void setup() {
   SETUP_RUN(stepper.init());          // Init stepper. This enables interrupts!
 
   
-  SETUP_RUN(queue.inject_P("G91\nG0 Z 0.007\nG0 Z -0.007\nG90")); //this runs on boot, but not when continue from sd card
+  SETUP_RUN(queue.inject_P(INITIAL_GCODE_COMMANDS)); //this runs on boot, but not when continue from sd card
 
   #if HAS_SERVOS
     SETUP_RUN(servo_init());
