@@ -577,6 +577,15 @@ void menu_configuration() {
   #endif
 
 
+#if HAS_LEVELING
+    EDIT_ITEM(bool, MSG_AUTO_BED_LEVELING_ENABLED, &planner.leveling_active, []{SERIAL_ECHO_MSG("Change Planer State");});
+#endif
+  
+
+
+
+
+
 /** //remove unnesecary menues
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     SUBMENU(MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);

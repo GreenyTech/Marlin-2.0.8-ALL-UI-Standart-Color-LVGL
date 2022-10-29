@@ -181,7 +181,8 @@ float Planner::steps_to_mm[XYZE_N];             // (mm) Millimeters per step
 #endif
 
 #if HAS_LEVELING
-  bool Planner::leveling_active = false; // Flag that auto bed leveling is enabled
+  bool Planner::leveling_active = false; // Flag that auto bed leveling is enabled 
+  //TODO edit
   #if ABL_PLANAR
     matrix_3x3 Planner::bed_level_matrix; // Transform to compensate for bed level
   #endif
