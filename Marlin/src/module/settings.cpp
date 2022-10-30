@@ -263,6 +263,9 @@ typedef struct SettingsDataStruct {
   //
   bool planner_leveling_active;                         // M420 S  planner.leveling_active
   int8_t ubl_storage_slot;                              // ubl.storage_slot
+  //bool override_planner_Behavior
+
+
 
   //
   // SERVO_ANGLES
@@ -820,8 +823,11 @@ void MarlinSettings::postprocess() {
     //
     {
       _FIELD_TEST(planner_leveling_active);
-      const bool ubl_active = TERN(AUTO_BED_LEVELING_UBL, planner.leveling_active, false);
+      const bool ubl_active = planner.leveling_active; // TERN(AUTO_BED_LEVELING_UBL, planner.leveling_active, false);
       const int8_t storage_slot = TERN(AUTO_BED_LEVELING_UBL, ubl.storage_slot, -1);
+      //planner.leveling_active
+      //planner_leveling_active
+      //
       EEPROM_WRITE(ubl_active);
       EEPROM_WRITE(storage_slot);
     }
@@ -1713,15 +1719,18 @@ void MarlinSettings::postprocess() {
       //
       {
         _FIELD_TEST(planner_leveling_active);
+        const bool &planner_leveling_active = planner.leveling_active;
+          
         #if ENABLED(AUTO_BED_LEVELING_UBL)
           const bool &planner_leveling_active = planner.leveling_active;
           const int8_t &ubl_storage_slot = ubl.storage_slot;
         #else
-          bool planner_leveling_active;
+          //bool planner_leveling_active;
           int8_t ubl_storage_slot;
         #endif
         EEPROM_READ(planner_leveling_active);
         EEPROM_READ(ubl_storage_slot);
+         planner.leveling_active = planner_leveling_active;
       }
 
       //

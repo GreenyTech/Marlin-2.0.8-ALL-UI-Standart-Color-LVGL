@@ -671,6 +671,13 @@ namespace Language_de {
   PROGMEM Language_Str MSG_BUSY                      = _UxGT("Beschaeftigt");
   PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("zu Kalt");
 
+
+
+  
+  PROGMEM Language_Str MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH                     = _UxGT("Bett wurde noch nicht vermessen...");
+  PROGMEM Language_Str MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH_2                     = _UxGT("Möchtest du es jetzt vermessen?");
+  PROGMEM Language_Str MSG_LEVEL_NOW                     = _UxGT("Jetzt Vermessen");
+
   //PROGMEM Language_Str MSG_BUTTON_HEAT_UP_DEFAULT_VALUES                     = _UxGT("Düse aufheizen und in Parkposition");
   
   //PROGMEM Language_Str MSG_BUTTON_HEAT_UP_NOZZLE_PARKPOSITION_VALUES                     = _UxGT("Homen, Düse Heizen und zur Reinigungsposition gehen");

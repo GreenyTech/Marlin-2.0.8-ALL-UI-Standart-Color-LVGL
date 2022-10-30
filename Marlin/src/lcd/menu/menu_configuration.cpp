@@ -26,6 +26,12 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+
+#if HAS_LEVELING
+  #include "../../feature/bedlevel/bedlevel.h"
+#endif
+
+
 #if HAS_LCD_MENU
 
 #include "menu_item.h"
@@ -486,6 +492,10 @@ void menu_advanced_settings();
 
 #endif // CUSTOM_MENU_CONFIG
 
+
+
+
+
 void menu_configuration() {
   const bool busy = printer_busy();
 
@@ -577,10 +587,42 @@ void menu_configuration() {
   #endif
 
 
+
 #if HAS_LEVELING
-    EDIT_ITEM(bool, MSG_AUTO_BED_LEVELING_ENABLED, &planner.leveling_active, []{SERIAL_ECHO_MSG("Change Planer State");});
+  if(!printer_busy()){
+
+    bool show_state = planner.leveling_active;
+    EDIT_ITEM(bool, MSG_AUTO_BED_LEVELING_ENABLED, &show_state, []{
+      //todo you must first Measure the Bed. Do you want to do that?
+      if(!planner.leveling_active && !leveling_is_valid() ){
+        //todo you must first Measure the Bed. Do you want to do that?
+      ui.save_previous_screen();
+      ui.goto_screen([]{
+        MenuItem_confirm::select_screen(
+          GET_TEXT(MSG_LEVEL_NOW), GET_TEXT(MSG_BACK),
+          []{
+              //ui.defer_status_screen();
+            _lcd_level_bed_plane();
+            planner.leveling_active=true;      
+            
+          },
+          []{
+            planner.leveling_active=false;
+            ui.goto_previous_screen();
+          },
+          GET_TEXT(MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH), (const char *)nullptr, GET_TEXT(MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH_2)
+        );
+      });
+      }
+      else{
+
+        //todo
+        //planner.leveling_active = !planner.leveling_active; //restore to profocate a change;
+        set_bed_leveling_enabled(!planner.leveling_active);
+        }
+    });
+  }
 #endif
-  
 
 
 

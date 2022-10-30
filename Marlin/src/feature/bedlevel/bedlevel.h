@@ -23,6 +23,10 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+#if HAS_MESH
+  #include "../../core/types.h"
+#endif
+
 #if EITHER(RESTORE_LEVELING_AFTER_G28, ENABLE_LEVELING_AFTER_G28)
   #define G28_L0_ENSURES_LEVELING_OFF 1
 #endif
@@ -58,6 +62,8 @@ class TemporaryBedLevelingState {
 #define TEMPORARY_BED_LEVELING_STATE(enable) const TemporaryBedLevelingState tbls(enable)
 
 #if HAS_MESH
+
+
 
   typedef float bed_mesh_t[GRID_MAX_POINTS_X][GRID_MAX_POINTS_Y];
 

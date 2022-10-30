@@ -1565,7 +1565,7 @@ void Planner::check_axes_activity() {
 
   void Planner::unapply_leveling(xyz_pos_t &raw) {
 
-    if (leveling_active) {
+    if (leveling_active ) { //todo add forced state
 
       #if ABL_PLANAR
 

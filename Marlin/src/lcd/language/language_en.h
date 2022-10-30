@@ -750,6 +750,10 @@ namespace Language_en {
 
   PROGMEM Language_Str MSG_AUTO_BED_LEVELING_ENABLED                = _UxGT("Disable AutoBedLeveling");
 
+  PROGMEM Language_Str MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH                     = _UxGT("Bed wasn't measured jet.");
+  PROGMEM Language_Str MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH_2                     = _UxGT("Do you want to measure it now?");
+  PROGMEM Language_Str MSG_LEVEL_NOW                     = _UxGT("measure now");
+
   PROGMEM Language_Str MSG_SERVICE_NAME_1                = _UxGT("Service Printhead");
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Printhead Done");
 

@@ -1555,7 +1555,7 @@
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
   // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-  #define FILAMENT_RUNOUT_DISTANCE_MM 20 // 45
+  #define FILAMENT_RUNOUT_DISTANCE_MM 10 // 45
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
     // Enable this option to use an encoder disc that toggles the runout pin
@@ -1605,6 +1605,7 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
+//todo?
 #ifdef XY3_V5_310_NO_TITAN_NO_TMC_NO_ABL
   #define MESH_BED_LEVELING
 #else
@@ -1618,8 +1619,8 @@
  * these options to restore the prior leveling state or to always enable
  * leveling immediately after G28.
  */
-//#define RESTORE_LEVELING_AFTER_G28
-#define ENABLE_LEVELING_AFTER_G28
+#define RESTORE_LEVELING_AFTER_G28 //
+//#define ENABLE_LEVELING_AFTER_G28 //Makes it always enabled
 
 /**
  * Auto-leveling needs preheating
@@ -1642,6 +1643,7 @@
   // at which point movement will be level to the machine's XY plane.
   // The height can be set with M420 Z<height>
   #define ENABLE_LEVELING_FADE_HEIGHT 0 // disable Leveling fade height removed. Not needet
+  //todo experiements
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
     #define DEFAULT_LEVELING_FADE_HEIGHT 3.0 // (mm) Default fade height.
   #endif
@@ -1732,9 +1734,12 @@
  * Include a guided procedure if manual probing is enabled.
  */
 
+//Todo disable
 #ifndef TFT_LVGL_UI
   #define LCD_BED_LEVELING
 #endif
+
+
 
 #if ENABLED(LCD_BED_LEVELING)
   #define MESH_EDIT_Z_STEP  0.025 // (mm) Step size while manually probing Z axis.
@@ -1968,7 +1973,7 @@
  *   P  Pattern
  *   S  Strokes / Repetitions
  *   T  Triangles (P1 only)
- *
+ * LCD_BED_LEVELING
  * Patterns:
  *   P0  Straight line (default). This process requires a sponge type material
  *       at a fixed bed location. "S" specifies strokes (i.e. back-forth motions)
@@ -2960,7 +2965,7 @@
 // (ms) Delay  before the next move will start, to give the servo time to reach its target angle.
 // 300ms is a good value but you can try less delay.
 // If the servo can't reach the requested position, increase it.
-#define SERVO_DELAY { 300 }
+#define SERVO_DELAY { 300 } //todo
 
 // Only power servos during movement, otherwise leave off to prevent jitter
 //#define DEACTIVATE_SERVOS_AFTER_MOVE
