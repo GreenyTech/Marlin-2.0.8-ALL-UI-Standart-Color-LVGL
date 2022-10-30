@@ -601,6 +601,8 @@ G29_TYPE GcodeSuite::G29() {
   {
     //TODO check for homing
 
+    int failedAtPosition = -1;
+
 
 
     const ProbePtRaise raise_after = parser.boolval('E') ? PROBE_PT_STOW : PROBE_PT_RAISE;
@@ -654,7 +656,10 @@ G29_TYPE GcodeSuite::G29() {
 
           if (isnan(abl.measured_z)) {
             set_bed_leveling_enabled(abl.reenable);
+             ui.set_status_P("Break",5);
+             failedAtPosition = pt_index;
             break; // Breaks out of both loops
+            
           }
 
           #if ENABLED(PROBE_TEMP_COMPENSATION)
@@ -723,11 +728,37 @@ G29_TYPE GcodeSuite::G29() {
       set_bed_leveling_enabled(abl.reenable);
       abl.measured_z = NAN;
     }
-    //TODO turn down bad temperatur. //not required as it turns it down automatically
-    queue.inject_P(PSTR("G0 X170 Y200 Z80\nM140 S0\n")); //"M140 S0 \n
-    //queue.inject_P(PSTR("")); //park Position
+
+    if(failedAtPosition!=-1){
+       ui.status_printf_P(4, PSTR(S_FMT " %i/%i"), "Failed at", int(failedAtPosition), int(abl.abl_points));
+       //todo deleat mesh
+
+       SERIAL_ECHOLNPAIR("valid mesh: " , leveling_is_valid());
+       reset_bed_level();
+       
+       //abl.meshCount
+
+    }
+    else{
+
+      queue.inject_P(PSTR("G0 X170 Y200 Z80\nM140 S0\n")); //"M140 S0 \n
+    queue.inject_P(PSTR("")); //park Position
     ui.reset_status();
     ui.store_settings();
+
+    }
+    //ui.set_status_P("Test",4);
+    
+    //ui.set_status_P("Done",3);
+    //TODO turn down bad temperatur. //not required as it turns it down automatically
+    
+    
+    //queue.inject_P(PSTR("G0 X170 Y200 Z80\nM140 S0\n")); //"M140 S0 \n
+    //queue.inject_P(PSTR("")); //park Position
+    //ui.reset_status();
+    //ui.store_settings();
+    
+    //Todo 
     //ui.buzz(200,500);
     
 
