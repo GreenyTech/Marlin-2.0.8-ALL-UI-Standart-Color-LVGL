@@ -150,6 +150,8 @@ static void _lcd_level_bed_center_homing() {
   _lcd_draw_heating_up_temperature();
   if (!all_axes_homed()) return;
   ui.buzz(200,500); //TODO anderer Ton?
+  //queue.inject_P(PSTR(CLEAR_PRINT_BEHAVIOR_FOR_PREHEAT_GCODE_BEVORE_MEASUREMENT)); //todo check if this is working
+
   #if ENABLED(LEVEL_CORNERS_USE_PROBE)
     _lcd_test_corners();
     if (corner_probing_done) ui.goto_previous_screen_no_defer();
@@ -191,9 +193,27 @@ void _lcd_level_bed_center() {
   }
   **/
   //queue.inject_P(PSTR("M190 S55\nM109 S210\nG92 E0\nG1 E F500\nG1 E-6\nG28\nG1 Z0")); //TODO: G10 Retract
-    set_all_unhomed();
-  queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT)); //TODO: G10 Retract
+  
 
+//TODO check if allready preheated and if allread homed.
+
+
+
+      set_all_unhomed();
+      queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT)); //TODO: G10 Retract
+
+  /**
+   * //todo check if allready warm.
+   * 
+   * 
+  if(abs(thermalManager.degBed()-55)<3 && abs(thermalManager.degHotend(0)-215)<5){
+    queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT_IF_ALLREADY_WARM)); //TODO: G10 Retract
+  }
+  else{
+      set_all_unhomed();
+      queue.inject_P(PSTR(PREHEAT_GCODE_BEVORE_MEASUREMENT)); //TODO: G10 Retract
+  }
+  */
  
 
   // Disable leveling so the planner won't mess with us
