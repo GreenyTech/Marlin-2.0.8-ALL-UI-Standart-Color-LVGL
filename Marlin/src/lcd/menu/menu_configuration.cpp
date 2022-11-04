@@ -494,6 +494,37 @@ void menu_advanced_settings();
 
 
 
+ void menu_auto_initialize_process() {
+
+  /**
+    //METHOD:
+
+     
+     char cmd[20];
+
+    //sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), hid, tune_temp);
+    sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), 0, PREHEAT_1_TEMP_HOTEND); 
+    queue.inject(cmd);
+    ui.return_to_status();
+
+    if(!bed_temperature_DISABLED){
+        sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), H_BED, PREHEAT_1_TEMP_BED); 
+    }
+
+
+
+
+
+    //TODO Menu das: nach einander
+    //1. Bed PID
+    //2. Nozzle PID
+    //3. Z Probe wizzard
+    //4. Ecken anfahren
+    //5. Bett Vermessen 
+    //durchführt.
+**/
+
+ }
 
 
 void menu_configuration() {
@@ -539,36 +570,8 @@ void menu_configuration() {
     SUBMENU(MSG_TEMPERATURE_PID, menu_advanced_temperature);//added from the menu advanced settings
 
 
-    //METHOD:
-    /**
-     
-     
 
-    //sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), hid, tune_temp);
-    sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), 0, PREHEAT_1_TEMP_HOTEND); 
-    queue.inject(cmd);
-    ui.return_to_status();
-
-    if(!bed_temperature_DISABLED){
-        sprintf_P(cmd, PSTR("M303 U1 E%i S%i"), H_BED, PREHEAT_1_TEMP_BED); 
-    }
-
-
-
-
-
-
-
-
-     **/
-
-    //TODO Menu das: nach einander
-    //1. Bed PID
-    //2. Nozzle PID
-    //3. Z Probe wizzard
-    //4. Ecken anfahren
-    //5. Bett Vermessen 
-    //durchführt.
+    //SUBMENU(MSG_AUTO_INITIALIZE, menu_auto_initialize_process);//added from the menu advanced settings
 
 
   }
@@ -619,6 +622,28 @@ void menu_configuration() {
         //todo
         //planner.leveling_active = !planner.leveling_active; //restore to profocate a change;
         set_bed_leveling_enabled(!planner.leveling_active);
+//MSG_AUTO_BED_LEVELING_ENABLED_AUSSCHALTEN_EMPFEHLUNG
+
+
+      ui.save_previous_screen();
+      ui.goto_screen([]{
+        MenuItem_confirm::select_screen(
+          GET_TEXT(MSG_YES), GET_TEXT(MSG_NO),
+          []{
+              //ui.defer_status_screen();
+            reset_bed_level(); 
+            ui.goto_previous_screen();   
+            
+          },
+          []{
+            ui.goto_previous_screen();
+          },
+          GET_TEXT(MSG_AUTO_BED_LEVELING_ENABLED_AUSSCHALTEN_EMPFEHLUNG), (const char *)nullptr, GET_TEXT(MSG_ACTIVATE_BETT_LEVELING_BUT_MISSING_MESH_2)
+        );
+      });
+
+
+
         }
     });
   }

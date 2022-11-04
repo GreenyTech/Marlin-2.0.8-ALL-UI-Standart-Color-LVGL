@@ -759,6 +759,10 @@ namespace Language_en {
 
   PROGMEM Language_Str MSG_SERVICE_NAME_2                = _UxGT("Service Mechanic");
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_2                = _UxGT("Service Mechanic Done");
+  
+  PROGMEM Language_Str MSG_AUTO_INITIALIZE                = _UxGT("Auto Initialize");
+
+  PROGMEM Language_Str MSG_AUTO_BED_LEVELING_ENABLED_AUSSCHALTEN_EMPFEHLUNG = _UxGT("We recommend resetting the mesh.");
 
 
 }

@@ -688,6 +688,10 @@ namespace Language_de {
   PROGMEM Language_Str MSG_CONNECT_HEAT_BED                = _UxGT("Verbinde Heizbett und Drucker");
   PROGMEM Language_Str MSG_HEAT_BED_DISABLED                = _UxGT("Heizbettsperre");
   PROGMEM Language_Str MSG_AUTO_BED_LEVELING_ENABLED                = _UxGT("Bettunebenheiten Ausgleichen");
+  PROGMEM Language_Str MSG_AUTO_BED_LEVELING_ENABLED_AUSSCHALTEN_EMPFEHLUNG                = _UxGT("Wir empfehlen das Mesh zu reseten.");
+
+
+  PROGMEM Language_Str MSG_AUTO_INITIALIZE                = _UxGT("Automatische Initialisierungsroutine");
 
   PROGMEM Language_Str MSG_SERVICE_NAME_1                = _UxGT("Service Druckkopf");
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Druckkopf durchgeführt");
