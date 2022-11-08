@@ -249,6 +249,17 @@ void MarlinUI::draw_status_screen() {
 
   TERN_(TOUCH_SCREEN, touch.clear());
 
+
+    
+    
+    if(is_in_z_probe_offset_process){
+      cancel_z_probe_offset();
+      ui.return_to_status();
+      ui.buzz(100,300);
+      ui.buzz(300,200);
+    
+    }
+
   // heaters and fan
   uint16_t i, x, y = TFT_STATUS_TOP_Y;
 

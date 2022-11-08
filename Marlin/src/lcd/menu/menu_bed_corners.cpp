@@ -26,6 +26,8 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+#include "auto_init_callback.h"
+
 #if BOTH(HAS_LCD_MENU, LEVEL_BED_CORNERS)
 
 #include "menu_item.h"
@@ -352,6 +354,8 @@ static void _lcd_level_bed_corners_homing() {
             line_to_z(LEVEL_CORNERS_Z_HOP); // Raise Z off the bed when done
             TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
             ui.goto_previous_screen_no_defer();
+            SERIAL_ECHO_MSG("WTF this should be executed only once");
+            execute_next_Auto_init_stepp();
           }
         , GET_TEXT(TERN(LEVEL_CENTER_TOO, MSG_LEVEL_BED_NEXT_POINT, MSG_NEXT_CORNER))
         , (const char*)nullptr, PSTR("?")

@@ -26,6 +26,8 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+#include "auto_init_callback.h"
+
 
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
@@ -496,6 +498,14 @@ void menu_advanced_settings();
 
  void menu_auto_initialize_process() {
 
+  /**ui.reset_status();
+  ui.status_screen();
+  **/
+
+    ui.return_to_status();
+  start_auto_init_process();
+
+
   /**
     //METHOD:
 
@@ -571,7 +581,8 @@ void menu_configuration() {
 
 
 
-    //SUBMENU(MSG_AUTO_INITIALIZE, menu_auto_initialize_process);//added from the menu advanced settings
+    SUBMENU(MSG_AUTO_INITIALIZE, menu_auto_initialize_process);//added from the menu advanced settings
+    //SUBMENU(MSG_BUTTON_NEXT, execute_next_Auto_init_stepp);//added from the menu advanced settings
 
 
   }

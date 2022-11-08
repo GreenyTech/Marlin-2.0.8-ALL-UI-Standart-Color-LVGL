@@ -26,6 +26,8 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+#include "auto_init_callback.h"
+
 #if ENABLED(PROBE_OFFSET_WIZARD)
 
 #include "menu_item.h"
@@ -67,6 +69,7 @@ inline void clear_temperature(){
     
     queue.inject_P(PSTR(CLEAR_PREHEAT_GCODE_BEVORE_MEASUREMENT)); //dont wait. Set bad temperatur 0
     //queue.inject_P(PSTR("M104 S0")); //dont wait set nozzle temp. to 0
+    
 
 }
 
@@ -75,6 +78,7 @@ void set_offset_and_end(const_float_t z) {
   probe.offset.z = z;
   SET_SOFT_ENDSTOP_LOOSE(false);
   TERN_(HAS_LEVELING, set_bed_leveling_enabled(leveling_was_active));
+  
   
   
 }
@@ -101,7 +105,7 @@ inline void cancel_z_probe_offset(){
     
     clear_temperature();
     //ui.goto_previous_screen_no_defer();
-
+    //execute_next_Auto_init_stepp();
 }
 
 void probe_offset_wizard_menu() {
@@ -171,12 +175,24 @@ void probe_offset_wizard_menu() {
     
     clear_temperature();
     
-    ui.goto_previous_screen_no_defer();
+    SERIAL_ECHO_MSG("asdfaiewofni oinewiorf na ");
+    if(is_in_init_process()){
+      execute_next_Auto_init_stepp();
+    }
+    else{
+      ui.goto_previous_screen_no_defer();
+    }
   });
 
   ACTION_ITEM(MSG_BUTTON_CANCEL, []{
     cancel_z_probe_offset();
-    ui.goto_previous_screen_no_defer();
+    if(is_in_init_process()){
+      execute_next_Auto_init_stepp();
+    }
+    else{
+      ui.goto_previous_screen_no_defer();
+    }
+
   });
 
   END_MENU();
@@ -307,6 +323,7 @@ void goto_probe_offset_wizard() {
   **/
 
 //clear_movement_and_Temperature();
+
 }
 
 #endif // PROBE_OFFSET_WIZARD

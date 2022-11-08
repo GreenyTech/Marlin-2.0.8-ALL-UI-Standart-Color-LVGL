@@ -28,6 +28,9 @@
 #include "../../lcd/marlinui.h"
 #include "../../module/temperature.h"
 
+
+#include "../../lcd/menu/auto_init_callback.h"
+
 #if ENABLED(EXTENSIBLE_UI)
   #include "../../lcd/extui/ui_api.h"
 #endif
@@ -45,6 +48,8 @@
  */
 
 void GcodeSuite::M303() {
+
+    SERIAL_ECHO_MSG("start pid");
 
   #if ANY(PID_DEBUG, PID_BED_DEBUG, PID_CHAMBER_DEBUG)
     if (parser.seen('D')) {
@@ -82,9 +87,12 @@ void GcodeSuite::M303() {
     KEEPALIVE_STATE(NOT_BUSY);
   #endif
 
+
   LCD_MESSAGEPGM(MSG_PID_AUTOTUNE);
   thermalManager.PID_autotune(temp, hid, c, u);
-  ui.reset_status();
+  SERIAL_ECHO_MSG("done pid");
+  //ui.reset_status();
+
   ui.store_settings();
   //TODO save 
   //ui.buzz(200,500);

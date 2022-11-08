@@ -84,6 +84,16 @@ void GcodeSuite::M1001() {
   {
     PORT_REDIRECT(SerialMask::All);
     SERIAL_ECHOLNPGM(STR_FILE_PRINTED);
+    
+    ui.buzz(100,200);
+    ui.buzz(100,500);
+    ui.buzz(100,200);
+    ui.buzz(100,500);
+    ui.buzz(100,200);
+    ui.buzz(100,500);
+    ui.buzz(100,200);
+    ui.buzz(100,500);
+    ui.buzz(150,800);
   }
 
   // Update the status LED color

@@ -693,6 +693,12 @@ namespace Language_de {
 
   PROGMEM Language_Str MSG_AUTO_INITIALIZE                = _UxGT("Automatische Initialisierungsroutine");
 
+  PROGMEM Language_Str MSG_AUTO_INITIALIZE_PLEASE_WAIT                = _UxGT("Initialisierungsroutine - Bitte Warten");
+  PROGMEM Language_Str MSG_AUTO_INITIALIZE_SUCCESSFULL                = _UxGT("Initialisierung erfolgreich abgeschlossen");
+  
+
+  
+
   PROGMEM Language_Str MSG_SERVICE_NAME_1                = _UxGT("Service Druckkopf");
   PROGMEM Language_Str MSG_SERVICE_NAME_RESET_1                = _UxGT("Service Druckkopf durchgeführt");
   PROGMEM Language_Str MSG_SERVICE_NAME_2                = _UxGT("Service Mechanik");

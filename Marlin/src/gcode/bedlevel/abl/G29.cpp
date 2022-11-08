@@ -26,6 +26,8 @@
 
 #include "../../../inc/MarlinConfig.h"
 
+#include "../../../lcd/menu/auto_init_callback.h"
+
 #if HAS_ABL_NOT_UBL
 
 #include "../../gcode.h"
@@ -745,6 +747,7 @@ G29_TYPE GcodeSuite::G29() {
     queue.inject_P(PSTR("")); //park Position
     ui.reset_status();
     ui.store_settings();
+    execute_next_Auto_init_stepp();
 
     }
     //ui.set_status_P("Test",4);
