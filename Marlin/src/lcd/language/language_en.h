@@ -767,6 +767,8 @@ namespace Language_en {
 
   PROGMEM Language_Str MSG_AUTO_BED_LEVELING_ENABLED_AUSSCHALTEN_EMPFEHLUNG = _UxGT("We recommend resetting the mesh.");
 
+  PROGMEM Language_Str MSG_SPEED_BETT_STABILISE                           = _UxGT("Speed for improved bed adhesion");
+
 
 }
 

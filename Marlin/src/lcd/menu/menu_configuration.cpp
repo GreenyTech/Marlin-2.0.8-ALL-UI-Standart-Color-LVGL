@@ -741,6 +741,14 @@ void menu_configuration() {
     //if (!busy) ACTION_ITEM(MSG_LOAD_EEPROM, ui.load_settings);
   #endif
 
+
+
+  EDIT_ITEM(int3, MSG_SPEED_BETT_STABILISE, &feedrate_percentage, 10, 100);
+
+
+
+  //todo Reset Speed after n Layers
+
     EDIT_ITEM(bool, MSG_HEAT_BED_DISABLED, &bed_temperature_DISABLED,
       [](){  
         SERIAL_ECHO_MSG("change temperature");

@@ -327,7 +327,7 @@ void Touch::touch(touch_control_t *control)
 
   case FEEDRATE:
     ui.clear_lcd();
-    MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 150); // Gabriel speed Slider limit
+    MenuItem_int3::action((const char *)GET_TEXT_F(MSG_SPEED), &feedrate_percentage, 10, 100); // Gabriel speed Slider limit
     break;
   case FLOWRATE:
     ui.clear_lcd();

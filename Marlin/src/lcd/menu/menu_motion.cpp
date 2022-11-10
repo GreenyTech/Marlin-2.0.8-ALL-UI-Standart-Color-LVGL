@@ -409,6 +409,8 @@ void menu_motion() {
       SUBMENU(MSG_BED_LEVELING, menu_bed_leveling); // TODO return to main Menu / status screen
       //loks like menuBedLevelin
 
+
+
   #elif HAS_LEVELING && DISABLED(SLIM_LCD_MENUS)
 
     #if ENABLED(LCD_BED_LEVELING)
@@ -440,6 +442,12 @@ void menu_motion() {
       SUBMENU(MSG_LEVEL_CORNERS_CENTER, _lcd_level_bed_center);
     #endif//LEVEL_BED_CORNERS
   #endif //LCD_BED_LEVELING
+
+
+
+//speed
+
+
 
 /** //useful tool to check if the sensor is working. Gabriels Deviation is 0.002964
   #if ENABLED(Z_MIN_PROBE_REPEATABILITY_TEST)
