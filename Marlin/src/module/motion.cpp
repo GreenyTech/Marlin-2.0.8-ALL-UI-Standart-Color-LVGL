@@ -137,6 +137,7 @@ xyze_pos_t destination; // {0}
 // Functions that override this for custom moves *must always* restore it!
 feedRate_t feedrate_mm_s = MMM_TO_MMS(1500);
 int16_t feedrate_percentage = 100;
+bool disableAfterHighFirstRange = true;
 
 // Cartesian conversion result goes here:
 xyz_pos_t cartes;
@@ -417,8 +418,18 @@ void _internal_move_to_destination(const_feedRate_t fr_mm_s/*=0.0f*/
   const feedRate_t old_feedrate = feedrate_mm_s;
   if (fr_mm_s) feedrate_mm_s = fr_mm_s;
 
+/*
+  if(disableAfterHighFirstRange){ //reset Feedrate.
+    if(current_position.z>=0.8){
+      feedrate_percentage = 100;
+    }
+  }**/
+  
+
   const uint16_t old_pct = feedrate_percentage;
   feedrate_percentage = 100;
+
+
 
   #if EXTRUDERS
     const float old_fac = planner.e_factor[active_extruder];

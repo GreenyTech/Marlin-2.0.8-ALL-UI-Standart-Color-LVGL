@@ -67,6 +67,15 @@ void GcodeSuite::G0_G1(TERN_(HAS_FAST_MOVES, const bool fast_move/*=false*/)) {
     }
   #endif
 
+  //restor speed.
+  
+  //feedrate_percentage = 95;
+  if(disableAfterHighFirstRange){ //reset Feedrate.
+    if(current_position.z>=0.8){
+      feedrate_percentage = 100;
+    }
+  }
+
 
     TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_RUNNING));
 
