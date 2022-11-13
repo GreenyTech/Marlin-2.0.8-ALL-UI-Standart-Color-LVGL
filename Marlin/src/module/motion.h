@@ -100,10 +100,11 @@ extern feedRate_t feedrate_mm_s;
  * Feedrate scaling is applied to all G0/G1, G2/G3, and G5 moves
  */
 extern int16_t feedrate_percentage;
+extern int16_t first_layer_speed_reduction_percentage;
 
 #define MMS_SCALED(V) ((V) * 0.01f * feedrate_percentage)
 
-extern bool disableAfterHighFirstRange;
+//extern bool disableAfterHighFirstRange;
 
 // The active extruder (tool). Set with T<extruder> command.
 #if HAS_MULTI_EXTRUDER

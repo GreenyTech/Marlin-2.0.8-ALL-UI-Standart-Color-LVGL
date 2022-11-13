@@ -36,7 +36,7 @@
  */
 
 // Change EEPROM version if the structure changes
-#define EEPROM_VERSION "V84" //TODO updtaen? EEPROM Version Bed Disable
+#define EEPROM_VERSION "V85" //TODO updtaen? EEPROM Version Bed Disable
 #define EEPROM_OFFSET 100
 
 // Check the integrity of data offsets.
@@ -220,6 +220,12 @@ typedef struct SettingsDataStruct {
   // Bed Temperature enabled
   //
   bool bed_temperature_enabled;
+
+
+  //
+  // First Layer Speed reduction
+  //
+  int16_t first_layer_speed_reduction_storage;
 
 
 
@@ -724,10 +730,20 @@ void MarlinSettings::postprocess() {
     //
 
     {
-      
       const bool &bed_temperature_enabled = bed_temperature_DISABLED; 
       _FIELD_TEST(bed_temperature_enabled);
       EEPROM_WRITE(bed_temperature_enabled);
+    }
+
+    
+    //
+    // First Layer Speed reduction
+    //
+
+    {
+      const int16_t &first_layer_speed_reduction_storage = first_layer_speed_reduction_percentage; 
+      _FIELD_TEST(first_layer_speed_reduction_storage);
+      EEPROM_WRITE(first_layer_speed_reduction_storage);
     }
 
     //
@@ -1632,6 +1648,20 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(bed_temperature_enabled);
       
         bed_temperature_DISABLED = bed_temperature_enabled < 0 ? FIL_RUNOUT_ENABLED_DEFAULT : bed_temperature_enabled;
+    }
+
+
+
+    //
+    // First Layer Speed reduction
+    //
+    
+    {
+        int16_t first_layer_speed_reduction_storage;
+        _FIELD_TEST(first_layer_speed_reduction_storage);
+        EEPROM_READ(first_layer_speed_reduction_storage);
+      
+        first_layer_speed_reduction_percentage = first_layer_speed_reduction_storage < 0 ? 100 : first_layer_speed_reduction_percentage;
     }
 
       //
@@ -2686,6 +2716,15 @@ void MarlinSettings::reset() {
 
     {
       bed_temperature_DISABLED = false;
+    }
+
+
+    //
+    // First Layer Speed reduction
+    //
+    {
+      
+        first_layer_speed_reduction_percentage = 100; 
     }
 
   //

@@ -744,8 +744,8 @@ void menu_configuration() {
 
 //extern bool disableAfterHighFirstRange;
 
-  EDIT_ITEM(int3, MSG_SPEED_BETT_STABILISE, &feedrate_percentage, 10, 100);
-  EDIT_ITEM(bool, MSG_SPEED_RESET_AFTER_LAYERS, &disableAfterHighFirstRange,[]{ ui.chirp(); });
+  EDIT_ITEM(int3, MSG_SPEED_BETT_STABILISE, &first_layer_speed_reduction_percentage, 10, 100);
+  //EDIT_ITEM(bool, MSG_SPEED_RESET_AFTER_LAYERS, &disableAfterHighFirstRange,[]{ ui.chirp(); });
 
   
 

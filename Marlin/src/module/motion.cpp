@@ -137,7 +137,9 @@ xyze_pos_t destination; // {0}
 // Functions that override this for custom moves *must always* restore it!
 feedRate_t feedrate_mm_s = MMM_TO_MMS(1500);
 int16_t feedrate_percentage = 100;
-bool disableAfterHighFirstRange = true;
+
+int16_t first_layer_speed_reduction_percentage = 100;
+//bool disableAfterHighFirstRange = true;
 
 // Cartesian conversion result goes here:
 xyz_pos_t cartes;

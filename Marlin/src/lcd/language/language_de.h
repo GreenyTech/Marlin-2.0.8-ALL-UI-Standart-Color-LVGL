@@ -671,8 +671,9 @@ namespace Language_de {
   PROGMEM Language_Str MSG_BUSY                      = _UxGT("Beschaeftigt");
   PROGMEM Language_Str MSG_TOO_COLD                      = _UxGT("zu Kalt");
 
+  PROGMEM Language_Str MSG_SPEED_BETT_STABILISE                           = _UxGT("Anfangsgeschw. für Betthaftung");
   
-  PROGMEM Language_Str MSG_SPEED_BETT_STABILISE                           = _UxGT("Geschw. für Verbesserte Betthaftung");
+  //PROGMEM Language_Str MSG_SPEED_RESET_AFTER_LAYERS                       = _UxGT("Geschw. automatisch zurück auf 100%");
 
 
 
