@@ -47,6 +47,13 @@
 
 #include "../../MarlinCore.h" // for startOrResumeJob
 
+
+
+
+#if ENABLED(HOTEND_IDLE_TIMEOUT)
+  #include "../../feature/hotend_idle_callback.h"
+#endif
+
 /**
  * M24: Start or Resume SD Print
  */
@@ -64,6 +71,7 @@ void GcodeSuite::M24() {
 
   #if ENABLED(PARK_HEAD_ON_PAUSE)
     if (did_pause_print) {
+          critical_section_that_prevents_temperature_timeout = false;
       resume_print(); // will call print_job_timer.start()
       return;
     }
@@ -93,6 +101,11 @@ void GcodeSuite::M24() {
  *   position. M24 will move the head back before resuming the print.
  */
 void GcodeSuite::M25() {
+
+
+    critical_section_that_prevents_temperature_timeout = true;
+
+
 
   #if ENABLED(PARK_HEAD_ON_PAUSE)
 

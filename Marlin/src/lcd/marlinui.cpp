@@ -1501,8 +1501,10 @@ void MarlinUI::update() {
     extern bool wait_for_user, wait_for_heatup;
   #endif
 
+
   void MarlinUI::abort_print() {
     //TODO Gabriel -> axchsen deaktivieren
+    //todo
     #if ENABLED(SDSUPPORT)
       wait_for_heatup = wait_for_user = false;
       card.flag.abort_sd_printing = true;
@@ -1526,9 +1528,22 @@ void MarlinUI::update() {
     #include "../gcode/queue.h"
   #endif
 
+    
+#if ENABLED(HOTEND_IDLE_TIMEOUT)
+  #include "../feature/hotend_idle_callback.h"
+#endif
+
+
   void MarlinUI::pause_print() {
+    //do not stop the print
+
+    critical_section_that_prevents_temperature_timeout = true;
+
+    
     #if HAS_LCD_MENU
+      
       synchronize(GET_TEXT(MSG_PAUSING));
+
       defer_status_screen();
     #endif
 
@@ -1539,6 +1554,7 @@ void MarlinUI::update() {
     #if ENABLED(PARK_HEAD_ON_PAUSE)
       pause_show_message(PAUSE_MESSAGE_PARKING, PAUSE_MODE_PAUSE_PRINT); // Show message immediately to let user know about pause in progress
       queue.inject_P(PSTR("M25 P\nM24"));
+      
     #elif ENABLED(SDSUPPORT)
       queue.inject_P(PSTR("M25"));
     #elif defined(ACTION_ON_PAUSE)
@@ -1553,6 +1569,8 @@ void MarlinUI::update() {
     #ifdef ACTION_ON_RESUME
       host_action_resume();
     #endif
+    
+    critical_section_that_prevents_temperature_timeout = false;
     print_job_timer.start(); // Also called by M24
   }
 

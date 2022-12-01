@@ -239,11 +239,18 @@ static PGM_P pause_header() {
   ++_thisItemNr; \
 }while(0)
 
+
+  
+#if ENABLED(HOTEND_IDLE_TIMEOUT)
+#include "../../feature/hotend_idle_callback.h"
+#endif
+
 void menu_pause_option() {
   START_MENU();
   #if LCD_HEIGHT > 2
     STATIC_ITEM(MSG_FILAMENT_CHANGE_OPTION_HEADER);
   #endif
+  
   ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_PURGE, []{ pause_menu_response = PAUSE_RESPONSE_EXTRUDE_MORE; });
 
 
@@ -256,7 +263,12 @@ void menu_pause_option() {
   #endif
 
   if (!still_out)
-    ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_RESUME, []{ pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT; });
+    ACTION_ITEM(MSG_FILAMENT_CHANGE_OPTION_RESUME, []{ 
+      pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT; 
+      #if ENABLED(HOTEND_IDLE_TIMEOUT)
+        critical_section_that_prevents_temperature_timeout = false;
+      #endif
+    });
 
   END_MENU();
 }
@@ -338,6 +350,7 @@ void MarlinUI::pause_show_message(
   }
   else
     ui.return_to_status();
+    //critical_section_that_prevents_temperature_timeout = false;
 }
 
 #endif // HAS_LCD_MENU && ADVANCED_PAUSE_FEATURE

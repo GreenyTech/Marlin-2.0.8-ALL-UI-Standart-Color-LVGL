@@ -584,8 +584,11 @@ void resume_print(const_float_t slow_load_length/*=0*/, const_float_t fast_load_
   if (targetTemp > thermalManager.degTargetHotend(active_extruder))
     thermalManager.setTargetHotend(targetTemp, active_extruder);
 
+
+
+  //purge_length =  ADVANCED_PAUSE_PURGE_LENGTH;//TODO reset
   // Load the new filament
-  load_filament(slow_load_length, fast_load_length, purge_length, max_beep_count, true, nozzle_timed_out, PAUSE_MODE_SAME DXC_PASS);
+  load_filament(slow_load_length, fast_load_length, ADVANCED_PAUSE_PURGE_LENGTH , max_beep_count, true, nozzle_timed_out, PAUSE_MODE_SAME DXC_PASS); //todo replace ADVANCED_PAUSE_PURGE_LENGTH with purge_length
 
   if (targetTemp > 0) {
     thermalManager.setTargetHotend(targetTemp, active_extruder);
