@@ -3858,7 +3858,7 @@
   #define SERVICE_INTERVAL_1  75 // print hours //hours//todo 70
   #define SERVICE_NAME_2      "Service 2"
   #define SERVICE_NAME_RESET_2      "Reset Service 2"
-  #define SERVICE_INTERVAL_2  150 // print hours
+  #define SERVICE_INTERVAL_2  14*24 // print hours
   //#define SERVICE_NAME_3      "Service 3"
   //#define SERVICE_INTERVAL_3    1 // print hours
 #endif
