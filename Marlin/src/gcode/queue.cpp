@@ -557,6 +557,7 @@ void GCodeQueue::get_serial_commands() {
 
     if (!IS_SD_PRINTING()) return;
 
+//check when sd stops
     int sd_count = 0;
     while (!ring_buffer.full() && !card.eof()) {
       const int16_t n = card.get();
@@ -612,7 +613,13 @@ void GCodeQueue::get_available_commands() {
 
   get_serial_commands();
 
-  TERN_(SDSUPPORT, get_sdcard_commands());
+  try{
+    TERN_(SDSUPPORT, get_sdcard_commands());
+  }
+  catch(...) {
+  SERIAL_ECHO_MSG("Throw an SD Card error...");
+  }
+
 }
 
 /**
